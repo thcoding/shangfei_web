@@ -1,0 +1,16 @@
+#svn
+*.svn*
+
+#upload
+upload/*
+
+#ide
+.settings/*
+
+#windows
+*.ini
+
+#sql
+*.sql
+
+ztemp.php

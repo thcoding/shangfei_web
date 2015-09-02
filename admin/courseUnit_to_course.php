@@ -1,0 +1,149 @@
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>商飞学习管理系统</title>
+
+<style type="text/css" media="screen, projection">
+/*<![CDATA[*/
+@import "../css/default.css";
+@import "../css/main.css";
+/*]]>*/
+</style>
+
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/function.js"></script>
+<script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+
+<script type="text/javascript">
+    $(function(){
+       $(window).scroll(function(){
+         $("#footer").css({"left":"0","bottom":"0"});
+       });       
+    });
+</script>
+</head>
+<body>
+
+<div id="wrapper">
+
+<?php 
+session_start();
+include "../inc/config.php";
+setcookie(session_name(),session_id(),time()+$sessionTime,"/");
+if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
+	header("Location:../index.php");
+	exit();
+}
+
+include "../inc/mysql.php";
+include "../inc/admin_header_in_admindir_for_courseunitnav.php";
+?>
+
+<div class="clear">&nbsp;</div>
+<div id="main"> <!-- start of #main wrapper for #content and #menu divs -->
+<!--   Begin Of script Output   -->
+<div id="content" class="maxcontent">
+
+	<div id="content_with_menu">
+		<div id="container">
+		<div class="info">课程单元（组）分配到课程（组）</div>
+		<form action="fenpei.php?type=3" method="post">
+			<div class="fenpei_dk fl">
+				<span>课程单元组</span>
+				<div style="max-height:210px;overflow-y: auto; overflow-x:hidden;">
+					<div class="list" id="groupList">				
+					<ul>
+					<?php
+						if($_SESSION["role"]==ADMIN){
+							$whereRole = "";
+						}else{
+							$whereRole = "and userid=".$_SESSION["userid"];
+						}
+						$res = $mysql->query("select * from `group` where deleted=0 and type=2 $whereRole order by time desc");
+						while($arr = $mysql->fetch_array($res)){
+							echo "<li><input type='checkbox' name='courseUnitGroup[]' value='$arr[id]' title='创建日期：$arr[time]'><img src='../img/no-expanded.gif' id=$arr[id] type=1> ".$arr["title"]."</li>";
+						}
+					?>
+					</ul>
+					</div>
+				</div>
+
+				<span>全部课程单元</span>
+				<div style="max-height:210px;overflow-y: auto; overflow-x:hidden;">
+					<div class="list">				
+					<ul>
+					<?php
+						$res = $mysql->query("select * from courseunit where deleted=0 $whereRole order by time desc");
+						while($arr = $mysql->fetch_array($res)){
+							echo "<li><label><input type='checkbox' name='courseUnit[]' value='$arr[id]' title='创建日期：$arr[time]'>".$arr["title"]."</label>";
+							
+							$res1 = $mysql->query("select * from courseunitversion_rel_attachment where deleted=0 $whereRole and courseunitid=".$arr["id"]);
+							$i=1;
+							$num = $mysql->num_rows($res1);
+							if($num>1){
+								echo "<ul>";
+								while($arr1 = $mysql->fetch_array($res1)){
+									$c = $i++==$num ? "checked" : "";
+									echo "<li><label><input type='radio' value='$arr1[id]' name='v-$arr[id]' $c title='创建日期：$arr1[time]'>$arr1[versionname]</label></li>";
+								}
+								echo "</ul>";
+							}
+							echo "</li>";
+						}
+					?>
+					</ul>
+					</div>
+				</div>
+			</div>
+			
+			<img src="../img/arrow_right.jpg" width="120" style="margin-top:180px;">
+			<div class="fenpei_dk fr">
+				<span>课程组</span>
+				<div style="max-height:210px;overflow-y: auto; overflow-x:hidden;">
+					<div class="list" id="groupList">				
+					<ul>
+					<?php
+						$res = $mysql->query("select * from `group` where deleted=0 and type=3 $whereRole order by time desc");
+						while($arr = $mysql->fetch_array($res)){
+							echo "<li title='创建日期：$arr[time]'><input type='checkbox' name='courseGroup[]' value='$arr[id]'><img src='../img/no-expanded.gif' id=$arr[id] type=2> ".$arr["title"]."</li>";							
+						}
+					?>
+					</ul>
+					</div>
+				</div>
+
+				<span>全部课程</span>
+				<div style="max-height:210px;overflow-y: auto; overflow-x:hidden;">
+					<div class="list">				
+					<ul>
+					<?php
+						$res = $mysql->query("select * from course where deleted=0 $whereRole order by time desc");
+						while($arr = $mysql->fetch_array($res)){
+							echo "<li title='创建日期：$arr[time]'><label><input type='checkbox' name='course[]' value='$arr[id]'>".$arr["title"]."</label></li>";
+						}
+					?>
+					</ul>
+					</div>
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+			<div style="text-align:center"><button type="submit">确定分配</button></div>
+		</form>
+		</div><!-- container -->
+	</div>
+</div> <div class="clear">&nbsp;</div> <!-- 'clearing' div to make sure that footer stays below the main and right column sections -->
+</div> <!-- end of #main" started at the end of banner.inc.php -->
+
+<div class="push"></div>
+</div> <!-- end of #wrapper section -->
+
+<?php include "../inc/footer.php";?>
+
+</body>
+</html>
