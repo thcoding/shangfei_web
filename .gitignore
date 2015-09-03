@@ -1,8 +1,11 @@
 upload/
 .idea/
 .settings/
+testeasyui/
+newcreate/
 
 #ide
+.idea/
 .settings/*
 
 #windows
