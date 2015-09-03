@@ -21,7 +21,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	<li><a href="#"></a></li>
 	<li><a href="#"></a></li>
 	<li><a href="#"></a></li>
-	<li><a href="../myinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>
+	<li style="height: 40px;width: auto"><a href="../myinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>
 	<ul>
 		<li><a href="../logout.php">退出登录</a></li>
 	</ul>			
