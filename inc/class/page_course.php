@@ -18,7 +18,24 @@ if(isset($_GET["page"])){
 	$page = 1;
 }
 
+
+
+//排序方式常量定义
+define("TIME_DESC",1);//创建时间降序（默认）
+define("TIME_ASC",2);//教创建时间升序
+define("TITLE_DESC",3);//课程名称降序
+define("TITLE_ASC",4);//课程名称升序
+define("TYPE_DESC",5);//课程类别降序
+define("TYPE_ASC",6);//课程类别升序
+define("CREATOR_DESC",7);//创建者降序
+define("CREATOR_ASC",8);//创建者升序
+define("STARTTIME_DESC",9);//课程开始时间降序
+define("STARTTIME_ASC",10);//课程开始时间升序
+define("ENDTIME_DESC",11);//课程结束时间降序
+define("ENDTIME_ASC",12);//课程结束时间升序
+
 class page{
+
 
 //共两个分页显示模式
 //$select 是否处于分页复选模式
@@ -33,20 +50,41 @@ class page{
 		
 		$by = "order by ";
 		switch($order){
-			case 1:
+			case TIME_DESC:
 				$by .= "time desc";
 				break;
-			case 2:
-				$by .= "time";
+			case TIME_ASC:
+				$by .= "time asc";
 				break;
-			case 3:
-				$by .= "userid";
+			case TITLE_DESC:
+				$by .= "title desc";
 				break;
-			case 4:
-				$by .= "title";
+			case TITLE_ASC:
+				$by .= "title asc";
 				break;
-			case 5:
+			case TYPE_DESC:
 				$by .= "type desc";
+				break;
+			case TYPE_ASC:
+				$by .= "type asc";
+				break;
+			case CREATOR_DESC:
+				$by .= "userid desc";
+				break;
+			case CREATOR_ASC:
+				$by .= "userid asc";
+				break;
+			case STARTTIME_DESC:
+				$by .= "starttime desc";
+				break;
+			case STARTTIME_ASC:
+				$by .= "starttime asc";
+				break;
+			case ENDTIME_DESC:
+				$by .= "endtime desc";
+				break;
+			case ENDTIME_ASC:
+				$by .= "endtime asc";
 				break;
 		}
 		
@@ -90,12 +128,42 @@ class page{
 		else{
 			echo "<table border='1' width='100%' cellspacing='0' cellpadding='0'>
 						<tr>
-							<th width='20%' align='center' class='th1'>课程名称</th>
-							<th width='10%' align='center' class='th1'>课程类别</th>
-							<th width='10%' align='center' class='th1'>创建者</th>
-							<th width='15%' align='center' class='th1'>创建时间</th>
-							<th width='15%' align='center' class='th1'>课程开始时间</th>
-							<th width='15%' align='center' class='th1'>课程结束时间</th>
+							<th width='18%' align='center' class='th1'><table style='border:0px; margin:auto'><tr><td>课程名称</td>
+							<td>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=4'><img src='../img/asc.png' width='8'></a></div>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=3'><img src='../img/desc.png' width='8'></a></div>
+							</td>
+							</tr></table></th>
+							<th width='12%' align='center' class='th1'><table style='border:0px; margin:auto'><tr><td>课程类别</td>
+							<td>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=6'><img src='../img/asc.png' width='8'></a></div>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=5'><img src='../img/desc.png' width='8'></a></div>
+							</td>
+							</tr></table></th>
+							<th width='10%' align='center' ><table style='border:0px; margin:auto'><tr><td>创建者</td>
+							<td>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=8'><img src='../img/asc.png' width='8'></a></div>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=7'><img src='../img/desc.png' width='8'></a></div>
+							</td>
+							</tr></table></th>
+							<th width='15%' align='center' class='th1'><table style='border:0px; margin:auto'><tr><td>创建时间</td>
+							<td>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=2'><img src='../img/asc.png' width='8'></a></div>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=1'><img src='../img/desc.png' width='8'></a></div>
+							</td>
+							</tr></table></th>
+							<th width='15%' align='center' class='th1'><table style='border:0px; margin:auto'><tr><td>课程开始时间</td>
+							<td>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=10'><img src='../img/asc.png' width='8'></a></div>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=9'><img src='../img/desc.png' width='8'></a></div>
+							</td>
+							</tr></table></th>
+							<th width='15%' align='center' class='th1'><table style='border:0px; margin:auto'><tr><td>课程结束时间</td>
+							<td>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=12'><img src='../img/asc.png' width='8'></a></div>
+							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=11'><img src='../img/desc.png' width='8'></a></div>
+							</td>
+							</tr></table></th>
 							<th width='15%' align='center' class='th1'>操作</th>
 						</tr>";
 		}
