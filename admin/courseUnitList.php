@@ -29,63 +29,40 @@ include "../inc/function.php";
 </script>
 <div id="container">
 <div class="info">课程单元列表</div>
-<div class="search">
-	<form action="" method="get">
-		<?php
-		$keyword = isset($_GET["k"])?$_GET["k"]:"";
-		$by1 = $by2 = $by3 = $by4 = "";
-		$order = 1;
-		if(isset($_GET["order"])){
-			switch($_GET["order"]){
-				case 1:
-					$by1 = "selected";
-					$order = 1;
-					break;
-				case 2:
-					$by2 = "selected";
-					$order = 2;
-					break;
-				case 3:
-					$by3 = "selected";
-					$order = 3;
-					break;
-				case 4:
-					$by4 = "selected";
-					$order = 4;
-					break;
-			}
-		}					
-		
-		?>
-		<table>
-			<tr>
-				<td>搜索关键词</td>
-				<td><input name="k" value="<?php echo $keyword;?>"></td>
-			</tr>
-			<tr>
-				<td>排序方式</td>
-				<td>
-					<select id="sel_order" name="order">
-					<option value="1" <?php echo $by1;?>>创建时间降序</option>
-					<option value="2" <?php echo $by2;?>>创建时间升序</option>
-					<option value="3" <?php echo $by3;?>>创建者</option>
-					<option value="4" <?php echo $by4;?>>课程单元名称</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-            <input id="aim" value="1" style="visibility: hidden"/>
-				<td colspan="2"><input id="btn_search" type="submit" value="提交"></td>
-			</tr>
-		</table>
-	</form>
-</div>
+<div class="wrap">
+				<form action="" method="get">
+					<?php
+					//初始化相关参数
+					$searchType = isset($_GET["searchType"])?$_GET["searchType"]:1;
+					//通过关键字搜索相关课程单元
+					$keyword = isset($_GET["k"])?$_GET["k"]:"";?>
+					<?php
+					//获取当前排序方式
+					$order = isset($_GET["order"])?$_GET["order"]:1;					
+					?>
+					<table border='1' width='100%' cellspacing='0' cellpadding='0'>
+				<tr>
+					<td colspan="2">
+					<input name="k" value="<?php echo $keyword;?>" type="text" placeholder="请输入关键字...">
+					<button id="btn_search" type="submit">搜索课程单元</button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><label><input type="radio" name="searchType" value=1 <?php if($searchType==1){					
+					?>checked<?php } ?>>按课程单元名</label> <label><input type="radio" name="searchType" value=2 <?php if($searchType==2){	
+					?>checked<?php } ?>>按创建者</label><label><input type="radio" name="searchType" value=3 <?php if($searchType==3){	
+					?>checked<?php } ?>>按创建时间(格式:年-月-日，可缺省)</label></td>
+				</tr>
+			</table>
+				</form>
+			</div>
 <div class="wrap">
 <?php
 include "../inc/class/page_courseUnit.php";
 $f = new page();			
 
 $self = $_SERVER["PHP_SELF"];
+
 $userid = 0;
 @$aim = isset($_GET["aim"]) ? $_GET["aim"] : 1;
 if($_SESSION["role"]==ADMIN){
@@ -97,9 +74,9 @@ if($_SESSION["role"]==ADMIN){
 $linkPage = "$self";
 //$userid = isset($_GET["userid"])?$_GET["userid"]:0;
 if($aim==1)//为课程目录分配课程单元,显示版本信息
-$f->fenye($page,$order,$linkPage,$userid,$keyword,0,1,1);
+$f->fenye($page,$order,$linkPage,$userid,$keyword,$searchType,0,1,1);
 else
-$f->fenye($page,$order,$linkPage,$userid,$keyword,0,1,0);//为课程单元组分配课程单元，不显示版本信息
+$f->fenye($page,$order,$linkPage,$userid,$keyword,$searchType,0,1,0);//为课程单元组分配课程单元，不显示版本信息
 ?>
 </div>
 </div>

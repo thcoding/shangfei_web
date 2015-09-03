@@ -35,10 +35,10 @@ define("ENDTIME_DESC",11);//课程结束时间降序
 define("ENDTIME_ASC",12);//课程结束时间升序
 
 //关键词类型常量定义
-define("TITLE",1);
-define("TYPE",2);
-define("CREATOR",3);
-define("CREATE_TIME",4);
+define("TITLE",1);//创建时间降序（默认）
+define("TYPE",2);//教创建时间升序
+define("CREATOR",3);//课程名称降序
+define("CREATE_TIME",4);//课程名称升序
 
 class page{
 

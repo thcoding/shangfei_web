@@ -100,7 +100,7 @@ class page{
 		if($select){
 			echo "<table border='1' width='100%' cellspacing='0' cellpadding='0'>
 					<tr>";
-            if (!$version) echo "<th width='10%' align='center' class='th1'></th>";
+            if (!$version||$version) echo "<th width='10%' align='center' class='th1'></th>";
 			echo "<th width='40%' align='center' class='th1'><table style='border:0px; margin:auto'><tr><td>课程单元名称</td>
 							<td>
 							<div><a href='$linkPage"."page=1&userid=$userid&k=$keyword&order=4"."$linkTail'><img src='../img/asc.png' width='8'></a></div>

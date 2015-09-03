@@ -76,11 +76,10 @@ include "../inc/navigation_admin.php";
 			<div class="wrap">
 				<form action="" method="get">
 					<?php
-					$title = $createTime = $startTime = $endTime = $yes = $no = $type1 = $type2 = $type3= $type4="";
-					$searchTpye = isset($_GET["searchType"])?$_GET["searchType"]:1;
-					$createTime = isset($_GET["createTime"])?$_GET["createTime"]:"";
+					//初始化相关参数
+					$searchType = isset($_GET["searchType"])?$_GET["searchType"]:1;
 					$startTime = isset($_GET["startTime"])?$_GET["startTime"]:"";
-					$endTime = isset($_GET["$endTime"])?$_GET["$endTime"]:"";
+					$endTime = isset($_GET["endTime"])?$_GET["endTime"]:"";
 					//通过关键字搜索相关课程
 					$keyword = isset($_GET["k"])?$_GET["k"]:"";?>						 
 					<?php
@@ -95,19 +94,22 @@ include "../inc/navigation_admin.php";
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><label><input type="radio" name="searchType" value=1 <?php if($searchTpye==1){					
-					?>checked<?php } echo $type1;?>>按课程名</label> <label><input type="radio" name="searchType" value=2 <?php if($searchTpye==2){	
-					?>checked<?php } echo $type2;?>>按课程类别</label><label><input type="radio" name="searchType" value=3 <?php if($searchTpye==3){	
-					?>checked<?php } echo $type3;?>>按创建者</label><label><input type="radio" name="searchType" value=4 <?php if($searchTpye==4){	
-					?>checked<?php } echo $type4;?>>按创建时间</label></td>
+					<td colspan="2"><label><input type="radio" name="searchType" value=1 <?php if($searchType==1){					
+					?>checked<?php } ?>>按课程名</label> <label><input type="radio" name="searchType" value=2 <?php if($searchType==2){	
+					?>checked<?php } ?>>按课程类别</label><label><input type="radio" name="searchType" value=3 <?php if($searchType==3){	
+					?>checked<?php } ?>>按创建者</label><label><input type="radio" name="searchType" value=4 <?php if($searchType==4){	
+					?>checked<?php } ?>>按创建时间(格式:年-月-日，可缺省)</label></td>
 				</tr>
 				<tr>
-					<td>开始时间：</td>
-					<td><input style="width:250px;" type="text" name="startTime" id="title" value="<?php echo $startTime;?>" class="Wdate" onClick="WdatePicker({minDate:'%y-%M-%d %H:%m:%s',dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
+					<td colspan="2">请选择课程有效区间</td>
 				</tr>
 				<tr>
-					<td>结束时间：</td>
-					<td><input style="width:250px;" type="text" name="endTime" id="title" value="<?php echo $endTime;?>" class="Wdate" onClick="WdatePicker({minDate:'%y-%M-%d %H:%m:%s',dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
+					<td>课程开始时间：</td>
+					<td><input style="width:250px;" type="text" name="startTime" id="title" value="<?php echo $startTime;?>" class="Wdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
+				</tr>
+				<tr>
+					<td>课程结束时间：</td>
+					<td><input style="width:250px;" type="text" name="endTime" id="title" value="<?php echo $endTime;?>" class="Wdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
 				</tr>
 			</table>			
 				</form>
@@ -127,7 +129,7 @@ include "../inc/navigation_admin.php";
 
 			$linkPage = "$self";
 			//$userid = isset($_GET["userid"])?$_GET["userid"]:0;
-			$page_course->fenye($page,$order,$linkPage,$userid,$keyword);//课程列表页面实现分页功能
+			$page_course->fenye($page,$order,$linkPage,$userid,$keyword,$searchType,$startTime,$endTime);//课程列表页面实现分页功能
 			?>
 			</div>
 		</div>

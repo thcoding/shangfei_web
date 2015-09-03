@@ -18,6 +18,7 @@
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/function.js"></script>
 <script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="../js/navigation.js"></script>
 <?php
 
 session_start();
@@ -29,7 +30,7 @@ if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
 }
 
 include "../inc/mysql.php";
-include "../inc/admin_header_in_admindir_for_courseunitnav.php";
+include "../inc/navigation_admin.php";
 
 $res = $mysql->query("select * from courseunitgroup where groupid=".$_GET["id"]);
 $arr = $mysql->fetch_array($res);
@@ -88,7 +89,7 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 	function setIframeSrc(type){
 		postType = type;
 		if(type==11){
-			$("#pager_list").attr("src","courseUnitlist.php?aim=2");//为课程单元组分配课程单元			
+			$("#pager_list").attr("src","courseUnitlist.php?aim=1");//为课程单元组分配课程单元			
 		}else{
 			$("#pager_list").attr("src","courseUnitGroupList.php");
 		}
@@ -136,9 +137,9 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 				$res = $mysql->query("select * from courseunit where deleted=0 and id in ($ids) order by time desc");
 				while($arr = $mysql->fetch_array($res)){
 					if($arr["lpid"]){
-						echo "<li><span><a href='javascript:;' onclick='if(confirm(\"确定要移除吗？\")){f_remove(32,$arr[id],$_GET[id]);$(this).parent().parent().remove();}'><img src='../img/delete.png'></a></span><a href='scormShow.php?id=$arr[lpid]' target='_blank'><img src='../img/scorm.png' width='25' title='Scorm'>".$arr["title"]."</a></li>";
+						echo "<li><span><a href='javascript:;' onclick='if(confirm(\"确定要移除吗？\")){courseUnitIds = courseUnitIds.replace(\",\"+$arr[id]+\",\",\",\");f_remove(32,$arr[id],$_GET[id]);$(this).parent().parent().remove();}'><img src='../img/delete.png'></a></span><a href='scormShow.php?id=$arr[lpid]' target='_blank'><img src='../img/scorm.png' width='25' title='Scorm'>".$arr["title"]."</a></li>";
 					}else{
-						echo "<li><span><a href='javascript:;' onclick='if(confirm(\"确定要移除吗？\")){f_remove(32,$arr[id],$_GET[id]);$(this).parent().parent().remove();}'><img src='../img/delete.png'></a></span><a href='courseUnitShow.php?id=$arr[id]'>".$arr["title"]."</a></li>";
+						echo "<li><span><a href='javascript:;' onclick='if(confirm(\"确定要移除吗？\")){courseUnitIds = courseUnitIds.replace(\",\"+$arr[id]+\",\",\",\");f_remove(32,$arr[id],$_GET[id]);$(this).parent().parent().remove();}'><img src='../img/delete.png'></a></span><a href='courseUnitShow.php?id=$arr[id]'>".$arr["title"]."</a></li>";
 					}
 					
 				}
@@ -147,18 +148,7 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 			</div>			
 		</div>
 	</div>
-
-<div class="menu" id="menu">
-
-<div class="create_portal">
-<ul>
-<li><a href="courseUnitSetting.php">创建课程单元</a></li>
-<li><a href="courseUnitGroup.php">课程单元组</a></li>
-<li><a href="courseUnit_to_group.php">分配到单元组</a></li>
-</ul>
-</div>
-
-</div></div> <div class="clear">&nbsp;</div> <!-- 'clearing' div to make sure that footer stays below the main and right column sections -->
+</div> <div class="clear">&nbsp;</div> <!-- 'clearing' div to make sure that footer stays below the main and right column sections -->
 </div> <!-- end of #main" started at the end of banner.inc.php -->
 
 <div class="push"></div>
