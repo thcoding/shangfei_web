@@ -1,0 +1,105 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="text/css" media="screen, projection">
+/*<![CDATA[*/
+@import "../css/default.css";
+@import "../css/main.css";
+/*]]>*/
+</style>
+
+<?php 
+session_start();
+include "../inc/config.php";
+setcookie(session_name(),session_id(),time()+$sessionTime,"/");
+if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
+	header("Location:../index.php");
+	exit();
+}
+
+include "../inc/mysql.php";
+include "../inc/function.php";
+
+?>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript">
+    $(function(){
+       $("#sel_order").change(function(){
+              $("#btn_search").click();
+           });
+    });
+</script>
+<div id="container">
+<div class="info">课程单元列表</div>
+<div class="search">
+	<form action="" method="get">
+		<?php
+		$keyword = isset($_GET["k"])?$_GET["k"]:"";
+		$by1 = $by2 = $by3 = $by4 = "";
+		$order = 1;
+		if(isset($_GET["order"])){
+			switch($_GET["order"]){
+				case 1:
+					$by1 = "selected";
+					$order = 1;
+					break;
+				case 2:
+					$by2 = "selected";
+					$order = 2;
+					break;
+				case 3:
+					$by3 = "selected";
+					$order = 3;
+					break;
+				case 4:
+					$by4 = "selected";
+					$order = 4;
+					break;
+			}
+		}					
+		
+		?>
+		<table>
+			<tr>
+				<td>搜索关键词</td>
+				<td><input name="k" value="<?php echo $keyword;?>"></td>
+			</tr>
+			<tr>
+				<td>排序方式</td>
+				<td>
+					<select id="sel_order" name="order">
+					<option value="1" <?php echo $by1;?>>创建时间降序</option>
+					<option value="2" <?php echo $by2;?>>创建时间升序</option>
+					<option value="3" <?php echo $by3;?>>创建者</option>
+					<option value="4" <?php echo $by4;?>>课程单元名称</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+            <input id="aim" value="1" style="visibility: hidden"/>
+				<td colspan="2"><input id="btn_search" type="submit" value="提交"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div class="wrap">
+<?php
+include "../inc/class/page_courseUnit.php";
+$f = new page();			
+
+$self = $_SERVER["PHP_SELF"];
+$userid = 0;
+@$aim = isset($_GET["aim"]) ? $_GET["aim"] : 1;
+if($_SESSION["role"]==ADMIN){
+	if(isset($_GET["userid"])) $userid = $_GET["userid"];
+}else{
+	$userid = $_SESSION["userid"];
+}
+
+$linkPage = "$self";
+//$userid = isset($_GET["userid"])?$_GET["userid"]:0;
+if($aim==1)//为课程目录分配课程单元,显示版本信息
+$f->fenye($page,$order,$linkPage,$userid,$keyword,0,1,1);
+else
+$f->fenye($page,$order,$linkPage,$userid,$keyword,0,1,0);//为课程单元组分配课程单元，不显示版本信息
+?>
+</div>
+</div>
