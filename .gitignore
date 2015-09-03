@@ -1,10 +1,11 @@
-#svn
-*.svn*
-
-#upload
-upload/*
+upload/
+.idea/
+.settings/
+testeasyui/
+newcreate/
 
 #ide
+.idea/
 .settings/*
 
 #windows
@@ -14,3 +15,5 @@ upload/*
 *.sql
 
 ztemp.php
+mysql.php
+new.txt

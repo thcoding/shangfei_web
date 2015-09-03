@@ -25,6 +25,7 @@
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/function.js"></script>
 <script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="../js/navigation.js"></script>
 
 <script type="text/javascript">
     function LaunchDueItem(id) {
@@ -89,8 +90,7 @@ $_SESSION["courseid"]=$_GET["id"];
 
 include "../inc/mysql.php";
 include "../inc/function.php";
-include "../inc/student_header_in_studentdir.php";
-
+include "../inc/navigation_student.php";
 
 
 ?>
