@@ -1,8 +1,6 @@
-#svn
-*.svn*
-
-#upload
-upload/*
+upload/
+.idea/
+.settings/
 
 #ide
 .settings/*
@@ -14,3 +12,4 @@ upload/*
 *.sql
 
 ztemp.php
+mysql.php
