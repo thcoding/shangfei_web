@@ -114,27 +114,54 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 			@$role       = trim($_POST["role"]);
 			@$mail       = trim($_POST["mail"]);
 			@$department = trim($_POST["department"]);
-			
-			if($id >0 ){
+			@$userGroupId = trim($_POST["userGroup"]);
+			if($id >0 ){//已存在该用户，可以为用户组直接添加该用户id
 				if($password != ""){
 					$mysql->query("update user set password='$password',realname='$realname',role='$role',mail='$mail',department='$department' where id=".$id);
 				}else{
 					$mysql->query("update user set realname='$realname',role='$role',mail='$mail',department='$department' where id=".$id);
 				}
+				//为用户组添加该用户
+				if($userGroupId!=""){
+					$resUserGroup = $mysql->query("select * from usergroup where groupid=".$userGroupId);
+					$arrUserGroup = $mysql->fetch_array($resUserGroup);
+					$userids0      = $arrUserGroup["userids"];//获取该组中所有用户id
+					$arrUser = explode(",",$userids0);//切割为用户id数组
+					$userIsIn = in_array(strval($id),$arrUser);
+					if(!$userIsIn){//该组中尚无该用户，添加之
+						$userids1 = $userids0.strval($id).",";
+						$mysql->query("update usergroup set userids='$userids1' where groupid=".$userGroupId);
+					}
+				}
 				echo "<script>alert('编辑成功！');location.href='user.php'</script>";
-			}else{
+			}else{//不存在用户，需重新取到用户id再添加该用户到用户组，insert完毕用户后降序userid查找到第一条即为新的用户
 				if($username != "" && $password != ""){
 					$res = $mysql->query("select * from user where username='".$username."'");
 					if($mysql->num_rows($res)){
 						echo "<script>alert('该用户名已经存在，请更换！');location.href='userAdd.php'</script>";
 					}else{
-						$mysql->query("insert into user (username,password,realname,role,time,mail,department) values ('$username','$password','$realname','$role','$time','$mail','$department')");
+						$mysql->query("insert into user (username,password,realname,role,time,mail,department) values ('$username','$password','$realname','$role','$time','$mail','$department')");						
+						$query="select * from user order by id desc";
+						$result=mysql_query($query);
+						$arrLast = mysql_fetch_array($result);
+						//添加成功后立马获得这条记录
+						if($arrLast&&$userGroupId!=""){
+							$resUserGroup = $mysql->query("select * from usergroup where groupid=".$userGroupId);
+							$arrUserGroup = $mysql->fetch_array($resUserGroup);
+							$userids0      = $arrUserGroup["userids"];//获取该组中所有用户id
+							$arrUser = explode(",",$userids0);//切割为用户id数组
+							$userIsIn = in_array(strval($arrLast["id"]),$arrUser);
+							if(!$userIsIn){//该组中尚无该用户，添加之
+								$userids1 = $userids0.strval($arrLast["id"]).",";
+								$mysql->query("update usergroup set userids='$userids1' where groupid=".$userGroupId);
+							}
+						}
 						echo "<script>alert('添加成功！');location.href='userAdd.php'</script>";
 					}					
 				}else{
 					echo "<script>alert('用户名和密码不能为空！');location.href='userAdd.php'</script>";
 				}
-			}			
+			}
 			break;
 		case 51:  //用户组
 			@$title = trim($_POST["title"]);

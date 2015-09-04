@@ -12,9 +12,9 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 		?>
 	<li><a href="mycourse.php">我的课程</a>
 	<ul>
-		<li><a href="mycourse.php?status=1">进行中的课程</a></li>
-		<li><a href="mycourse.php?status=2">未开始的课程</a></li>
-		<li><a href="mycourse.php?status=3">已结束的课程</a></li>
+		<li><a href="mycourse_in.php">进行中的课程</a></li>
+		<li><a href="mycourse_undo.php">未开始的课程</a></li>
+		<li><a href="mycourse_expire.php">已结束的课程</a></li>
 	</ul>			
 		<div class="clear"></div>
 	</li>

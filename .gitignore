@@ -17,3 +17,5 @@ newcreate/
 ztemp.php
 mysql.php
 new.txt
+
+inc/mysql.php

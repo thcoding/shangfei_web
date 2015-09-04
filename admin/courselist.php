@@ -82,7 +82,7 @@ include "../inc/function.php";
 			}else{
 				$userid = $_SESSION["userid"];
 			}
-
+			$linkPage = "$self";
 			//$userid = isset($_GET["userid"])?$_GET["userid"]:0;
 			$page_course->fenye($page,$order,$linkPage,$userid,$keyword,$searchTpye,$startTime,$endTime,0,1);//课程列表页面实现分页复选功能
 			?>

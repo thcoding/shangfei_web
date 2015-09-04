@@ -146,6 +146,22 @@ if($userid){
 					</td>
 				</tr>
 				<tr>
+					<td>用户组：</td>
+					<td>
+						<select name="userGroup" id="userGroup">
+						<option value="">(默认或不更改)</option>
+							<?php
+							$resUserGroup = $mysql->query("select * from `group` where deleted=0 and type=1 order by time desc");
+							while($arrUserGroup = $mysql->fetch_array($resUserGroup)){
+								$userGroupId = $arrUserGroup["id"];
+								$userGroupTitle = $arrUserGroup["title"];
+							echo "<option value='$userGroupId'>$userGroupTitle</option>";
+							}
+							?>							
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<td> </td>
 					<td><input type="hidden" name="id" id="userid" value="<?php echo $userid;?>"><button type="submit" >确定</button></td>
 				</tr>

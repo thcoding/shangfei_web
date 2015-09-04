@@ -17,6 +17,7 @@
 
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="../js/navigation.js"></script>
  
 <script type="text/javascript">
     $(function(){
@@ -43,7 +44,7 @@
 			isok= reg.test($("#mail").val());
 		   if (!isok) {
 				alert("邮箱格式不正确，请重新输入！");
-				document.getElementById("emailname").focus();
+				$("#mail").focus();
 				return false;
 			}
 		}
@@ -80,7 +81,7 @@ if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
 
 include "../inc/mysql.php";
 include "../inc/function.php";
-include "../inc/admin_header_in_admindir_for_usernav.php";
+include "../inc/navigation_admin.php";
 
 $userid = isset($_GET["id"])?$_GET["id"]:0;
 $username = $password = $role = $realname = $mail = $department = "";
@@ -145,6 +146,22 @@ if($userid){
 					</td>
 				</tr>
 				<tr>
+					<td>用户组：</td>
+					<td>
+						<select name="userGroup" id="userGroup">
+						<option value=""></option>
+							<?php
+							$resUserGroup = $mysql->query("select * from `group` where deleted=0 and type=1 order by time desc");
+							while($arrUserGroup = $mysql->fetch_array($resUserGroup)){
+								$userGroupId = $arrUserGroup["id"];
+								$userGroupTitle = $arrUserGroup["title"];
+							echo "<option value='$userGroupId'>$userGroupTitle</option>";
+							}
+							?>							
+						</select>
+					</td>
+				</tr>
+				<tr>
 					<td> </td>
 					<td><input type="hidden" name="id" id="userid" value="<?php echo $userid;?>"><button type="submit" >确定</button></td>
 				</tr>
@@ -155,17 +172,7 @@ if($userid){
 			</div>
 		</div>
 	</div>
-
-<div class="menu" id="menu">
-
-<div class="create_portal">
-<ul>
-<li><a href="userAdd.php">创建用户</a></li>
-<li><a href="userGroup.php">用户组</a></li>
-</ul>
-</div>
-
-</div></div> <div class="clear">&nbsp;</div> <!-- 'clearing' div to make sure that footer stays below the main and right column sections -->
+</div> <div class="clear">&nbsp;</div> <!-- 'clearing' div to make sure that footer stays below the main and right column sections -->
 </div> <!-- end of #main" started at the end of banner.inc.php -->
 
 <div class="push"></div>
