@@ -688,11 +688,6 @@ html>body #main_left_content #menu{
 }
 
 #content_with_menu{
-	margin: auto;
-	width: 760px;
-}
-
-#content_with_menu_unlogin{
 	float: right;
 	width: 760px;
 }
@@ -5329,73 +5324,3 @@ Icons for the quiz top header(question list)
 span.highlight {
     color: yellow !important;
 }
-
-/* Giving a font-family and Size to give good look */
-	
-	/* Adjusting the margins, paddings and no list styles */
-	.navigation  {
-		margin:0; 
-		padding:0; 
-		list-style:none;
-	}	
-	
-	/* Little tricking with positions */
-	.navigation  li {
-		float:left;			/* Show list items inline */
-		width:150px; 
-		position:relative; 
-	}
-		
-	/* Playing with Main Categories */
-	.navigation  li a {
-		background:#262626; 
-		color:#fff;
-		display:block;  	/* Making sure a element covers whole li area */
-		padding:8px 7px 8px 7px; 
-		text-decoration:none; /* No underline */
-		font-size:15px;
-		border-top:1px solid #F2861D;
-		text-align:center; 
-		text-transform:uppercase;
-		z-index:99;
-	}
-
-	.navigation  li a:hover {
-		color:#F2861D;
-	}
-		
-	/* Sub Cat Menu stuff*/
-	.navigation  ul {
-		position:absolute; 
-		left:0; 
-		display:none; /* Hide it by default */
-		margin:0 0 0 -1px; 
-		padding:0; 
-		list-style:none;
-		border-bottom:3px solid #F2861D;
-		z-index:99;
-	}
-		
-	.navigation  ul li {
-		width:150px; 
-		float:left; 
-		border-top:none;
-		z-index:99;
-	}
-		
-	/* Sub Cat menu link properties */
-	.navigation  ul a {
-		display:block;    	/* Making sure a element covers whole li area */
-		height:15px;
-		padding:8px 7px 13px 7px; 
-		color:#fff;
-		text-decoration:none;
-		font-size:15px;
-		border-top:none;
-		border-bottom:1px dashed #6B6B6B;
-		z-index:99;
-	}
-		
-	.navigation  ul a:hover {
-		color:#F2861D;
-	}
