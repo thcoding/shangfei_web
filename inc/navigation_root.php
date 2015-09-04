@@ -66,7 +66,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	<?php
 			}//else if($_SESSION["role"]==STUDENT)
 				?>
-	<li><a href="myinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>
+	<li style="height: 40px;width: auto"><a href="myinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>
 	<ul>
 	<?php
 	if($_SESSION["role"]==ADMIN){//管理员拥有的权限

@@ -251,7 +251,7 @@
                             alert("不能删除课程节点的。");
                             return false;
                         }
-                        return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+                        return true;
                     }
                     function onRemove(e, treeId, treeNode) {
                         var zTree = $.fn.zTree.getZTreeObj("treeDemo");
@@ -267,7 +267,7 @@
                         if (nodes && nodes.length > 0) {
 
                             if (nodes[0].children && nodes[0].children.length > 0) {
-                                var msg = "要删除的节点是父节点，如果删除将连同子节点一起删掉。\n\n请确认！";
+                                var msg = "要删除的是"+treeNode.name+"章节，如果删除将连同子章节一起删掉。\n\n请确认！";
 
                                 if (confirm(msg) == true) {
                                     zTree.removeNode(nodes[0]);
