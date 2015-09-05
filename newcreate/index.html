@@ -12,6 +12,7 @@
             text-shadow: 0 0 1px #ddd;
             margin:0;
             height: 100%;
+            background-color: #ffffff;
             font-family:"Noto Sans CJK SC", "Source Han Sans CN";
             /*思源黑体7种字体粗细，在 CSS 中也可以指定：*/
             font-family:"Noto Sans CJK SC Thin", "Source Han Sans CN Thin";
@@ -25,6 +26,9 @@
             margin: 0px;
             padding: 0px;
         }
+        #container{
+            position: fixed;
+        }
         #wrapper{
             height: 100%;
         }
@@ -32,13 +36,17 @@
             background-color: #464E78;
             padding: 0px;
             height: 100%;
-
+            position: fixed;
 
         }
-        #title{
+        #title {
             height: auto;
             text-align: center;
             box-shadow: #888 0 -5px 8px 4px;
+            background-color: #ffffff;
+            position: fixed;
+            z-index: 9999;
+
         }
         #right-title{
             padding: 0px;
@@ -98,10 +106,13 @@
         }
         #left-content{
             background-color: #FCFCFD;
-            height: 100%;
             -webkit-box-shadow:inset 0 0 10px #F5F5F5;
             -moz-box-shadow:inset 0 0 10px #F5F5F5;
             box-shadow:inset 0 0 10px #888;
+            float:right;
+            width: 85%;
+            z-index:-1;
+
         }
         .blank{
             margin: 0px;
@@ -187,7 +198,7 @@
             border:1px solid #C9C1BB;
             text-align: center;
             font-size: 12px;
-            width: 180px;
+            width: 85%;
             color: white;
             padding: 10px;
             margin:0 auto;
@@ -198,22 +209,23 @@
         #main-content{
             border:1px solid #E6E6E6;
             height:500px;
-            background-color: #ffffff
+            background-color: #ffffff;
+            margin: 30px;
         }
     </style>
 </head>
-<body>
-<div class="container-fluid" >
-    <div class="row" id="title">
-        <div class="col-md-2" id="right-title">
+<body >
+<div  id="titlecontainer">
+    <div id="title">
+        <div style="width: 15%;float: left" id="right-title">
             <div id="ico">中国商飞</div>
         </div>
-        <div class="col-md-2" id="right-title-2">
+        <div style="width: 15%;float: left" id="right-title-2">
             <div id="catalog">
                 我的课程
             </div>
         </div>
-        <div class="col-md-3" id="right-title-3">
+        <div style="width: 30%;float:left;" id="right-title-3">
             <div id="search" style="padding:auto 0px;">
                 <div class="input-group" >
                     <span class="input-group-btn" style="padding-left:10px">
@@ -223,15 +235,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4" id="right-title-4">
+        <div style="width: 30%;float:left;" id="right-title-4">
             <div id="personIfo" style="padding-top:6px;padding-bottom: 4px">个人信息&nbsp;&nbsp;&nbsp;<img style="border-radius:50%;max-width:40px;max-height:40px;" src="../img/header.jpg">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;</div>
         </div>
-        <div class="col-mad-1" id="right-title-5">
+        <div style="width: 10%;float:left;" id="right-title-5">
             <div id="set">setting</div>
         </div>
     </div>
-    <div class="row" id="wrapper">
-        <div class="col-md-2" id="left-menu">
+    <div id="wrapper">
+        <div  id="left-menu" style="width: 15%">
             <div class="blank"></div>
             <div id="border1" style="float: right;width: 4px"></div>
             <div id="myclass"><span class="glyphicon glyphicon-list-alt" style="margin-right: 25px" aria-hidden="true"></span>我的课程</div>
@@ -258,25 +270,22 @@
 
                 <div style="float: right;padding-top:10px;"><div style="text-align: left">考试总数</div><div>1门课程需要补考</div></div>
                 <div style="padding-top:5px;color:#ffffff;text-align: left;font-size: 30px;"><span style="">4</span></div>
-                <div style="padding-top: 20px"><button type="button" class="btn btn-info" style="width: 120px;font-size: 10px;height: 25px;">忽略此条消息</button></div>
+                <div style="padding-top: 20px"><button type="button" class="btn btn-info" style="width: 80%;font-size: 10px;height: 25px;">忽略此条消息</button></div>
             </div>
             <div class="blank"></div>
             <div style="margin: 0 auto;text-align: center;color: #ffffff"><span class="glyphicon glyphicon-log-out" style="margin-right: 25px" aria-hidden="true"></span>Logout</div>
         </div>
-        <div class="col-md-10" id="left-content">
-            <div class="row" style="height: 80px;padding-left: 85%;padding-top: 20px">
-                <button type="button"  class="btn btn-danger" style="width: 100px">Help</button>
+        <div  id="left-content" style="width: 85%; margin: 0px;">
+            <div  style="height: 80px;padding-left: 85%;padding-top: 20px">
+                <button type="button"  class="btn btn-danger" style="width: 100px;">Help</button>
             </div>
-            <div class="row">
-                <div class="col-md-1"> </div>
-                <div class="col-md-10"id="main-content" ></div>
-                <div class="col-md-1"></div>
-            </div>
+            <div id="main-content">1231ee</div>
 
         </div>
     </div>
     </div>
 </div>
+
 </body>
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -286,12 +295,21 @@
     var fitwindow = function(){
         var winHeight = $(window).height() ;
         var titleHeight=$('#title').outerHeight(true);
+        var width=$(window).width();
         var height=winHeight-titleHeight;
         //以下代码设置section元素的高和宽为窗口高宽，即全屏
         $('#wrapper').css({
             'height': height
         });
-
+        $('#titlecontainer').css({
+            'width':width
+        })
+        $('#left-menu').css({
+            'top':titleHeight
+        })
+        $('#left-content').css({
+            'margin-top':titleHeight
+        })
 
     }
     /* 需要在两个方法中调用以上我们定义的方法
@@ -337,6 +355,7 @@
 
     };
     $(function(){
+        fitwindow();
         var myclassclick=1;
         var myexamclick=1;
         var mysettingclick=1;
