@@ -55,6 +55,7 @@ if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
          $("#footer").css({"left":"0","bottom":"0"});
        }); 
        $("#distribute").click(function(){
+           //课程组
            course_ids = [];
            for (var i in cid_arr) {
                if (cid_arr[i] == "") continue;
@@ -64,6 +65,7 @@ if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
                alert("请至少选择一个课程。");
                return;
            }
+           //用户组
            user_ids = [];
            for (var i in uid_arr) {
                if (uid_arr[i] == "") continue;

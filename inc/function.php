@@ -60,6 +60,14 @@ function getSiteStatistics(){//��ȡ��ǰ���ÿγ̵�Ԫ���γ̡
 
 	return $info;
 }
+function getStuStatistics($userid){
+    global $mysql;
+    $res = $mysql->query("select courseids as s from user_rel_course where userid=".$userid);
+    $arr = $mysql->fetch_array($res);
+    $info["course"] = $arr["s"];
+    $num=explode(",",$arr["s"]);
+    return count($num)-2;
+}
 function isutf8($data){//����ַ��ı���
 	return mb_detect_encoding($data, array('UTF-8', 'GB2312'));
 }
