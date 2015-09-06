@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        html{
+            height: 100%;
+        }
+        body{
+            font-size:15px;
+            text-shadow: 0 0 1px #ddd;
+            margin:0;
+            height: 100%;
+            background-color: #ffffff;
+            font-family:"Noto Sans CJK SC", "Source Han Sans CN";
+            /*思源黑体7种字体粗细，在 CSS 中也可以指定：*/
+            font-family:"Noto Sans CJK SC Thin", "Source Han Sans CN Thin";
+            /*font-family:"Noto Sans CJK SC Light", "Source Han Sans CN Light";*/
+            /*font-family:"Noto Sans CJK SC DemiLight", "Source Han Sans CN DemiLight";*/
+            /*font-family:"Noto Sans CJK SC Medium", "Source Han Sans CN Medium";*/
+            /*font-family:"Noto Sans CJK SC Blod", "Source Han Sans CN Blod";*/
+            /*font-family:"Noto Sans CJK SC Black", "Source Han Sans CN Black";*/
+        }
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #container{
+            position: fixed;
+        }
+        #wrapper{
+            height: 100%;
+        }
+        #left-menu{
+            background-color: #464E78;
+            padding: 0px;
+            height: 100%;
+            position: fixed;
+
+        }
+        #title {
+            height: auto;
+            text-align: center;
+            box-shadow: #888 0 -5px 8px 4px;
+            background-color: #ffffff;
+            position: fixed;
+            z-index: 9999;
+
+        }
+        #right-title{
+            padding: 0px;
+        }
+        #right-title-2{
+            padding: 0px;
+        }
+        #right-title-3{
+            padding: 0px;
+        }
+        #right-title-4{
+            padding: 0px;
+        }
+        #right-title-5{
+            padding: 0px;
+        }
+        #ico{
+            height: auto;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            font-family:"Noto Sans CJK SC Thin";
+        }
+        #catalog{
+            border:1px solid #ffffff;
+            border-right-color: #E6E6E6;
+            border-bottom-color: #E6E6E6;
+            border-left-color: #E6E6E6;
+            height: auto;
+            padding-top: 15px;
+            padding-bottom: 15px;
+
+        }
+        #search{
+            border:1px solid #ffffff;
+
+            border-bottom-color: #E6E6E6;
+            height: auto;
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        #personIfo{
+            border:1px solid #ffffff;
+            border-right-color: #E6E6E6;
+            border-bottom-color: #E6E6E6;
+            height: auto;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            text-align: right;
+        }
+        #set{
+            border:1px solid #ffffff;
+            border-right-color: #E6E6E6;
+            border-bottom-color: #E6E6E6;
+            height: auto;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        #left-content{
+            background-color: #FCFCFD;
+            -webkit-box-shadow:inset 0 0 10px #F5F5F5;
+            -moz-box-shadow:inset 0 0 10px #F5F5F5;
+            box-shadow:inset 0 0 10px #888;
+            float:right;
+            width: 85%;
+            z-index:-1;
+
+        }
+        .blank{
+            margin: 0px;
+            padding: 0px;
+            height: 50px;
+        }
+        #myclass{
+            text-align: center;
+            font-size: 15px;
+            color: #C9C1BB;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        #myclass1{
+            text-align: center;
+            font-size: 15px;
+            color: #C9C1BB;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: none;
+        }
+        #myclass2{
+            text-align: center;
+            font-size: 15px;
+            color: #C9C1BB;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: none;
+        }
+        #myclass3{
+            text-align: center;
+            font-size: 15px;
+            color: #C9C1BB;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: none;
+        }
+        .changecolor{
+            color: #ffffff;
+            background-color: #423B5F;
+
+        }
+        #myexam{
+            text-align: center;
+            font-size: 15px;
+            color: #C9C1BB;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        #myexam1{
+            text-align: center;
+            font-size: 15px;
+            color: #C9C1BB;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: none;
+        }
+        #myexam2{
+            text-align: center;
+            font-size: 15px;
+            color: #C9C1BB;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: none;
+        }
+        #mysetting{
+            text-align: center;
+            font-size: 15px;
+            color: #C9C1BB;
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+        }
+        #mylog{
+            text-align: center;
+            font-size: 15px;
+            color: #C9C1BB;
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+        }
+        #yuanjiao{
+            border:1px solid #C9C1BB;
+            text-align: center;
+            font-size: 12px;
+            width: 85%;
+            color: white;
+            padding: 10px;
+            margin:0 auto;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+
+        }
+        #main-content{
+            border:1px solid #E6E6E6;
+            height:500px;
+            background-color: #ffffff;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body >
+<div  id="titlecontainer">
+    <div id="title">
+        <div style="width: 15%;float: left" id="right-title">
+            <div id="ico">中国商飞</div>
+        </div>
+        <div style="width: 15%;float: left" id="right-title-2">
+            <div id="catalog">
+                我的课程
+            </div>
+        </div>
+        <div style="width: 30%;float:left;" id="right-title-3">
+            <div id="search" style="padding:auto 0px;">
+                <div class="input-group" >
+                    <span class="input-group-btn" style="padding-left:10px">
+                        <button  class="btn btn-default" type="button">Go!</button>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search for...">
+                </div>
+            </div>
+        </div>
+        <div style="width: 30%;float:left;" id="right-title-4">
+            <div id="personIfo" style="padding-top:6px;padding-bottom: 4px">个人信息&nbsp;&nbsp;&nbsp;<img style="border-radius:50%;max-width:40px;max-height:40px;" src="../img/header.jpg">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;</div>
+        </div>
+        <div style="width: 10%;float:left;" id="right-title-5">
+            <div id="set">setting</div>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div  id="left-menu" style="width: 15%">
+            <div class="blank"></div>
+            <div id="border1" style="float: right;width: 4px"></div>
+            <div id="myclass"><span class="glyphicon glyphicon-list-alt" style="margin-right: 25px" aria-hidden="true"></span>我的课程</div>
+            <div id="myclasssum">
+            <div id="myclass1">进行中课程</div>
+            <div id="myclass2">已开始课程</div>
+            <div id="myclass3">已结束课程</div>
+            </div>
+            <div id="border2" style="float: right;width: 4px"></div>
+            <div id="myexam"><span class="glyphicon glyphicon-question-sign" style="margin-right: 25px" aria-hidden="true"></span>我的考试</div>
+            <div id="myexamsum">
+            <div id="myexam1">未开始的考试</div>
+            <div id="myexam2">已结束的考试</div>
+            </div>
+            <div id="border3" style="float: right;width: 4px"></div>
+            <div id="mysetting"><span class="glyphicon glyphicon-wrench" style="margin-right: 25px" aria-hidden="true"></span>我的设置</div>
+            <div id="border4" style="float: right;width: 4px"></div>
+            <div id="mylog"><span class="glyphicon glyphicon-log-in" style="margin-right: 25px" aria-hidden="true"></span>登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="blank"></div>
+            <div id="yuanjiao">
+                <div style="padding-top:6px;text-align:left;color:#58BBD2">学习进度</div>
+                <div style="float: right;padding-top:10px;"><div style="text-align: left">课程总数</div><div>5门课程即将过期</div></div>
+                <div style="padding-top:5px;color:#ffffff;text-align: left;font-size: 30px;"><span style="">20</span></div>
+
+                <div style="float: right;padding-top:10px;"><div style="text-align: left">考试总数</div><div>1门课程需要补考</div></div>
+                <div style="padding-top:5px;color:#ffffff;text-align: left;font-size: 30px;"><span style="">4</span></div>
+                <div style="padding-top: 20px"><button type="button" class="btn btn-info" style="width: 80%;font-size: 10px;height: 25px;">忽略此条消息</button></div>
+            </div>
+            <div class="blank"></div>
+            <div style="margin: 0 auto;text-align: center;color: #ffffff"><span class="glyphicon glyphicon-log-out" style="margin-right: 25px" aria-hidden="true"></span>Logout</div>
+        </div>
+        <div  id="left-content" style="width: 85%; margin: 0px;">
+            <div  style="height: 80px;padding-left: 85%;padding-top: 20px">
+                <button type="button"  class="btn btn-danger" style="width: 100px;">Help</button>
+            </div>
+            <div id="main-content">1231ee</div>
+
+        </div>
+    </div>
+    </div>
+</div>
+
+</body>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script language="JavaScript">
+    var fitwindow = function(){
+        var winHeight = $(window).height() ;
+        var titleHeight=$('#title').outerHeight(true);
+        var width=$(window).width();
+        var height=winHeight-titleHeight;
+        //以下代码设置section元素的高和宽为窗口高宽，即全屏
+        $('#wrapper').css({
+            'height': height
+        });
+        $('#titlecontainer').css({
+            'width':width
+        })
+        $('#left-menu').css({
+            'top':titleHeight
+        })
+        $('#left-content').css({
+            'margin-top':titleHeight
+        })
+
+    }
+    /* 需要在两个方法中调用以上我们定义的方法
+     １．页面加载时
+     ２．用户拖拽改变window窗口大小时
+     */
+    $(window).load(function(){
+        fitwindow();
+    }).resize(function(){
+        fitwindow();
+    });
+    //以上使用jQuery的链式方法操作来实现页面加载和重新改变ｗｉｎｄｏｗ窗口时对fitwindow方法调用
+    //清除函数
+    var h=$('#myclass').outerHeight(true);
+
+    var clearmenu=function(){
+        $('#myclasssum > div').css({display:"none"});
+        $('#myexamsum > div').css({display:"none"});
+
+    };
+    var keepmyclassstatus=function(){
+        $('#myclass').removeClass('changecolor');
+        $('#myclass').css({color: "#C9C1BB"});
+        $('#border1').css({"background-color":"#464E78"});
+
+    };
+    var keepmyexamstatus=function(){
+        $('#myexam').removeClass('changecolor');
+        $('#myexam').css({color: "#C9C1BB"});
+        $('#border2').css({"background-color":"#464E78"});
+
+    };
+    var keepmysetting=function(){
+        $('#mysetting').removeClass('changecolor');
+        $('#mysetting').css({color: "#C9C1BB"});
+        $('#border3').css({"background-color":"#464E78"});
+
+    };
+    var keepmylog=function(){
+        $('#mylog').removeClass('changecolor');
+        $('#mylog').css({color: "#C9C1BB"});
+        $('#border4').css({"background-color":"#464E78"});
+
+    };
+    $(function(){
+        fitwindow();
+        var myclassclick=1;
+        var myexamclick=1;
+        var mysettingclick=1;
+        var mylogclick=1;
+        $('#myclass').hover(function(){
+            $(this).addClass('changecolor');
+            $(this).css({color:"white"});
+            $('#border1').css({height:h,"background-color":"#58BBD2"});
+        },function(){
+            if(myclassclick%2==1){
+            $(this).removeClass('changecolor');
+            $(this).css({color: "#C9C1BB"});
+            $('#border1').css({"background-color":"#464E78"});}}
+        );
+        //重新写个函数
+        $('#myclass').click(function(){
+            //用一个函数代替
+            if(myclassclick%2==1){//奇数表示未展开
+                clearmenu();
+                if(myexamclick%2==0){
+                keepmyexamstatus();
+                myexamclick--;
+                }
+                if(mysettingclick%2==0){
+                keepmysetting();
+                mysettingclick--;
+                }
+                if(mylogclick%2==0){
+                keepmylog();
+                mylogclick--;
+                }
+                $('#border1').css({height:h,"background-color":"#58BBD2"});
+                $('#myclass1').css({display:"block",color:"#ffffff"});
+                $('#myclass2').css({display:"block",color:"#ffffff"});
+                $('#myclass3').css({display:"block",color:"#ffffff"});
+                myclassclick++;
+                $("#myclass").css({color: "white"});
+            } else{
+                clearmenu();
+                $('#myclass1').css({display:"none"});
+                $('#myclass2').css({display:"none"});
+                $('#myclass3').css({display:"none"});
+                myclassclick++;
+            }
+        });
+        $('#myexam').hover(function(){
+            $(this).addClass('changecolor');
+            $(this).css({color:"white"});
+            $('#border2').css({height:h,"background-color":"#58BBD2"});
+
+        },function(){
+            if(myexamclick%2==1){
+            $(this).removeClass('changecolor');
+            $(this).css({color: "#C9C1BB"});
+            $('#border2').css({"background-color":"#464E78"});}
+        });
+        //重新写
+        $('#myexam').click(function(){
+
+            if(myexamclick%2==1){
+                clearmenu();
+                if(myclassclick%2==0){
+                    keepmyclassstatus();
+                    myclassclick--;
+                }
+                if(mysettingclick%2==0) {
+                    keepmysetting();
+                    mysettingclick--;
+                }
+                if(mylogclick%2==0){
+                    keepmylog();
+                    mylogclick--;
+                }
+                $('#border2').css({height:h,"background-color":"#58BBD2"});
+                $("#myexam").css({color: "white"});
+                $('#myexam1').css({display:"block",color:"#ffffff"});
+                $('#myexam2').css({display:"block",color:"#ffffff"});
+                myexamclick++;
+            } else{
+                clearmenu();
+                $('#myexam1').css({display:"none"});
+                $('#myexam2').css({display:"none"});
+                myexamclick++;
+            }
+        });
+        $('#mysetting').hover(function(){
+            $(this).addClass('changecolor');
+            $(this).css({color:"white"});
+            $('#border3').css({height:h,"background-color":"#58BBD2"});
+        },function(){
+            if(mysettingclick%2==1){
+            $(this).removeClass('changecolor');
+            $(this).css({color: "#C9C1BB"});
+            $('#border3').css({"background-color":"#464E78"});}
+        });
+        $('#mysetting').click(function(){
+            if(mysettingclick%2==1){
+                clearmenu();
+                if(myclassclick%2==0) {
+                    keepmyclassstatus();
+                    myclassclick--;
+                }
+                if(myexamclick%2==0) {
+                    keepmyexamstatus();
+                    myexamclick--;
+                }
+                if(mylogclick%2==0){
+                    keepmylog();
+                    mylogclick--;
+                }
+                $(this).addClass('changecolor');
+                $(this).css({color:"white"});
+                $('#border3').css({height:h,"background-color":"#58BBD2"});
+                mysettingclick++;
+            } else{
+                clearmenu();
+
+                mysettingclick++;
+            }
+
+        });
+        $('#mylog').hover(function(){
+            $(this).addClass('changecolor');
+            $(this).css({color:"white"});
+            $('#border4').css({height:h,"background-color":"#58BBD2"});
+        },function(){
+            if(mylogclick%2==1){
+                $(this).removeClass('changecolor');
+                $(this).css({color: "#C9C1BB"});
+                $('#border4').css({"background-color":"#464E78"});}
+        });
+        $('#mylog').click(function(){
+            if(mylogclick%2==1){
+                clearmenu();
+                if(myclassclick%2==0) {
+                    keepmyclassstatus();
+                    myclassclick--;
+                }
+                if(myexamclick%2==0) {
+                    keepmyexamstatus();
+                    myexamclick--;
+                }
+                if(mysettingclick%2==0){
+                    keepmysetting();
+                    mysettingclick--;
+                }
+                $(this).addClass('changecolor');
+                $(this).css({color:"white"});
+                $('#border4').css({height:h,"background-color":"#58BBD2"});
+                mylogclick++;
+            } else{
+                clearmenu();
+                mylogclick++;
+            }
+
+        });
+    });
+</script>
+</html>
