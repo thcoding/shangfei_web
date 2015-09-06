@@ -73,7 +73,7 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 			$mysql->query("update user_rel_course set coursegroupids=REPLACE(coursegroupids,',".$_GET["cid"].",',',') where userid=".$_GET["id"]);
 			break;
 		case 54:  //将用户从用户组中移除
-			$mysql->query("update usergroup set userids=REPLACE(userids,',".$_GET["uid"].",',',') where groupid=".$_GET["id"]);
+			$mysql->query("update usergroup set userids=REPLACE(userids,',".$_GET["cid"].",',',') where groupid=".$_GET["id"]);
 			break;
 		case 6:  //删除课程单元的一个版本
 			$mysql->query("update courseunitversion_rel_attachment set deleted=1 where id=".$_GET["id"]);
