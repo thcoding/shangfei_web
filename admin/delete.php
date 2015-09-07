@@ -35,7 +35,25 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 		case 42:  //将课程从课程组中移除
 			//die("update `courseunitgroup` set courseunitids=REPLACE(courseunitids,',".$_GET["cuid"].",',',') where groupid=".$_GET["id"]);
 			$mysql->query("update coursegroup set courseids=REPLACE(courseids,',".$_GET["cid"].",',',') where groupid=".$_GET["id"]);
-			break;
+            @$course        = $_GET["cid"];//要删除的id号
+            @$courseGroup   = $_GET["id"];//课程组号
+            //1.查看usergroup_rel_course，获取以前的课程组id
+            $res=$mysql->query("select * from coursegroup where groupid=".$courseGroup);
+            $arr = $mysql->fetch_array($res);
+            $courseidstr=$arr["courseids"];//老
+            $newcoursestr=str_replace(",".$course.",",",",$courseidstr);
+            //$course要删除的id
+            //$newcoursestr删除处理以后的id
+            $mysql->query("replace into coursegroup (groupid,courseids) values ('".$courseGroup."','".$newcoursestr."')");//更改课程组中课程的数据
+            //相应的修改user_rel_course表
+
+            //2.更新所有拥有该课程组的所有用户
+            $res=$mysql->query("select * from user_rel_course where coursegroupids like '%".$courseGroup."%'");
+            while($arr=$mysql->fetch_array($res)) {
+                $newcourseidsstr = str_replace(",".$course.",",",",$arr["courseids"]);
+                $mysql->query("update user_rel_course set courseids='$newcourseidsstr' where userid=" . $arr["userid"]);
+            }
+            break;
 		case 43:  //将课程组从课程组中移除
 			//die("update `courseunitgroup` set courseunitids=REPLACE(courseunitids,',".$_GET["cuid"].",',',') where groupid=".$_GET["id"]);
 			$mysql->query("update `coursegroup` set coursegroupids=REPLACE(coursegroupids,',".$_GET["cid"].",',',') where groupid=".$_GET["id"]);
@@ -73,6 +91,7 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 			$mysql->query("update user_rel_course set coursegroupids=REPLACE(coursegroupids,',".$_GET["cid"].",',',') where userid=".$_GET["id"]);
 			break;
 		case 54:  //将用户从用户组中移除
+
 			$mysql->query("update usergroup set userids=REPLACE(userids,',".$_GET["uid"].",',',') where groupid=".$_GET["id"]);
 			break;
 		case 6:  //删除课程单元的一个版本

@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <?php 
 //TODO: delete php code in this page
+
     session_start();
 include "../inc/config.php";
 setcookie(session_name(),session_id(),time()+$sessionTime,"/");
@@ -55,28 +56,57 @@ if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
          $("#footer").css({"left":"0","bottom":"0"});
        }); 
        $("#distribute").click(function(){
-           //课程组
+           //所有选中课程
            course_ids = [];
+           course_group_ids=[];
+           //alert("course_ids"+cid_arr);
            for (var i in cid_arr) {
-               if (cid_arr[i] == "") continue;
+               var cidstr=cid_arr[i];
+               if(cidstr.indexOf("group") >=0){
+                   var num=cid_arr[i].replace('group','');
+                   course_group_ids.push(num);
+                   continue;
+               }
+               if (cidstr == "" || cid_arr[i].indexOf("group") >=0) continue;
                course_ids.push(i);
            }
            if (course_ids.length == 0) {
                alert("请至少选择一个课程。");
                return;
            }
-           //用户组
+
+           //所有选中的用户
            user_ids = [];
+           user_group_ids=[];
            for (var i in uid_arr) {
-               if (uid_arr[i] == "") continue;
+               var uidstr=uid_arr[i];
+               if(uidstr.indexOf("group") >=0){
+                   var num=uid_arr[i].replace('group','');
+                   user_group_ids.push(num);
+                   continue;
+               }
+               if (uidstr == "" || uid_arr[i].indexOf("group") >=0) continue;
                user_ids.push(i);
            }
            if (user_ids.length == 0) {
                alert("请至少选择一个用户。");
                return;
            }
+           Array.prototype.delRepeat = function () {
+               this.sort();//排序
+               var n = [this[0]];
+               for (var i = 1; i < this.length; i++) {
+                   if (this[i] !== n[n.length - 1]) {
+                       n.push(this[i]);
+                   }
+               }
+               return n;
+           }
+           course_group_ids=course_group_ids.delRepeat();
+           user_group_ids=user_group_ids.delRepeat();
+          // alert(course_group_ids+"===="+user_group_ids);
            $.post("course_to_user_confirm.php",
-           {course_ids:course_ids, user_ids:user_ids},
+           {course_ids:course_ids,user_ids:user_ids,course_group_ids:course_group_ids,user_group_ids:user_group_ids},
            function(result, status) {
               if (status !== "success"){
                   alert("网络不正常哟");
@@ -113,7 +143,7 @@ var save_course_groupids = function() {
     })
     $("#cgids").text(cgidstr);
 }
-var save_userids = function() {
+var save_userids = function() {//基本没用。。。。。
     var uidstr = ",";
     $("#user_list li input").each(function(){
         if (this.checked){
@@ -164,9 +194,11 @@ var page_submit = function(type, id_arr) {
     } else {
         typelist = type + "_list";
     }
+    //alert("类型"+typelist);
+    //alert(id_arr);
     $("#" + typelist).empty();
     for (var i in id_arr) {
-        if (id_arr[i] == "") continue;
+        if (id_arr[i] == "" || id_arr[i].indexOf("group") >=0) continue;
         $("#" + typelist).prepend("<li><input type='checkbox' checked='true' value='" + i + "'/><span>" + id_arr[i] + "</span></li>");
     }
     if (type == "course" || type == "course_group") {
@@ -190,7 +222,7 @@ var page_submit = function(type, id_arr) {
             }
         });
     }
-    
+    //alert("open"+cid_arr);
 }
 
 </script>
