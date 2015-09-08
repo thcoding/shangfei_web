@@ -125,12 +125,17 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 				if($userGroupId!=""){
 					$resUserGroup = $mysql->query("select * from usergroup where groupid=".$userGroupId);
 					$arrUserGroup = $mysql->fetch_array($resUserGroup);
-					$userids0      = $arrUserGroup["userids"];//获取该组中所有用户id
-					$arrUser = explode(",",$userids0);//切割为用户id数组
-					$userIsIn = in_array(strval($id),$arrUser);
-					if(!$userIsIn){//该组中尚无该用户，添加之
-						$userids1 = $userids0.strval($id).",";
-						$mysql->query("update usergroup set userids='$userids1' where groupid=".$userGroupId);
+					if($arrUserGroup){//usergroup表中存在该字段
+						$userids0      = $arrUserGroup["userids"];//获取该组中所有用户id
+						$arrUser = explode(",",$userids0);//切割为用户id数组
+						$userIsIn = in_array(strval($id),$arrUser);
+						if(!$userIsIn){//该组中尚无该用户，添加之
+							$userids1 = $userids0.strval($id).",";
+							$mysql->query("update usergroup set userids='$userids1' where groupid=".$userGroupId);
+						}
+					}else{//此组为新的用户组，尚未分配过用户
+						$userids1 = ",".strval($id).",";
+						$mysql->query("insert usergroup (groupid,userids,usergroupids) values ('$userGroupId','$userids1',',')");
 					}
 				}
 				echo "<script>alert('编辑成功！');location.href='user.php'</script>";
@@ -148,15 +153,20 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 						if($arrLast&&$userGroupId!=""){
 							$resUserGroup = $mysql->query("select * from usergroup where groupid=".$userGroupId);
 							$arrUserGroup = $mysql->fetch_array($resUserGroup);
-							$userids0      = $arrUserGroup["userids"];//获取该组中所有用户id
-							$arrUser = explode(",",$userids0);//切割为用户id数组
-							$userIsIn = in_array(strval($arrLast["id"]),$arrUser);
-							if(!$userIsIn){//该组中尚无该用户，添加之
-								$userids1 = $userids0.strval($arrLast["id"]).",";
-								$mysql->query("update usergroup set userids='$userids1' where groupid=".$userGroupId);
+							if($arrUserGroup){//usergroup表中存在该字段
+								$userids0      = $arrUserGroup["userids"];//获取该组中所有用户id
+								$arrUser = explode(",",$userids0);//切割为用户id数组
+								$userIsIn = in_array(strval($arrLast["id"]),$arrUser);
+								if(!$userIsIn){//该组中尚无该用户，添加之
+									$userids1 = $userids0.strval($arrLast["id"]).",";
+									$mysql->query("update usergroup set userids='$userids1' where groupid=".$userGroupId);
+								}
+							}else{//此组为新的用户组，尚未分配过用户
+								$userids1 = ",".strval($id).",";
+								$mysql->query("insert usergroup (groupid,userids,usergroupids) values ('$userGroupId','$userids1',',')");
 							}
 						}
-						//echo "<script>alert('添加成功！');location.href='userAdd.php'</script>";
+						echo "<script>alert('添加成功！');location.href='userAdd.php'</script>";
 					}					
 				}else{
 					echo "<script>alert('用户名和密码不能为空！');location.href='userAdd.php'</script>";

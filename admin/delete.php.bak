@@ -42,7 +42,7 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 			break;
 		case 341:  //将课程单元版本从课程中移除
 			//die("update `courseversion_rel_courseunitversion` set courseunitversionids=REPLACE(courseunitversionids,',".$_GET["cuid"].",',',') where coursecategoryid=".$_GET["id"]);
-			$mysql->query("update `courseversion_rel_courseunitversion` set courseunitids=REPLACE(courseunitids,',".$_GET["cuid"].",',',') where coursecategoryid=".$_GET["id"]);
+			$mysql->query("update `courseversion_rel_courseunitversion` set courseunitversionids=REPLACE(courseunitversionids,',".$_GET["cuid"].",',',') where coursecategoryid=".$_GET["id"]);
 			break;
 		case 342:  //将课程单元组从课程中移除
 			//die("update ``courseversion_rel_courseunit`` set courseunitgroupids=REPLACE(courseunitgroupids,',".$_GET["cuid"].",',',') where courseid=".$_GET["id"]);
