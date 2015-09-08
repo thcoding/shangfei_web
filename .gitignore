@@ -2,7 +2,7 @@ upload/
 .idea/
 .settings/
 testeasyui/
-
+inc/mysql.php
 
 #ide
 .idea/
@@ -15,7 +15,7 @@ testeasyui/
 *.sql
 
 ztemp.php
-mysql.php
+
 new.txt
 
 inc/mysql.php

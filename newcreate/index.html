@@ -112,7 +112,7 @@
             float:right;
             width: 85%;
             z-index:-1;
-
+            height: 100%;
         }
         .blank{
             margin: 0px;
@@ -311,6 +311,7 @@
             'margin-top':titleHeight
         })
 
+
     }
     /* 需要在两个方法中调用以上我们定义的方法
      １．页面加载时
@@ -318,6 +319,7 @@
      */
     $(window).load(function(){
         fitwindow();
+
     }).resize(function(){
         fitwindow();
     });
