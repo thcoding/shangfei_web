@@ -19,3 +19,5 @@ ztemp.php
 new.txt
 
 inc/mysql.php
+
+.gitignore

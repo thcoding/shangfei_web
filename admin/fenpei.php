@@ -439,10 +439,33 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 		case 15: //为课程组分配课程
 			@$course        = $_POST["course"];
 			@$courseGroup   = $_POST["courseGroup"];
-<<<<<<< HEAD
-			
-			$mysql->query("replace into coursegroup (groupid,courseids) values ('".$courseGroup."','".$course."')");
-			break;
+
+            //1.查看usergroup_rel_course
+            $res=$mysql->query("select * from coursegroup where groupid=".$courseGroup);
+            $arr = $mysql->fetch_array($res);
+            $courseidstr=$arr["courseids"];
+            $courseids=explode(",",$courseidstr);//老
+            $newcoursestr=$course;
+            for($i=0; $i<count($courseids); $i++){
+                //获取新增的课程id
+                $course = str_replace(",".$courseids[$i].",",",",$course);
+            }
+            $mysql->query("replace into coursegroup (groupid,courseids) values ('".$courseGroup."','".$newcoursestr."')");//更改课程组中课程的数据
+            //相应的修改user_rel_course表
+
+            //2.更新所有拥有该课程组的所有用户
+            $res=$mysql->query("select * from user_rel_course where coursegroupids like '%".$courseGroup."%'");
+            while($arr=$mysql->fetch_array($res)) {
+                $arr_course=explode(",",$course);
+                $belongcourseidsstr=$arr["courseids"];
+                for($i=0; $i<count($arr_course); $i++){
+                    $belongcourseidsstr = str_replace(",".$arr_course[$i].",",",",$belongcourseidsstr);
+                }
+                $newcourseidsstr=$belongcourseidsstr.substr($course,1);
+                $mysql->query("update user_rel_course set courseids='$newcourseidsstr' where userid=" . $arr["userid"]);
+            }
+
+            break;
 		case 16: //为课程组分配课程
 			@$courseUnit        = $_POST["courseUnit"];
 			@$courseUnitVersion = $_POST["courseUnitVersion"];
@@ -470,35 +493,7 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 					}
 				}
 			}
-			break;		
-=======
-            //1.查看usergroup_rel_course
-            $res=$mysql->query("select * from coursegroup where groupid=".$courseGroup);
-            $arr = $mysql->fetch_array($res);
-            $courseidstr=$arr["courseids"];
-            $courseids=explode(",",$courseidstr);//老
-            $newcoursestr=$course;
-            for($i=0; $i<count($courseids); $i++){
-                //获取新增的课程id
-                $course = str_replace(",".$courseids[$i].",",",",$course);
-            }
-            $mysql->query("replace into coursegroup (groupid,courseids) values ('".$courseGroup."','".$newcoursestr."')");//更改课程组中课程的数据
-            //相应的修改user_rel_course表
-
-            //2.更新所有拥有该课程组的所有用户
-            $res=$mysql->query("select * from user_rel_course where coursegroupids like '%".$courseGroup."%'");
-            while($arr=$mysql->fetch_array($res)) {
-                $arr_course=explode(",",$course);
-                $belongcourseidsstr=$arr["courseids"];
-                for($i=0; $i<count($arr_course); $i++){
-                    $belongcourseidsstr = str_replace(",".$arr_course[$i].",",",",$belongcourseidsstr);
-                }
-                $newcourseidsstr=$belongcourseidsstr.substr($course,1);
-                $mysql->query("update user_rel_course set courseids='$newcourseidsstr' where userid=" . $arr["userid"]);
-            }
-
-            break;
->>>>>>> b537cf43d9a348ef930e8f0511b3e332ca967f38
+			break;	
 	}	
 }else{
 	die("What are you doing?");

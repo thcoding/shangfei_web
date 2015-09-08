@@ -553,7 +553,7 @@ var open_page = function(type) {//1.open_page打开选择栏
     var iHeight=600; //弹出窗口的高度
     var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
     var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
-    add_window = window.open('course_choose_item.php?type=' + type, //3.打开choose界面
+    add_window = window.open('courseunit_choose_item.php?type=' + type, //3.打开choose界面
                              page_title, 
                              'width=' + iWidth + ',height=' + iHeight + ', top=' + iTop + ', left=' + iLeft + ', scrollbars=yes');
 }
@@ -564,7 +564,6 @@ var page_submit = function(type, id_arr) {//选择到的课程单元id
 						   if (id_arr[i] == "") continue;
 						   courseunit_ids.push(i);
 					   }
-					  // alert('分配成功');
 							$.ajax({
                                     type: "POST",
                                     url: "fenpei.php",

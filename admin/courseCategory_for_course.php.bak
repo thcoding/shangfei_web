@@ -461,7 +461,7 @@
                                 /*$("#pager_list").contents().find("input[type='checkbox']:checked").each(function(){
                                  alert($(this).val());
                                  })*/
- alert('分配成功');
+
                                 //courseUnitIds是从json中获取的
                                 //alert("type="+postType+"&courseUnitVersion="+courseUnitVersionIds+"&courseUnitGroup="+courseUnitGroupIds+"&toCourseCategoryId="+catid);
                                 $.ajax({
@@ -564,7 +564,6 @@ var page_submit = function(type, id_arr) {//选择到的课程单元id
 						   if (id_arr[i] == "") continue;
 						   courseunit_ids.push(i);
 					   }
-					  // alert('分配成功');
 							$.ajax({
                                     type: "POST",
                                     url: "fenpei.php",
