@@ -13,14 +13,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 
 	<?php
 	if($_SESSION["role"]==ADMIN || $_SESSION["role"]==TEACHER){//管理员、教员拥有的权限?>
-    <li><a href="">我的课程</a>
-            <ul>
-                <li><a href="">进行中的课程</a></li>
-                <li><a href="">未开始的课程</a></li>
-                <li><a href="">已结束的课程</a></li>
-            </ul>
-            <div class="clear"></div>
-    </li>
+
    <li><a href="courseUnit.php">课程单元</a>
 		<ul>
 			<li><a href="courseUnitGroup.php">课程单元组</a></li>

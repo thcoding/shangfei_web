@@ -18,6 +18,13 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	</ul>			
 		<div class="clear"></div>
 	</li>
+            <li><a href="mycourse.php?status=4">我的考试</a>
+                <ul>
+                    <li><a href="mycourse.php?status=5">未开始的考试</a></li>
+                    <li><a href="mycourse.php?status=6">已结束的考试</a></li>
+                </ul>
+                <div class="clear"></div>
+            </li>
 	<li><a href="#"></a></li>
 	<li><a href="#"></a></li>
 	<li><a href="#"></a></li>
