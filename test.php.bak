@@ -11,6 +11,9 @@ while($arr = mysql_fetch_array($resCreator)){
 	//echo $arr["realname"];
 }
 similar_text("参考","参考课程",$percent);
-echo $percent
+echo $percent;
+$arrs = isset($_GET["arrs"])?$_GET["arrs"]:0;
+error_log(date("[Y-m-d H:i:s]").$arrs."\n", 3, "php_err.log");
 
-?><input type="hidden" name="x" value="1"><input type="hidden" name="y" value="12">
+?>
+<input type="hidden" name="x" value="1"><input type="hidden" name="y" value="12">

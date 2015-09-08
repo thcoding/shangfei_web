@@ -317,7 +317,7 @@ function getChildren($groupid,$grouptype){//获得group的children grouptype(1:�
 		$res = $mysql->query("select * from courseunitgroup where groupid=".$groupid);
 		$arr = $mysql->fetch_array($res);
 		$courseunitids = substr($arr["courseunitids"],1,-1);//获取所有课程单元id
-		$res_courseunit = $mysql->query("select * from courseunitversion_rel_attachment where deleted=0 and id in ($courseunitids) order by time desc");//根据courseid获取course表中的课程单元
+		$res_courseunit = $mysql->query("select * from courseunit where deleted=0 and id in ($courseunitids) order by time desc");//根据courseid获取course表中的课程单元
 		while($arr_courseunit = $mysql->fetch_array($res_courseunit)){//逐行取出课程
 
 			$userinfo = getUserinfoById($arr_courseunit["userid"]);

@@ -162,12 +162,12 @@ var save_user_groupids = function() {
     $("#ugids").text(ugidstr);
 }
 
-var open_page = function(type) {
+var open_page = function(type) {//1.open_page打开选择栏
     page_title = "";
     if (type === "course") {
         save_courseids();
         page_title = "添加课程";
-    } else if (type === "course_group") {
+    } else if (type === "course_group") {//2.type
         save_course_groupids();
         page_title = "添加课程组";
     } else if (type === "user") {
@@ -176,13 +176,16 @@ var open_page = function(type) {
     } else if (type === "user_group") {
         save_user_groupids();
         page_title = "添加用户组";
+    }else if (type === "courseunit_group") {
+        //save_courseunit_groupids();
+        page_title = "添加课程单元组";
     }
     if (add_window != null) add_window.close();
     var iWidth=600; //弹出窗口的宽度;
     var iHeight=600; //弹出窗口的高度
     var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
     var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
-    add_window = window.open('course_choose_item.php?type=' + type, 
+    add_window = window.open('course_choose_item.php?type=' + type, //3.打开choose界面
                              page_title, 
                              'width=' + iWidth + ',height=' + iHeight + ', top=' + iTop + ', left=' + iLeft + ', scrollbars=yes');
 }
