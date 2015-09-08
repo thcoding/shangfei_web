@@ -168,6 +168,7 @@ function getCourseorUserInfo(){//获取postinfo
 		echo json_encode($returninfo,JSON_UNESCAPED_UNICODE);
 	}
 	else if(($returntype=="course_group")||($returntype=="user_group")||($returntype=="courseunit_group")){//返回的是组
+		
 		if($returntype=="course_group")
 			$grouptype = 3;
 		else if($returntype=="user_group")
@@ -252,6 +253,7 @@ function getCourseorUserInfo(){//获取postinfo
 
 		$res = mysql_query("select * from `group` $where $by limit $page_start,$page_size");//在course表中查询符合条件的所有课程组
 		while($arr = mysql_fetch_array($res)){//开始逐行获取课程组
+			
 			$userinfo = getUserinfoById($arr["userid"]);
 			//开始获取课程组所需信息，并添加到item中
 			$item["id"] = $arr["id"];
@@ -316,15 +318,15 @@ function getChildren($groupid,$grouptype){//获得group的children grouptype(1:�
 	else if($grouptype==2){//获取课程单元
 		$res = $mysql->query("select * from courseunitgroup where groupid=".$groupid);
 		$arr = $mysql->fetch_array($res);
-		$courseunitids = substr($arr["courseunitids"],1,-1);//获取所有课程单元id
-		$res_courseunit = $mysql->query("select * from courseunitversion_rel_attachment where deleted=0 and id in ($courseunitids) order by time desc");//根据courseid获取course表中的课程单元
+		$courseunitids = substr($arr["courseids"],1,-1);//获取所有课程单元id
+		$res_courseunit = $mysql->query("select * from courseunit where deleted=0 and id in ($courseunitids) order by time desc");//根据courseid获取course表中的课程单元
 		while($arr_courseunit = $mysql->fetch_array($res_courseunit)){//逐行取出课程
 
 			$userinfo = getUserinfoById($arr_courseunit["userid"]);
 			$courseunitinfo = getCourseUnitinfoById($arr_courseunit["courseunitid"]);
 			//开始获取课程单元所需信息，并添加到item中
 			$childrenitem["id"] = $arr_courseunit["id"];
-			$childrenitem["title"] = $courseunitinfo["title"]."(".$arr_courseunit["versionname"].")";
+			$childrenitem["title"] = $arr_courseunit["versionname"];
 			$childrenitem["time"] = $arr_courseunit["time"];
 			$childrenitem["creator"] = $userinfo["realname"];
 			$childrenitem["children"] = null;

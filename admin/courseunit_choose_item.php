@@ -54,7 +54,7 @@
             // get item list from server and update page
             var getList = function () {
                 $.post(
-                        "course_to_user_function.php",
+                        "courseunit_to_user_function.php",
                         {type: type, page_index: page_index, order_type: order_type, keyword: keyword },
                 function (result, status) {
                     if (status !== "success") {
@@ -161,7 +161,7 @@
             }
             //return checked course id and title to opener
             var submitChecked = function () {
-                parent.page_submit(type, id_arr);//4.提交选择
+                parent.page_submit(type, id_arr);
                 window.close();
             }
             

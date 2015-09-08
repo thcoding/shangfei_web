@@ -135,6 +135,7 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 			});
 		//}
 	}
+
 </script>
 </head>
 <body>

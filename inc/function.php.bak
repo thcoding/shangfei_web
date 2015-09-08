@@ -1,4 +1,5 @@
 <?php
+//error_log(date("[Y-m-d H:i:s]").$returntype."\n", 3, "../php_err.log");
 function logger($content, $filepath = 'log.html') {
 	file_put_contents("../" . $filepath,  date("Y-m-d H:i:s", time()). "\t" .$content  . "\r\n<br>", FILE_APPEND);
 }
@@ -150,7 +151,5 @@ function first2upper($str){//���ַ�������ĸ��Ϊ��д
 function api_get_user_id(){//��ȡ��ǰsession���û�id
 	return $_SESSION["userid"];
 }
-function is_email($email){//检查字符串是否符合电子邮箱格式
-	return strlen($email) > 6 && preg_match("/^[\w\-\.]+@[\w\-]+(\.\w+)+$/",$email);
-}
+
 ?>

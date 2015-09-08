@@ -17,10 +17,10 @@
 
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/function.js"></script>
-<script type="text/javascript" src="../js/slides.min.jquery.js"></script>
 <script type="text/javascript" src="../js/navigation.js"></script>
-<?php
 
+
+<?php 
 session_start();
 include "../inc/config.php";
 setcookie(session_name(),session_id(),time()+$sessionTime,"/");
@@ -33,16 +33,16 @@ include "../inc/mysql.php";
 include "../inc/function.php";
 include "../inc/navigation_admin.php";
 
-@$cugroupid = $_GET["id"];
+@$catid = $_GET["catid"];
 
-$res = $mysql->query("select * from courseunitgroup where groupid=".$_GET["id"]);
+$res = $mysql->query("select * from courseversion_rel_courseunitversion where coursecategoryid=".$catid);
 $arr = $mysql->fetch_array($res);
 $courseUnitIds = $arr["courseunitids"];
-$courseUnitVersionIds = $arr["courseunitids"];
+$courseUnitVersionIds = $arr["courseunitversionids"];
 $courseUnitGroupIds = $arr["courseunitgroupids"];
 ?>
 <script type="text/javascript">
-	var arrIds = new Array();
+    var arrIds = new Array();
 	var courseUnitIds0 = courseUnitIds = "<?php echo $courseUnitIds?$courseUnitIds:",";?>";
 	var courseUnitVersionIds0 = courseUnitVersionIds = "<?php echo $courseUnitVersionIds?$courseUnitVersionIds:",";?>";
 	var courseUnitGroupIds0 = courseUnitGroupIds = "<?php echo $courseUnitGroupIds?$courseUnitGroupIds:",";?>";
@@ -56,10 +56,11 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 				/*$("#pager_list").contents().find("input[type='checkbox']:checked").each(function(){
 					alert($(this).val());
 				})*/
+				alert(postType);
 				$.ajax({				
 					type: "POST",
 					url: "fenpei.php",
-					data:"type="+postType+"&courseUnit="+courseUnitIds+"&courseUnitVersion="+courseUnitVersionIds+"&courseUnitGroup="+courseUnitGroupIds+"&toCourseUnitGroup=<?php echo $_GET['id'];?>",
+					data:"type="+postType+"&courseUnit="+courseUnitIds+"&courseUnitVersion="+courseUnitVersionIds+"&courseUnitGroup="+courseUnitGroupIds+"&toCourseCategoryId=<?php echo $catid;?>",
 					success:function(msg){
 						location.reload();
 					}
@@ -114,8 +115,8 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
     });
 	function setIframeSrc(type){
 		postType = type;
-		if(type==11){
-			$("#pager_list").attr("src","courseUnitlist.php?aim=1");//为课程单元组分配课程单元			
+		if(type==13){
+			$("#pager_list").attr("src","courseUnitlist.php?aim=1");//为课程目录节点分配课程单元		
 		}else{
 			$("#pager_list").attr("src","courseUnitGroupList.php");
 		}
@@ -134,12 +135,81 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 			});
 		//}
 	}
+//以下是分配课程单元组的相关操作
+add_window = null;
+var open_page = function(type) {//1.open_page打开选择栏
+    page_title = "";
+    if (type === "course") {
+        save_courseids();
+        page_title = "添加课程";
+    } else if (type === "course_group") {//2.type
+        save_course_groupids();
+        page_title = "添加课程组";
+    } else if (type === "user") {
+        save_userids();
+        page_title = "添加用户";
+    } else if (type === "user_group") {
+        save_user_groupids();
+        page_title = "添加用户组";
+    }else if (type === "courseunit_group") {
+        //save_courseunit_groupids();
+        page_title = "添加课程单元组";
+    }
+    if (add_window != null) add_window.close();
+    var iWidth=600; //弹出窗口的宽度;
+    var iHeight=600; //弹出窗口的高度
+    var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
+    var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
+    add_window = window.open('course_choose_item.php?type=' + type, //3.打开choose界面
+                             page_title, 
+                             'width=' + iWidth + ',height=' + iHeight + ', top=' + iTop + ', left=' + iLeft + ', scrollbars=yes');
+}
+//handle checked data from open window
+var page_submit = function(type, id_arr) {//选择到的课程id
+    
+    if (type == "course_group" || type == "user_group") {
+        typelist = type.substr(0, type.indexOf('_')) + "_list";
+    } else {
+        typelist = type + "_list";
+    }
+    $("#" + typelist).empty();
+    for (var i in id_arr) {
+        if (id_arr[i] == "") continue;
+        $("#" + typelist).prepend("<li><input type='checkbox' checked='true' value='" + i + "'/><span>" + id_arr[i] + "</span></li>");
+    }
+    if (type == "course" || type == "course_group") {
+        cid_arr = id_arr;
+        $("#" + typelist + " li input:checkbox").click(function(){
+            id = this.value;
+            if (this.checked) {
+                cid_arr[id] = $(this).next().html();
+            } else {
+                cid_arr[id] = "";
+            }
+        });
+    } else if (type == "user" || type == "user_group") {
+        uid_arr = id_arr;
+        $("#" + typelist + " li input:checkbox").click(function(){
+            id = this.value;
+            if (this.checked) {
+                uid_arr[id] = $(this).next().html();
+            } else {
+                uid_arr[id] = "";
+            }
+        });
+    }
+    
+}
 </script>
 </head>
 <body>
 
 <div class="div_Mask" id="div_Mask"></div>
-<div class="div_wait" id="div_wait" style="position: absolute;left: 50%;top: 10%;width: 800px;margin-left: -400px;height:530px;max-height:530px;overflow:hidden"><div class="div_pager_list" id="div_pager_list"><iframe name="pager_list" id="pager_list" src="" width="800px" height="500px;" frameborder="0"></iframe></div><div style="text-align:center"><button>确定</button> <button>取消</button></div></div>
+<div class="div_wait" id="div_wait" style="position: absolute;left: 50%;top: 10%;width: 800px;margin-left: -400px;height:530px;max-height:530px;overflow:hidden">
+    <div class="div_pager_list" id="div_pager_list">
+        <iframe name="pager_list" id="pager_list" src="" width="800px" height="500px;" frameborder="0"></iframe>
+    </div>
+    <div style="text-align:center"><button>确定</button> <button>取消</button></div></div>
 
 <div id="wrapper">
 
@@ -151,7 +221,7 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 	<div id="content_with_menu">
 		<div id="container">
 		
-			<div class="info">【<?php echo $_GET["title"];?>】所含有的课程单元列表 &nbsp; <a href="javascript:;" onclick="setIframeSrc(11);"><img src="../img/add.jpg" width="15" title="添加课程单元" alt="添加课程单元"></a></div>
+			<div class="info">课程单元列表 &nbsp; <a href="javascript:;" onclick="setIframeSrc(13);"><img src="../img/add.jpg" width="15" title="添加课程单元" alt="添加课程单元"></a></div>
 			<div class="list_courseUnit">
 			<ul>
 			<?php
@@ -164,11 +234,14 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 					
 					$courseunitinfo = getCourseUnitinfoById($arr["courseunitid"]);//通过版本获取课程单元的信息
 
-					echo "<li><span><a href='javascript:;' onclick='if(confirm(\"确定要移除吗？\")){f_remove(32,".$arr["id"].",$cugroupid);$(this).parent().parent().remove();}'><img src='../img/delete.png'></a></span><a href='courseUnitShow.php?id=".$courseunitinfo["id"]."'>".$courseunitinfo["title"]."(".$arr["versionname"].")"."</a></li>";
+					echo "<li><span><a href='javascript:;' onclick='if(confirm(\"确定要移除吗？\")){f_remove(341,".$arr["id"].",$catid);$(this).parent().parent().remove();}'><img src='../img/delete.png'></a></span><a href='courseUnitShow.php?id=".$courseunitinfo["id"]."'>".$courseunitinfo["title"]."(".$arr["versionname"].")"."</a></li>";
 				}
 			?>
 			</ul>
 			</div>			
+		</div>
+		<div class="actions" style="display:none">
+			<a href="courseSetting.php?id=<?php echo $id;?>">设置</a>
 		</div>
 	</div>
 </div> <div class="clear">&nbsp;</div> <!-- 'clearing' div to make sure that footer stays below the main and right column sections -->

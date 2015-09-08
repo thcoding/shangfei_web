@@ -55,7 +55,7 @@
             var getList = function () {
                 $.post(
                         "course_to_user_function.php",
-                        {type: type, page_index: page_index, order_type: order_type, keyword: keyword },
+                        {type: "type", page_index: page_index, order_type: order_type, keyword: keyword },
                 function (result, status) {
                     if (status !== "success") {
                         alert("网络不正常哟");

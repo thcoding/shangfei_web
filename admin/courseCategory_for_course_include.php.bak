@@ -25,7 +25,7 @@ $arrjson=json_encode($arr,JSON_UNESCAPED_UNICODE);
 
 
 
-echo "<div class=\"info\">课程单元列表 &nbsp; <a href=\"javascript:;\" onclick=\"setIframeSrc(13);\"><img src=\"../img/add.jpg\" width=\"15\" title=\"添加课程单元\" alt=\"添加课程单元\"></a><a href=\"javascript:;\" onclick=\"open_page('courseunit_group');\"><img src=\"../img/addgroup.png\" width=\"15\" title=\"添加课程单元组\" alt=\"添加课程单元组\"></a></div>
+echo "<div class=\"info\">课程单元列表 &nbsp; <a href=\"javascript:;\" onclick=\"setIframeSrc(13);\"><img src=\"../img/add.jpg\" width=\"15\" title=\"添加课程单元\" alt=\"添加课程单元\"></a><a href=\"javascript:;\" onclick=\"open_page('courseunit_group');\"><img src=\"../img/addgroup.jpg\" width=\"15\" title=\"添加课程单元组\" alt=\"添加课程单元组\"></a></div>
                             <div class=\"list_courseUnit\">
                                 <ul>";
 

@@ -161,7 +161,7 @@
             }
             //return checked course id and title to opener
             var submitChecked = function () {
-                parent.page_submit(type, id_arr);//4.提交选择
+                parent.page_submit(type, id_arr);
                 window.close();
             }
             
