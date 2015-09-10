@@ -140,7 +140,10 @@
                         id_arr.push("group"+allresult[f]["id"]);
                     }
                 }
+<<<<<<< HEAD
                 //alert("选中的叶子和组"+id_arr);
+=======
+>>>>>>> origin/master
             };
             var printIdArr = function () {
                 idarrstr = ",";

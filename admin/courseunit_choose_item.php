@@ -54,7 +54,7 @@
             // get item list from server and update page
             var getList = function () {
                 $.post(
-                        "courseunit_to_user_function.php",
+                        "course_to_user_function.php",
                         {type: type, page_index: page_index, order_type: order_type, keyword: keyword },
                 function (result, status) {
                     if (status !== "success") {

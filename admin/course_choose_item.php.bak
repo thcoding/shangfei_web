@@ -5,13 +5,12 @@
     <head>
         <title>商飞学习管理系统</title>
 
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
-        <link rel="stylesheet" type="text/css" href="../themes/icon.css">
-        <link rel="stylesheet" type="text/css" href="../css/default.css">
-        <link rel="stylesheet" type="text/css" href="../css/main.css">
-
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/default.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script type="text/javascript" src="../js/function.js"></script>
     <script type="text/javascript" src="../js/slides.min.jquery.js"></script>
@@ -55,7 +54,7 @@
             var getList = function () {
                 $.post(
                         "course_to_user_function.php",
-                        {type: "type", page_index: page_index, order_type: order_type, keyword: keyword },
+                        {type: type, page_index: page_index, order_type: order_type, keyword: keyword },
                 function (result, status) {
                     if (status !== "success") {
                         alert("网络不正常哟");
@@ -82,11 +81,13 @@
                             } else {
                                 //handle group check
                                 items = node.children;
-                                if (node.checked == false) {
+                                if (node.checked == false) {//被选中
+                                    //alert("组检测"+node["title"]);
                                     for (var i in items) {
                                         addId(items[i]['id'], items[i]['title']);
                                     }
                                 } else {
+                                    //alert("组移除");
                                     for (var i in items) {
                                         removeId(items[i]['id'], items[i]['title']);
                                     }
@@ -94,8 +95,53 @@
                             }
                         }
                     });
+
                 });
-            }
+            };
+            var filterprocess=function(allresult){   //过滤函数  id_arr  allresult传入d = result['data'];
+                //获取所有的组节点，分析哪些小组的节点是全部包含的
+                var idstr=[];//所有的id
+                for(var i in allresult){
+                    var its=allresult[i].children;//组级别
+                    idstr[i]="";
+                    for(var j in its){
+                        idstr[i]=idstr[i]+its[j]['id']+',';//节点
+                    }
+                }
+                //alert("所有的id"+idstr);
+                var idarrstr="";//选中的id
+                for(var i in id_arr){
+                    if(id_arr[i] != "") {
+                        idarrstr +=i+",";
+                    }
+                }
+                //alert("选中的叶子id==="+idarrstr);
+                //id_arr是否拥有idstr中某个数组项中的所有id号
+                var flag=[1,1,1,1];//是否拥有全组,0为没有拥有全组
+                for(var n in idstr){
+                    var items=idstr[n];
+                    items=items.substring(0,items.length-1);
+                    items=items.split(",");//某一组所有item
+                    //alert("www"+items[0]);
+                    for(var m in items){
+                            //alert("判断id=="+items[m]);
+                            if (idarrstr.indexOf(items[m]) >= 0) {
+                                //alert("选中的id"+items[m]);
+                            }else{
+                                //alert(n+"组"+"未选中的叶子id"+items[m]);//不存在
+                                flag[n] = 0;
+                            }
+                    }
+                }
+                //alert(flag[0]+";"+flag[1]+";"+flag[2]+";"+flag[3]);
+                for(var f in allresult){
+                    if(flag[f]==1) {
+                        //alert("xx" + allresult[f]["id"]);
+                        id_arr.push("group"+allresult[f]["id"]);
+                    }
+                }
+                alert("选中的叶子和组"+id_arr);
+            };
             var printIdArr = function () {
                 idarrstr = ",";
                 for (var i in id_arr) {
@@ -116,7 +162,6 @@
                     return;
                 id_arr[id] = "";
             }
-
             var setPagelist = function (amount) {
                 $("#page_list").pagination({
                     total: amount,
@@ -160,11 +205,12 @@
                 return Object.prototype.toString.call(obj) === '[object Array]';
             }
             //return checked course id and title to opener
+            //id_arr,type
             var submitChecked = function () {
-                parent.page_submit(type, id_arr);//4.提交选择
+                filterprocess(d['items']);
+                parent.page_submit(type, id_arr);
                 window.close();
             }
-            
             $.extend($.fn.textbox.methods, {
             addClearBtn: function(jq, iconCls){
                 return jq.each(function(){
