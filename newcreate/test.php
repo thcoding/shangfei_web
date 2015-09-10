@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Created by PhpStorm.
@@ -5,11 +6,30 @@
  * Date: 2015/9/6
  * Time: 23:09
  */
-$res=mysql_query("select * from where userid=".$user);
-if(!mysql_num_rows($res)) {
-    echo "record doesn't exist~~~~~!!!!!!";
-}else{
-    // echo mysql_num_rows($result)."\n";
-    echo $row['userid'];
-    echo $row['task'];
+function Str_RemoveRepeatItem($str){//带，的字符串除掉重复项
+    $arr=explode(",",$str);
+    $list=array_merge(array_unique($arr));//array_unique索引号不变
+    /*$list=array();
+    foreach($arr as $item){
+        $flag=false;
+        foreach($list as $item2){
+            if($item==$item2){
+                $flag=true;
+                break;
+            }
+        }
+        if($flag==true){
+            continue;
+        }else{
+            array_push($list,$item);
+        }
+    }*/
+    $str=",";
+    for($i=0;$i<count($list);$i++){
+        if($list[$i]!="") {
+            $str = $str . $list[$i] . ",";
+        }
+    }
+    return $str;
 }
+echo Str_RemoveRepeatItem(",");

@@ -106,18 +106,22 @@ if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
            user_group_ids=user_group_ids.delRepeat();
           // alert(course_group_ids+"===="+user_group_ids);
            $.post("course_to_user_confirm.php",
-           {course_ids:course_ids,user_ids:user_ids,course_group_ids:course_group_ids,user_group_ids:user_group_ids},
+           {course_ids:course_ids,user_ids:user_ids,
+               course_group_ids:course_group_ids,user_group_ids:user_group_ids},
            function(result, status) {
               if (status !== "success"){
                   alert("网络不正常哟");
                   return;
-              } 
+              }
+
               result = $.parseJSON(result);
+
               if (result['status'] != 200) {
                   alert("服务器有点问题，请于开发人员联系 T.T, 失败代码：" + result['status']);
                   return;
               }
               alert("分配成功！");
+              location.reload();
            });
        });
     });
@@ -143,7 +147,7 @@ var save_course_groupids = function() {
     })
     $("#cgids").text(cgidstr);
 }
-var save_userids = function() {//基本没用。。。。。
+var save_userids = function() {
     var uidstr = ",";
     $("#user_list li input").each(function(){
         if (this.checked){

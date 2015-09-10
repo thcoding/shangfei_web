@@ -12,17 +12,17 @@ function setCoursetoUser(){//1.将课程分配给用户
 	global $mysql;
 
 	//请求的信息，均为数组
-	$courseids = $_POST["course_ids"]?$_POST["course_ids"]:0;
-	$userids = $_POST["user_ids"]?$_POST["user_ids"]:0;
-    $coursegroupids=$_POST["course_group_ids"]?$_POST["course_group_ids"]:0;
-    $usergroupids=$_POST["user_group_ids"]?$_POST["user_group_ids"]:0;
+	@$courseids = $_POST["course_ids"]?$_POST["course_ids"]:0;
+	@$userids = $_POST["user_ids"]?$_POST["user_ids"]:0;
+    @$coursegroupids=$_POST["course_group_ids"]?$_POST["course_group_ids"]:0;
+    @$usergroupids=$_POST["user_group_ids"]?$_POST["user_group_ids"]:0;
 	//需要返回的信息
 	$returninfo = Array();//$returninfo["data"] = $data; $returninfo["info"] = $info;$returninfo["status"] = $status;
 		$data = "";
 		$info = "";
 		$status = 200;
 	
-	if($courseids==0||$userids==0||$coursegroupids==0||$usergroupids==0){//请求出错，没有课程id或用户id
+	if($courseids==0||$userids==0){//请求出错，没有课程id或用户id
 		$data = "";
 		$info = "未选择用户或课程";
 		$status = 400;
@@ -34,7 +34,7 @@ function setCoursetoUser(){//1.将课程分配给用户
 		echo json_encode($returninfo,JSON_UNESCAPED_UNICODE);		
 		return;
 	}
-	
+
 	$newcoursestr = ",";
 	for($i=0; $i<count($courseids); $i++){//获取课程字符串
 		$newcoursestr = str_replace(",".$courseids[$i].",",",",$newcoursestr);
@@ -71,94 +71,99 @@ function setCoursetoUser(){//1.将课程分配给用户
 			for($m=0; $m<count($arr_temp); $m++){
 				$newcourse_tempstr = str_replace(",".$arr_temp[$m].",",",",$newcourse_tempstr);//如果有重复课程，则删除
 			}
-				
+
 			$newcourse_tempstr = $arr["courseids"].substr($newcourse_tempstr,1);
-			$mysql->query("update user_rel_course set courseids=".$newcourse_tempstr."where userid=".$userids[$i]);
+
+            $mysql->query("update user_rel_course set courseids='$newcourse_tempstr' where userid=".$userids[$i]);
 		}else{//表中暂无该用户关联的课程的数据，insert
 			$mysql->query("insert into user_rel_course (userid,courseids,) values ('".$userids[$i]."','".$newcoursestr."')");
 		}	
 			
 	}
 
+    if($coursegroupids!=0&&$usergroupids!=0) {
+        //2.用户组分配课程组
+        for ($i = 0; $i < count($usergroupids); $i++) {
 
-    //2.用户组分配课程组
-    for($i=0; $i<count($usergroupids); $i++){
+            $newcoursegroup_tempstr = $newcoursegroupstr;
+            $res = $mysql->query("select * from usergroup_rel_course where usergroupid=" . $usergroupids[$i]);//获取到用户
+            $arr = $mysql->fetch_array($res);//获得用户组
 
-        $newcoursegroup_tempstr = $newcoursegroupstr;
-        $res = $mysql->query("select * from usergroup_rel_course where usergroupid=".$usergroupids[$i]);//获取到用户
-        $arr = $mysql->fetch_array($res);//获得用户组
+            //修改usergroup_rel_coures表
+            if ($arr) {//表中已有该用户关联课程的数据
+                $coursegroupids0 = $arr["coursegroupids"];//获得原有的课程id
+                $arr_temp = explode(",", $coursegroupids0);
 
-        //修改usergroup_rel_coures表
-        if($arr){//表中已有该用户关联课程的数据
-            $coursegroupids0 = $arr["coursegroupids"];//获得原有的课程id
-            $arr_temp = explode(",",$coursegroupids0);
+                for ($m = 0; $m < count($arr_temp); $m++) {
+                    $newcoursegroup_tempstr = str_replace("," . $arr_temp[$m] . ",", ",", $newcoursegroup_tempstr);//如果有重复课程，则删除
+                }
 
-            for($m=0; $m<count($arr_temp); $m++){
-                $newcoursegroup_tempstr = str_replace(",".$arr_temp[$m].",",",",$newcoursegroup_tempstr);//如果有重复课程，则删除
+                $newcoursegroup_tempstr = $arr["coursegroupids"] . substr($newcoursegroup_tempstr, 1);
+                $mysql->query("update usergroup_rel_course set coursegroupids='$newcoursegroup_tempstr' where usergroupid=" . $usergroupids[$i]);
+            } else {//表中暂无该用户关联的课程的数据，insert
+                $mysql->query("insert into usergroup_rel_course (usergroupid,coursegroupids) values ('" . $usergroupids[$i] . "','" . $newcoursegroupstr . "')");
             }
 
-            $newcoursegroup_tempstr = $arr["coursegroupids"].substr($newcoursegroup_tempstr,1);
-            $mysql->query("update usergroup_rel_course set coursegroupids='$newcoursegroup_tempstr' where usergroupid=".$usergroupids[$i]);
-        }else{//表中暂无该用户关联的课程的数据，insert
-            $mysql->query("insert into usergroup_rel_course (usergroupid,coursegroupids) values ('".$usergroupids[$i]."','".$newcoursegroupstr."')");
         }
 
     }
-
-
 
     //3.为用户分配课程组
     //user_rel_course表
     //coursegroup===>>>user
-    for($i=0; $i<count($userids); $i++){
+    if($coursegroupids!=0) {
+        for ($i = 0; $i < count($userids); $i++) {
 
-        $newcoursegroup_tempstr = $newcoursegroupstr;
-        $res = $mysql->query("select * from user_rel_course where userid=".$userids[$i]);//获取到用户
-        $arr = $mysql->fetch_array($res);//获得用户
+            $newcoursegroup_tempstr = $newcoursegroupstr;
+            $res = $mysql->query("select * from user_rel_course where userid=" . $userids[$i]);//获取到用户
+            $arr = $mysql->fetch_array($res);//获得用户
 
-        //修改user_rel_coures表
-        if($arr){//表中已有该用户关联课程的数据
-            $coursegroupids0 = $arr["coursegroupids"];//获得原有的课程id
-            $arr_temp = explode(",",$coursegroupids0);
+            //修改user_rel_coures表
+            if ($arr) {//表中已有该用户关联课程的数据
+                $coursegroupids0 = $arr["coursegroupids"];//获得原有的课程id
+                $arr_temp = explode(",", $coursegroupids0);
 
-            for($m=0; $m<count($arr_temp); $m++){
-                $newcoursegroup_tempstr = str_replace(",".$arr_temp[$m].",",",",$newcoursegroup_tempstr);//如果有重复课程，则删除
+                for ($m = 0; $m < count($arr_temp); $m++) {
+                    $newcoursegroup_tempstr = str_replace("," . $arr_temp[$m] . ",", ",", $newcoursegroup_tempstr);//如果有重复课程，则删除
+                }
+
+                $newcoursegroup_tempstr = $arr["coursegroupids"] . substr($newcoursegroup_tempstr, 1);
+                $mysql->query("update user_rel_course set coursegroupids='$newcoursegroup_tempstr' where userid=" . $userids[$i]);
+            } else {//表中暂无该用户关联的课程的数据，insert
+                $mysql->query("insert into user_rel_course (userid,coursegroupids) values ('" . $userids[$i] . "','" . $newcoursegroupstr . "')");
             }
 
-            $newcoursegroup_tempstr = $arr["coursegroupids"].substr($newcoursegroup_tempstr,1);
-            $mysql->query("update user_rel_course set coursegroupids='$newcoursegroup_tempstr' where userid=".$userids[$i]);
-        }else{//表中暂无该用户关联的课程的数据，insert
-            $mysql->query("insert into user_rel_course (userid,coursegroupids) values ('".$userids[$i]."','".$newcoursegroupstr."')");
         }
-
     }
-
 
     //4.为用户组分配课程
     //usergroup_rel_course表
-    for($i=0; $i<count($usergroupids); $i++){
+    if($usergroupids!=0) {
+        $open=fopen("c:/oo.txt","a");
+        fclose($open);
+        for ($i = 0; $i < count($usergroupids); $i++) {
 
-        $newcourse_tempstr = $newcoursestr;
-        $res = $mysql->query("select * from usergroup_rel_course where usergroupid=".$usergroupids[$i]);//获取到用户组
-        $arr = $mysql->fetch_array($res);//获得用户组
+            $newcourse_tempstr = $newcoursestr;
+            $res = $mysql->query("select * from usergroup_rel_course where usergroupid=" . $usergroupids[$i]);//获取到用户组
+            $arr = $mysql->fetch_array($res);//获得用户组
 
-        //修改usergroup_rel_coures表
-        if($arr){//表中已有该用户关联课程的数据
-            $courseids0 = $arr["courseids"];//获得原有的课程id
-            $arr_temp = explode(",",$courseids0);
+            //修改usergroup_rel_coures表
+            if ($arr) {//表中已有该用户关联课程的数据
+                $courseids0 = $arr["courseids"];//获得原有的课程id
+                $arr_temp = explode(",", $courseids0);
 
-            for($m=0; $m<count($arr_temp); $m++){
-                $newcourse_tempstr = str_replace(",".$arr_temp[$m].",",",",$newcourse_tempstr);//如果有重复课程，则删除
+                for ($m = 0; $m < count($arr_temp); $m++) {
+                    $newcourse_tempstr = str_replace("," . $arr_temp[$m] . ",", ",", $newcourse_tempstr);//如果有重复课程，则删除
+                }
+
+                $newcourse_tempstr = $arr["courseids"] . substr($newcourse_tempstr, 1);
+                $mysql->query("update usergroup_rel_course set courseids='$newcourse_tempstr' where usergroupid=" . $usergroupids[$i]);
+            } else {//表中暂无该用户关联的课程的数据，insert
+                $mysql->query("insert into usergroup_rel_course (usergroupid,courseids) values ('" . $usergroupids[$i] . "','" . $newcoursestr . "')");
             }
 
-            $newcourse_tempstr = $arr["courseids"].substr($newcourse_tempstr,1);
-            $mysql->query("update usergroup_rel_course set courseids='$newcourse_tempstr' where usergroupid=".$usergroupids[$i]);
-        }else{//表中暂无该用户关联的课程的数据，insert
-            $mysql->query("insert into usergroup_rel_course (usergroupid,courseids) values ('".$usergroupids[$i]."','".$newcoursestr."')");
         }
-
     }
-
 
 		$data = "分配成功";
 		$info = "";
@@ -167,8 +172,9 @@ function setCoursetoUser(){//1.将课程分配给用户
 		$returninfo["data"] = $data;
 		$returninfo["info"] = $info;
 		$returninfo["status"] = $status;
+        $str=json_encode($returninfo,JSON_UNESCAPED_UNICODE);
+		echo json_encode($returninfo,JSON_UNESCAPED_UNICODE);
 
-		echo json_encode($returninfo,JSON_UNESCAPED_UNICODE);		
 }
 
 ?>

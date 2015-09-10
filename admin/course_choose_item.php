@@ -140,7 +140,7 @@
                         id_arr.push("group"+allresult[f]["id"]);
                     }
                 }
-                alert("选中的叶子和组"+id_arr);
+                //alert("选中的叶子和组"+id_arr);
             };
             var printIdArr = function () {
                 idarrstr = ",";
@@ -207,12 +207,8 @@
             //return checked course id and title to opener
             //id_arr,type
             var submitChecked = function () {
-<<<<<<< HEAD
-                parent.page_submit(type, id_arr);//4.提交选择
-=======
                 filterprocess(d['items']);
                 parent.page_submit(type, id_arr);
->>>>>>> b537cf43d9a348ef930e8f0511b3e332ca967f38
                 window.close();
             }
             $.extend($.fn.textbox.methods, {

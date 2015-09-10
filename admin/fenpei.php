@@ -3,6 +3,21 @@
 
 session_start();
 include "../inc/config.php";
+function Str_RemoveRepeatItem($str){//带，的字符串除掉重复项
+    $arr=explode(",",$str);
+    $list=array_merge(array_unique($arr));//array_unique索引号不变
+    $str=",";
+    for($i=0;$i<count($list);$i++){
+        if($list[$i]!="") {
+            $str = $str . $list[$i] . ",";
+        }
+    }
+    return $str;
+}
+function Str_CompareRemoveRepeatItem($str,$str_new){
+    
+    return $str_new;
+}
 setcookie(session_name(),session_id(),time()+$sessionTime,"/");
 if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==TEACHER)){
 	include "../inc/mysql.php";
@@ -369,11 +384,8 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
             //更新所有的用户的课程、课程组（user_rel_coure表）
             $user=$newuserids;
             $user=substr($user,1,-1);
-            $open=fopen("c:/log.txt","a" );
-
 
             //获取usergroup的课程ids和课程组（usergroup_rel_course表）
-
             $res=$mysql->query("select * from usergroup_rel_course where usergroupid =".$userGroup);
             $arr=$mysql->fetch_array($res);
             $courseids=$arr["courseids"];
@@ -385,53 +397,43 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
                 $arr=$mysql->fetch_array($res);
                 $courseids=$arr["courseids"].substr($courseids,1);
             }
-
-            $arr_courseids=explode(",",$courseids);
-            $arr_unique_courseids=array_unique($arr_courseids);
-            $newaddcourseids="";
-            for($m=0;$m<count($arr_unique_courseids);$m++){
-                $newaddcourseids=$newaddcourseids.",".$arr_unique_courseids[$m];
-
-            }
-
-
-            //去掉重复项
             //将上述信息更新$coursegroupids和$newaddcourseids
             //表user_rel_coure表
             $res=$mysql->query("select * from user_rel_course where userid =".$user);
             $arr=$mysql->fetch_array($res);
             $oldcourseids=$arr["courseids"];
             //除掉重复项
-            for($m=0;$m<count($arr_unique_courseids);$m++){
-                $oldcourseids=str_replace(",".$arr_unique_courseids[$m].",",",",$oldcourseids);
-            }
-            $courseids=$oldcourseids.substr($newaddcourseids,1).",";
-
-
+            $courseids=$courseids.$newaddcourseids;
+            $courseids=Str_RemoveRepeatItem($courseids);
 
             $res=$mysql->query("select * from user_rel_course where userid=".$user);
             $arr=$mysql->fetch_array($res);
             $oldcoursegroupids=$arr['coursegroupids'];
-            $newcoursegroupids=$oldcoursegroupids.$coursegroupids.",";
-            //$newcoursegroupids=$coursegroupids;
-            $courseids=substr($courseids,1);
-
-            fwrite($open,"groupid".$newcoursegroupids);
-            fwrite($open,"==========");
-            fwrite($open,"courseid".$courseids);
-            fwrite($open,"userid".$user);
+            $newcoursegroupids=Str_RemoveRepeatItem($oldcoursegroupids.$coursegroupids);
 
             $res=mysql_query("select * from user_rel_course where userid=".$user);
-            fwrite($open,"count".mysql_num_rows($res));
+            
             if(mysql_num_rows($res)) {
                 $mysql->query("update  user_rel_course set courseids='$courseids' where userid=".$user);
                 $mysql->query("update  user_rel_course set coursegroupids='$newcoursegroupids' where userid=".$user);
             } else{
-                fwrite($open,"success".mysql_num_rows($res));
-                fclose($open);
+                //将该用户组所有课程和课程组都插入
                 //插入新纪录
-                $mysql->query("insert into user_rel_course (userid,courseids) VALUES ('" . $user . "','" . $courseids . "')");
-                $mysql->query("insert into user_rel_course (userid,coursegroupids) VALUES ('" . $user . "','" . $newcoursegroupids . "')");
+                //所有的课程
+                $res=$mysql->query("select * from usergroup_rel_course WHERE usergroupid=".$userGroup);
+                $arr=$mysql->fetch_array($res);
+                $addcourseids=$arr["courseids"];
+                $addcoursegroupids=$arr["coursegroupids"];
+                $coursegroupids=substr($arr["coursegroupids"],1,-1);
+                $arr_coursegroup=explode(",",$coursegroupids);
+                $courseids="";
+                for($i=0;$i<count($arr_coursegroup);$i++) {
+                    $res = $mysql->query("select * from coursegroup where groupid=" .$arr_coursegroup[$i]);
+                    $arr=$mysql->fetch_array($res);
+                    $courseids=$arr["courseids"].substr($courseids,1);
+                }
+                $courseids=Str_RemoveRepeatItem($courseids.$addcourseids);
+                $mysql->query("insert into user_rel_course (userid,courseids,coursegroupids) VALUES ('" . $user . "','" . $courseids . "','" .  $addcoursegroupids . "')");
             }
             break;
 		case 15: //为课程组分配课程
