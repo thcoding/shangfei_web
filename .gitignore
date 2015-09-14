@@ -21,3 +21,5 @@ new.txt
 inc/mysql.php
 
 .gitignore
+
+php_err.log

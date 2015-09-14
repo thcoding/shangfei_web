@@ -465,6 +465,33 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
             }
 
             break;
+			case 16: //为课程组分配课程
+				@$courseUnit        = $_POST["courseUnit"];
+				@$courseUnitVersion = $_POST["courseUnitVersion"];
+				@$courseUnitGroup   = $_POST["courseUnitGroup"];
+				@$toCourseCategoryId = $_POST["toCourseCategoryId"];
+				$arrCourseunitId = explode(",",$courseUnitVersion);//待添加的课程单元数组
+				$unitids1 = "";
+				//为单元组添加这些单元
+				foreach($arrCourseunitId as $courseunitId){
+					if($toCourseCategoryId!=""){
+						$resCategory = $mysql->query("select * from courseversion_rel_courseunitversion where coursecategoryid=".$toCourseCategoryId);
+						$arrCategory = $mysql->fetch_array($resCategory);
+						if($arrCategory){//表中存在该字段
+							$unitids0 = $arrCategory["courseunitversionids"];//获取该组中所有用户id
+							$arrUnitversionIds = explode(",",$unitids0);//切割为用户id数组
+							$unitIsIn = in_array(strval($courseunitId),$arrUnitversionIds);
+						if(!$unitIsIn){//该组中尚无该用户，添加之
+								$unitids1 = $unitids0.strval($courseunitId).",";
+								$mysql->query("update courseversion_rel_courseunitversion set courseunitversionids='$unitids1' where coursecategoryid=".$toCourseCategoryId);
+							}
+						}else{//此组为新的单元组，尚未分配过课程单元
+							$unitids1 = ",".strval($courseunitId).",";
+							$mysql->query("insert courseversion_rel_courseunitversion (coursecategoryid,courseunitids,courseunitversionids) values ('$toCourseCategoryId',',','$unitids1')");
+						}
+					}
+				}
+			break;	
 	}	
 
 }else{

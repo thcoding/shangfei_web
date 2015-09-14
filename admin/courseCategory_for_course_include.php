@@ -12,7 +12,7 @@ include "../inc/function.php";
 @$catid =$_POST["catid"] ;
 
 if ($catid == "undefined") {
-    die("课程根目录不支持添加课程单元，请创建子目录。");
+    die("该节点包含子目录，不能为其添加课程单元");
 }
 
 $res = $mysql->query("select * from courseversion_rel_courseunitversion where coursecategoryid=".$catid);
@@ -25,7 +25,7 @@ $arrjson=json_encode($arr,JSON_UNESCAPED_UNICODE);
 
 
 
-echo "<div class=\"info\">课程单元列表 &nbsp; <a href=\"javascript:;\" onclick=\"setIframeSrc(13);\"><img src=\"../img/add.jpg\" width=\"15\" title=\"添加课程单元\" alt=\"添加课程单元\"></a><a href=\"javascript:;\" onclick=\"open_page('courseunit_group');\"><img src=\"../img/addgroup.png\" width=\"15\" title=\"添加课程单元组\" alt=\"添加课程单元组\"></a></div>
+echo "<div class=\"info\">课程单元列表 &nbsp; <a href=\"javascript:;\" onclick=\"setIframeSrc(13);\"><img src=\"../img/add.jpg\" width=\"15\" title=\"添加课程单元\" alt=\"添加课程单元\"></a>&nbsp;<a href=\"javascript:;\" onclick=\"open_page('courseunit_group');\"><img src=\"../img/addgroup.png\" width=\"20\" title=\"添加课程单元组\" alt=\"添加课程单元组\"></a></div>
                             <div class=\"list_courseUnit\">
                                 <ul>";
 

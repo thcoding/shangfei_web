@@ -157,6 +157,7 @@
                         view: {
                             addHoverDom: addHoverDom,
                             removeHoverDom: removeHoverDom,
+							dblClickExpand:false,
                             selectedMulti: false
                         },
                         edit: {
@@ -177,7 +178,9 @@
                             beforeRename: beforeRename,
                             onRemove: onRemove,
                             onRename: onRename,
-                            beforeClick: beforeClick
+                            beforeClick: beforeClick,
+							beforeDblClick: zTreeBeforeDblClick
+							onDblClick: zTreeOnDblClick
                         }
                     };
 
@@ -191,7 +194,10 @@
                     function beforeClick(treeId, treeNode) {
                         var zTree = $.fn.zTree.getZTreeObj("treeDemo");
                         zTree.selectNode(treeNode);
-                        catid = treeNode.catid;
+						if(!treeNode.isParent)//是叶子节点，可以添加课程单元
+							catid = treeNode.catid;
+						else
+							catid = "undefined";
                         courseUnitVersionIds = ",";
                         $.ajax({
                             type: "POST",
@@ -239,7 +245,7 @@
                             alert("请在课程属性中修改课程名。");
                             return false;
                         }
-                        return confirm("进入节点 -- " + treeNode.name + " 的编辑状态吗？");
+                        return true;
                     }
                     function beforeRemove(treeId, treeNode) {
                         className = (className === "dark" ? "" : "dark");
@@ -301,6 +307,18 @@
                             }
                         }
                     }
+					function zTreeBeforeDblClick(treeId, treeNode) {
+						var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+						var isCourse = zTree.getSelectedNodes()[0].isCourse ? 1 : 0;
+                        if (isCourse) {
+                            return false;
+                        }
+						return true;
+					};
+					function zTreeOnDblClick(event, treeId, treeNode) {
+						var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+						zTree.editName(treeNode);
+					};
                     function beforeRename(treeId, treeNode, newName, isCancel) {
                         className = (className === "dark" ? "" : "dark");
 
@@ -379,36 +397,38 @@
                         var btn = $("#addBtn_" + treeNode.tId);
                         if (btn)
                             btn.bind("click", function () {
-                                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                                zTree.selectNode(treeNode);
+								if(confirm("该节点已包含课程单元，添加子目录后，节点中的课程单元将失效（删除子目录后可恢复），是否确认添加子目录？")){
+									var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+									zTree.selectNode(treeNode);
 
-                                var name = "自定义章节";
-                                var isCourse = zTree.getSelectedNodes()[0].isCourse ? 1 : 0;
-                                var id = zTree.getSelectedNodes()[0].id;
-                                if (!id)
-                                    id = zTree.getSelectedNodes()[0].catid;
-                                var nodeId;//id与catid有重复之嫌，可以改掉，此时为空，在数据库保存时才会产生一个id值，通过ajax返回
-                                //url已被废，可以全部删掉
-                                var newNode = {name: name, id: nodeId, url: "courseUnit_for_courseCategory.php?catid=" + nodeId};
+									var name = "自定义章节";
+									var isCourse = zTree.getSelectedNodes()[0].isCourse ? 1 : 0;
+									var id = zTree.getSelectedNodes()[0].id;
+									if (!id)
+										id = zTree.getSelectedNodes()[0].catid;
+									var nodeId;//id与catid有重复之嫌，可以改掉，此时为空，在数据库保存时才会产生一个id值，通过ajax返回
+									//url已被废，可以全部删掉
+									var newNode = {name: name, id: nodeId, url: "courseUnit_for_courseCategory.php?catid=" + nodeId};
 
-                                if (zTree.getSelectedNodes()[0]) {
-                                    newNode.checked = zTree.getSelectedNodes()[0].checked;
-                                    zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
+									if (zTree.getSelectedNodes()[0]) {
+										newNode.checked = zTree.getSelectedNodes()[0].checked;
+										zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
 
-                                } else {
-                                    zTree.addNodes(null, newNode);
-                                }
-                                $.ajax({
-                                    type: "POST",
-                                    async: false,
-                                    url: "saveCourseCategory.php",
-                                    data: "id=" + id + "&name=" + name + "&isCourse=" + isCourse + "&type=add",
-                                    success: function (msg) {
-                                        nodeId = msg;//返回节点catid
-                                        nds = zTree.getSelectedNodes()[0].children;
-                                        nds[nds.length - 1].catid = nodeId;//取新增节点的id
-                                    }
-                                });
+									} else {
+										zTree.addNodes(null, newNode);
+									}
+									$.ajax({
+										type: "POST",
+										async: false,
+										url: "saveCourseCategory.php",
+										data: "id=" + id + "&name=" + name + "&isCourse=" + isCourse + "&type=add",
+										success: function (msg) {
+											nodeId = msg;//返回节点catid
+											nds = zTree.getSelectedNodes()[0].children;
+											nds[nds.length - 1].catid = nodeId;//取新增节点的id
+										}
+									});
+								}
                                 return false;
                             });
                     }
@@ -553,7 +573,7 @@ var open_page = function(type) {//1.open_page打开选择栏
     var iHeight=600; //弹出窗口的高度
     var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
     var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
-    add_window = window.open('course_choose_item.php?type=' + type, //3.打开choose界面
+    add_window = window.open('courseunit_choose_item.php?type=' + type, //3.打开choose界面
                              page_title, 
                              'width=' + iWidth + ',height=' + iHeight + ', top=' + iTop + ', left=' + iLeft + ', scrollbars=yes');
 }
