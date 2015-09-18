@@ -36,8 +36,19 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	</ul>			
 		<div class="clear"></div>
 	</li>
-	<li><a href="#"></a></li>
-	<?php
+
+	<!--管理员权限 数据管理-->
+    </li>
+        <li><a href="">数据管理</a>
+            <ul>
+                <li><a href="setting.php">恢复已删除</a></li>
+            </ul>
+
+    </li>
+    <li><a href="#"></a></li>
+
+
+    <?php
 			}//if($_SESSION["role"]==ADMIN)
 				?>
 	<?php
