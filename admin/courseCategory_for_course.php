@@ -197,7 +197,7 @@
 						if(!treeNode.isParent)//是叶子节点，可以添加课程单元
 							catid = treeNode.catid;
 						else
-							catid = "undefined";
+							catid = "haschildren";
                         courseUnitVersionIds = ",";
                         $.ajax({
                             type: "POST",
@@ -397,7 +397,7 @@
                         var btn = $("#addBtn_" + treeNode.tId);
                         if (btn)
                             btn.bind("click", function () {
-								if(confirm("该节点已包含课程单元，添加子目录后，节点中的课程单元将失效（删除子目录后可恢复），是否确认添加子目录？")){
+								if(treeNode.isParent||confirm("若该节点已包含课程单元，添加子目录后，节点中的课程单元将失效（删除子目录后可恢复）！是否确认添加子目录？")){
 									var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 									zTree.selectNode(treeNode);
 

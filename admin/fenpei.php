@@ -353,10 +353,11 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 			break;
 		case 11: //课程单元(组)分配到课程单元组
 			@$courseUnit        = $_POST["courseUnit"];
+			@$courseUnitVersion = $_POST["courseUnitVersion"];
 			@$courseUnitGroup   = $_POST["courseUnitGroup"];
 			@$toCourseUnitGroup = $_POST["toCourseUnitGroup"];
 
-			$mysql->query("replace into courseunitgroup (groupid,courseunitids,courseunitgroupids) values ('".$toCourseUnitGroup."','".$courseUnit."','".$courseUnitGroup."')");
+			$mysql->query("replace into courseunitgroup (groupid,courseunitids,courseunitgroupids) values ('".$toCourseUnitGroup."','".$courseUnitVersion."','".$courseUnitGroup."')");
 			break;
 		case 13: //课程单元(组)分配到课程
 			@$courseUnit        = $_POST["courseUnit"];

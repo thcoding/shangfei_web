@@ -12,7 +12,9 @@ include "../inc/function.php";
 @$catid =$_POST["catid"] ;
 
 if ($catid == "undefined") {
-    die("课程根目录不支持添加课程单元，请创建子目录。");
+    die("该节点为课程，不能为其添加课程单元");
+}else if($catid == "haschildren") {
+    die("该节点包含子目录，不能为其添加课程单元");
 }
 
 $res = $mysql->query("select * from courseversion_rel_courseunitversion where coursecategoryid=".$catid);

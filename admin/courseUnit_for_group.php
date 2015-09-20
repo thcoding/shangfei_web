@@ -163,7 +163,7 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 				while($arr = $mysql->fetch_array($res)){
 					
 					$courseunitinfo = getCourseUnitinfoById($arr["courseunitid"]);//通过版本获取课程单元的信息
-
+					if($courseunitinfo["deleted"]==0)
 					echo "<li><span><a href='javascript:;' onclick='if(confirm(\"确定要移除吗？\")){f_remove(32,".$arr["id"].",$cugroupid);$(this).parent().parent().remove();}'><img src='../img/delete.png'></a></span><a href='courseUnitShow.php?id=".$courseunitinfo["id"]."'>".$courseunitinfo["title"]."(".$arr["versionname"].")"."</a></li>";
 				}
 			?>

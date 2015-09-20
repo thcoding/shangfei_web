@@ -6,7 +6,7 @@ class mysql{
 	
 		$m_host = "localhost:3306";
 		$m_name = "root";
-		$m_pass = "root"; 
+		$m_pass = "welcome"; 
 
 		$link   =   $this -> linkdatabase($m_host,$m_name,$m_pass);
 		$this   ->    selectdatabase($database,$link);

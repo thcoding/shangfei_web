@@ -12,6 +12,8 @@ include "../inc/function.php";
 @$catid =$_POST["catid"] ;
 
 if ($catid == "undefined") {
+    die("该节点为课程，不能为其添加课程单元");
+}else if($catid == "haschildren") {
     die("该节点包含子目录，不能为其添加课程单元");
 }
 
@@ -37,6 +39,7 @@ echo "<div class=\"info\">课程单元列表 &nbsp; <a href=\"javascript:;\" onc
                     while($arr = $mysql->fetch_array($res)){
 
                         $courseunitinfo = getCourseUnitinfoById($arr["courseunitid"]);//通过版本获取课程单元的信息
+						if($courseunitinfo["deleted"]==0)
                         echo "<li><span><a href='javascript:;' onclick='if(confirm(\"确定要移除吗？\")){f_remove(341,".$arr["id"].",$catid);$(this).parent().parent().remove();}'><img src='../img/delete.png'></a></span><a href='courseUnitShow.php?id=".$courseunitinfo["id"]."'>".$courseunitinfo["title"]."(".$arr["versionname"].")"."</a></li>";
                     }
 
