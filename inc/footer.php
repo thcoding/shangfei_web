@@ -17,8 +17,11 @@ $student=getStuStatistics($UserId);
 
         echo "课程单元统计：" . $info["courseunit"] . "，课程统计：" . $info["course"] . "，用户统计：" . $info["user"];
     }else{
-
-        echo "您的课程总数：". $student;
+        if($student>=0) {
+            echo "您的课程总数：" . $student;
+        }else{
+            echo "您的课程总数：0";
+        }
     }?></span></span>&nbsp;
 	</div>
 </div> <!-- end of #footer -->

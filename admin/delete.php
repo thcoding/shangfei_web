@@ -85,7 +85,11 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 		case 52:  //将课程从用户中移除
 			//die("update user_rel_course set courseids=REPLACE(courseids,',".$_GET["cid"].",',',') where userid=".$_GET["id"]);
 			$mysql->query("update user_rel_course set courseids=REPLACE(courseids,',".$_GET["cid"].",',',') where userid=".$_GET["id"]);
-			break;
+			//如果课程属于课程组，则需要将user_rel_course表中coursegroupids中的id删掉
+            $open=fopen('D:/ss.txt','a');
+            fwrite($open,$_GET["cid"]);
+            fclose($open);
+            break;
 		case 53:  //将课程组从用户中移除
 			//die("update `userunitgroup` set userunitids=REPLACE(userunitids,',".$_GET["cuid"].",',',') where groupid=".$_GET["id"]);
 			$mysql->query("update user_rel_course set coursegroupids=REPLACE(coursegroupids,',".$_GET["cid"].",',',') where userid=".$_GET["id"]);

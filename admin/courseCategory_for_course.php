@@ -288,6 +288,8 @@
                                         success: function (msg) {
                                         }
                                     });
+                                }else{
+                                    window.location.href=window.location.href;
                                 }
                             } else {
 

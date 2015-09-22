@@ -66,9 +66,28 @@ function getStuStatistics($userid){
     $res = $mysql->query("select courseids as s from user_rel_course where userid=".$userid);
     $arr = $mysql->fetch_array($res);
     $info["course"] = $arr["s"];
-    $num=explode(",",$arr["s"]);
-    return count($num)-2;
+    $arr=explode(",",$arr["s"]);
+    for($i=0;$i<count($arr);$i++){
+        if($arr[$i]!=""){
+            $res = $mysql->query("select deleted from course where id=".$arr[$i]);
+            if(mysql_num_rows($res)<1){
+              array_remove($arr,$i);
+            }else{
+                $arrsun = $mysql->fetch_array($res);
+                if($arrsun["deleted"]==1){
+                    array_remove($arr,$i);
+                }
+            }
+
+        }
+    }
+    return count($arr)-2;
 }
+function array_remove(&$arr, $offset)
+{
+    array_splice($arr, $offset, 1);
+}
+
 function isutf8($data){//����ַ��ı���
 	return mb_detect_encoding($data, array('UTF-8', 'GB2312'));
 }
