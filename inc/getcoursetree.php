@@ -175,8 +175,8 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
         //获得课程单元名称**
         $lesson_courseunitInfo = getCourseUnitinfoById($arr["courseunitid"]);
         $lesson_courseunitName = $lesson_courseunitInfo["title"];
-		//如果课程单元已被删除，则不需要以下信息，重新执行下一次的while循环
-		if($lesson_courseunitInfo["deleted"]==1)
+		//如果课程单元已被删除（或彻底删除），则不需要以下信息，重新执行下一次的while循环
+		if(!$lesson_courseunitInfo||$lesson_courseunitInfo["deleted"]==1)
 			continue;
 
         //获得课程单元版本名称**

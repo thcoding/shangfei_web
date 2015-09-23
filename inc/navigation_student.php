@@ -25,7 +25,16 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
                 </ul>
                 <div class="clear"></div>
             </li>
+	<?php
+	if($_SESSION["role"]==TEACHER){//教员,增加一个模式切换?>
+	<li><a href="../admin/course.php">切换到教员模式</a></li>
+	<?php
+			}//if($_SESSION["role"]==TEACHER)
+	else{//学员?>
 	<li><a href="#"></a></li>
+	<?php
+			}//else
+				?>
 	<li><a href="#"></a></li>
 	<li><a href="#"></a></li>
 	<li style="height: 40px;width: auto"><a href="../myinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>

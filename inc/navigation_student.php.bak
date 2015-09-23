@@ -12,16 +12,34 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 		?>
 	<li><a href="mycourse.php">我的课程</a>
 	<ul>
-		<li><a href="mycourse_in.php">进行中的课程</a></li>
-		<li><a href="mycourse_undo.php">未开始的课程</a></li>
-		<li><a href="mycourse_expire.php">已结束的课程</a></li>
+		<li><a href="mycourse.php?status=1">进行中的课程</a></li>
+		<li><a href="mycourse.php?status=2">未开始的课程</a></li>
+		<li><a href="mycourse.php?status=3">已结束的课程</a></li>
 	</ul>			
 		<div class="clear"></div>
 	</li>
+            <li><a href="mycourse.php?status=4">我的考试</a>
+                <ul>
+                    <li><a href="mycourse.php?status=5">未开始的考试</a></li>
+                    <li><a href="mycourse.php?status=6">已结束的考试</a></li>
+                </ul>
+                <div class="clear"></div>
+            </li>
+	<?php
+	if($_SESSION["role"]==TEACHER){//教员,增加一个模式切换?>
+	<li><a href="../admin/course.php">切换到教员模式</a></li>
+	<?php
+			}//if($_SESSION["role"]==TEACHER)
+				?>
+	<?php
+	else{//学员?>
+	<li><a href="#"></a></li>
+	<?php
+			}//else
+				?>
 	<li><a href="#"></a></li>
 	<li><a href="#"></a></li>
-	<li><a href="#"></a></li>
-	<li><a href="../myinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>
+	<li style="height: 40px;width: auto"><a href="../myinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>
 	<ul>
 		<li><a href="../logout.php">退出登录</a></li>
 	</ul>			

@@ -14,14 +14,16 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	<?php
 	if($_SESSION["role"]==ADMIN || $_SESSION["role"]==TEACHER){//管理员、教员拥有的权限
 				?>
-	<li><a href="admin/courseUnit.php">课程单元</a>
+	<li><a>课程单元</a>
 		<ul>
+			<li><a href="admin/courseUnit.php">管理</a></li>
 			<li><a href="admin/courseUnitGroup.php">课程单元组</a></li>
 		</ul>
 		<div class="clear"></div>
 	</li>
-	<li><a href="admin/course.php">课程</a>
+	<li><a>课程</a>
 	<ul>
+		<li><a href="admin/course.php">管理</a></li>
 		<li><a href="admin/courseGroup.php">课程组</a></li>
 		<li><a href="admin/course_to_user.php">注册课程</a></li>
 	</ul>			
@@ -39,9 +41,9 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 
 	<!--管理员权限 数据管理-->
     </li>
-        <li><a href="">数据管理</a>
+        <li><a>数据管理</a>
             <ul>
-                <li><a href="setting.php">恢复已删除</a></li>
+                <li><a href="admin/setting.php">恢复已删除</a></li>
             </ul>
 
     </li>
@@ -52,7 +54,8 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 			}//if($_SESSION["role"]==ADMIN)
 				?>
 	<?php
-	if($_SESSION["role"]==TEACHER){//教员,加2占位<li>?>
+	if($_SESSION["role"]==TEACHER){//教员,加3占位<li>?>
+	<li><a href="student/mycourse.php">切换到学员模式</a></li>
 	<li><a href="#"></a></li>
 	<li><a href="#"></a></li>
 	<?php
@@ -89,7 +92,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	<?php
 	if($_SESSION["role"]==ADMIN){//管理员拥有的权限
 				?>
-		<li><a href="admin/setting.php">恢复已删除</a></li>
+
 	<?php
 			}//if($_SESSION["role"]==ADMIN)
 				?>

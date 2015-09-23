@@ -46,13 +46,18 @@ define("STATUS_IN",1);
 define("STATUS_UNDO",2);
 define("STATUS_EXPIRE",3);
 
+//考试状态定义
+define("EXAM_STATUS_All",4);
+define("EXAM_STATUS_UNDO",5);
+define("EXAM_STATUS_EXPIRE",6);
+
 class page{
 
 
 //共两个分页显示模式
 //$select 是否处于分页复选模式
 //$deleted 是否只显示已删除的用户
-	function fenye ($page,$order,$linkPage,$userid,$keyword,$searchType=1,$startTime="",$endTime="",$status=0){
+	function fenye ($page,$order,$linkPage,$userid,$keyword,$searchType=1,$startTime="",$endTime="",$status=0,$typeflag){
 
 		global $page_size;
 
@@ -108,7 +113,12 @@ class page{
 		$arr = mysql_fetch_array($res);
 		$ids = substr($arr["courseids"],1,-1);
 		$where .=" and id in ($ids)";
-
+        //选出是考试还是课程
+        if($typeflag==1){
+            $where .= " and (type in (0,1))";
+        }else{
+            $where .= " and (type in (2))";
+        }
 		//选出符合的关键字
 		if($keyword!=""){
 			switch($searchType){
@@ -145,7 +155,7 @@ class page{
 		
 		//根据时间状态继续筛选
 		$timeNow = date("Y-m-d H:i:s");//当前时间
-		//switch($status){
+		switch($status){
 			case STATUS_All:
 				break;
 			case STATUS_IN:
@@ -158,8 +168,16 @@ class page{
 			case STATUS_EXPIRE:
 				$where .= " and (DATE_FORMAT( endTime, '%Y-%m-%d %H:%i:%S') <='".$timeNow."')";
 				break;
-		//	}
-		
+            case EXAM_STATUS_All:
+                break;
+            case EXAM_STATUS_UNDO:
+                $where .= " and (DATE_FORMAT( startTime, '%Y-%m-%d %H:%i:%S') >='".$timeNow."')";
+                break;
+            case EXAM_STATUS_EXPIRE:
+                $where .= " and (DATE_FORMAT( endTime, '%Y-%m-%d %H:%i:%S') <='".$timeNow."')";
+                break;
+			}
+
 		$sql = "select * from course $where";
 
 		//echo $sql;
@@ -173,7 +191,11 @@ class page{
 		if($amount){
 			$page_total = ceil($amount / $page_size);	
 		}else{
-			echo("无相关课程记录");
+            if($typeflag==1){
+			echo("无相关课程记录");}
+            else{
+                echo("无相关考试记录");
+            }
 			return;
 		}
 
