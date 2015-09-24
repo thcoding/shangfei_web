@@ -10,16 +10,18 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	<?php
 		if($isLogin){//判断是否已登录
 		?>
-	<li><a href="mycourse.php">我的课程</a>
+	<li><a>我的课程</a>
 	<ul>
+		<li><a href="mycourse.php">所有课程</a></li>
 		<li><a href="mycourse.php?status=1">进行中的课程</a></li>
 		<li><a href="mycourse.php?status=2">未开始的课程</a></li>
 		<li><a href="mycourse.php?status=3">已结束的课程</a></li>
 	</ul>			
 		<div class="clear"></div>
 	</li>
-            <li><a href="mycourse.php?status=4">我的考试</a>
+            <li><a>我的考试</a>
                 <ul>
+					<li><a href="mycourse.php?status=4">未开始的考试</a></li>
                     <li><a href="mycourse.php?status=5">未开始的考试</a></li>
                     <li><a href="mycourse.php?status=6">已结束的考试</a></li>
                 </ul>
@@ -30,8 +32,6 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	<li><a href="../admin/course.php">切换到教员模式</a></li>
 	<?php
 			}//if($_SESSION["role"]==TEACHER)
-				?>
-	<?php
 	else{//学员?>
 	<li><a href="#"></a></li>
 	<?php
