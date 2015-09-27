@@ -76,7 +76,7 @@ function setCoursetoUser(){//1.将课程分配给用户
 
             $mysql->query("update user_rel_course set courseids='$newcourse_tempstr' where userid=".$userids[$i]);
 		}else{//表中暂无该用户关联的课程的数据，insert
-			$mysql->query("insert into user_rel_course (userid,courseids) values ('".$userids[$i]."','".$newcoursestr."')");
+			$mysql->query("insert into user_rel_course (userid,courseids,) values ('".$userids[$i]."','".$newcoursestr."')");
 		}	
 			
 	}

@@ -186,7 +186,7 @@ class page{
 		$result = mysql_query($sql);//在course表中查询所有课程信息
 
 
-		$amount = mysql_num_rows($result);   //表中的总纪录数
+		@$amount = mysql_num_rows($result);   //表中的总纪录数
 
 		if($amount){
 			$page_total = ceil($amount / $page_size);	
