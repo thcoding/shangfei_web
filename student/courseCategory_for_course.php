@@ -123,7 +123,7 @@ div#rMenu ul li{
 	<div>
 
 		<div class="info">课程目录 &nbsp;</div>
-            <table title="Folder Browser" class="easyui-treegrid" style="width:1030px;height:500px"
+            <table title="课程" class="easyui-treegrid" style="width:1030px;height:500px"
                    data-options="
 				url: '../inc/getcoursetree.php',
 				method: 'get',
@@ -170,7 +170,7 @@ div#rMenu ul li{
 </div> <!-- end of #main" started at the end of banner.inc.php -->
 
 <div class="push"></div>
--->
+
 </div> <!-- end of #wrapper section -->
 
 <?php include "../inc/footer.php";?>

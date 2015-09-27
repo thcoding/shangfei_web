@@ -13,6 +13,7 @@ global $mysql;
 $id = $courseid;
 $res = $mysql->query("select id,name from coursecategory where courseid=".$id." order by id");//查找courseid下所有的一级目录
 logger("userid:$userid; courseid:$courseid;");
+$arr["id"]=$courseid;
 while($arr = $mysql->fetch_array($res)){//取出一级目录
 	$arr["open"] = true;
 	$res2 = $mysql->query("select id,name from coursecategory where parentid=".$arr["id"]." order by id");//查找一级目录下的所有二级目录
@@ -135,6 +136,7 @@ while($arr = $mysql->fetch_array($res)){//取出一级目录
 }
 
 		$courseinfo = getCourseinfoById($id);
+        $node["id"]="";
 		$node["name"] = $courseinfo["title"];
 		$node["status"] = "";
 		$node["totaltime"] = "";
@@ -145,6 +147,7 @@ while($arr = $mysql->fetch_array($res)){//取出一级目录
 		$node["itemurl"] = "";
 //@$nodes = "children:".json_encode($node["children"],JSON_UNESCAPED_UNICODE);
 //return json_encode($node,JSON_UNESCAPED_UNICODE);
+
 return   json_encode($node,JSON_UNESCAPED_UNICODE);
 }
 function vtime($time) {
