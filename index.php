@@ -1,7 +1,7 @@
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" xml:lang="en" lang="en">
 <head>
 <title>商飞学习管理系统</title>
 
@@ -37,9 +37,16 @@ include "inc/navigation_root.php";
 <div id="content" class="maxcontent">
 <?php
 if(isset($_SESSION["userid"]) && $_SESSION["userid"]>0){//判断用户是否已经登录
+if(@$_SESSION["role"] == STUDENT){
 ?>
-<div id="content_with_menu">
-<?php }else{
+    <div id="student_content" style="padding: 10px"> <?php
+        }else{
+        ?>
+    <div id="content_with_menu" >
+
+<?php
+}
+}else{
 ?>
 <div id="content_with_menu_unlogin">
 <?php }
@@ -81,54 +88,130 @@ $('#slides').slides({
 });
 });
 </script>
-<div id="container">
-	<div class="siteName">商飞学习管理系统</div>
-		<div id="example">
-			
-			<div id="slides">
-				<div class="slides_container"><div class="slide"><img src="img/slide01.jpg" width="720" height="240" title="ARJ21新支线飞机首次走出国门" alt="ARJ21新支线飞机首次走出国门"><div class="slide_caption" style="bottom:0"><p>ARJ21新支线飞机首次走出国门</p></div></div><div class="slide"><img src="img/slide02.jpg" width="720" height="240" title="中国商用飞机有限责任公司" alt="中国商用飞机有限责任公司"><div class="slide_caption" style="bottom:0"><p>中国商用飞机有限责任公司</p></div></div><div class="slide"><img src="img/slide03.jpg" width="720" height="240" title="更安全*更经济*更舒适*更环保" alt="更安全*更经济*更舒适*更环保"><div class="slide_caption" style="bottom:0"><p>更安全*更经济*更舒适*更环保</p></div></div></div>
-				<div id="nextbutton" style="display:none;">
-				<a href="#" class="prev"><img src="img/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
-				<a href="#" class="next"><img src="img/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
-				</div>
-			</div>
-		</div>		
-	</div>
-	<table style="width: 730px;" class="white">
-		<tr>
-			<td><!-- table for the cells of content -->
-			<table style="width: 730px;margin:0px;" class="cellscontent">
-				
-				<tr>
-					<td valign="top"><!-- tableau gauche pour les 4 items -->
-					<table cellspacing="10" style="width: 100%;" class="quatreitems_scenario table_actions table_actions_rows">
-						
-						<tr>
-							<td class="section_white" style="padding: 10px;">
-							<h2>单元重组</h2>
-							课程单元可重组，优秀通用的课程单元可以通过加入新<br>的课程重复利用，减少开发成本，提高课程开发效率<img width="64" vspace="0" hspace="0" height="64" border="0" align="right"src="img/plane.png"></td>
-							<td class="section_white" style="padding: 10px;">
-							<h2>学习跟踪</h2>
-							学习系统可以及时的跟踪学习者的学习进度，学习者下次<BR>进入时智能读取学习进度，节省学习时间<img width="64" vspace="0" hspace="0" height="64" border="0" align="right" src="img/track.png"></td>
-						</tr>
-						<tr>
-							<td class="section_white" style="padding: 10px;">
-							<h2>支持多种课件标准</h2>
-							本学习系统不仅支持多媒体学习资源图片，文档和视频，<BR> 还支持多种电子课件标准，比如scorm2004等<img width="64" vspace="0" hspace="0" height="64" border="0" align="right" src="img/bag.png"></td>
-							<td class="section_white" style="padding: 10px;">
-							<h2>移动学习</h2>
-							本学习系统的移动客户端同时支持在线和离线学习，方便<BR>学习者随时随地查阅学习内容，了解课程信息<img width="64" vspace="0" hspace="0" height="64" border="0" align="right" src="img/mobile.png"></td>
-						</tr>
-						
-					</table>
-					<!-- fin tableau gauche pour les 4 items --></td>
-				</tr>
-				
-			</table>
-			<!-- end table for the cells of content --></td>
-		</tr>            
-	</table>
+<?php
+    if(@$_SESSION["role"] == STUDENT){//根据用户角色跳转至相应用户界面
+?>
+    <div style="border-radius: 15px;width: 200px;">
+        <img src="img/indexheader.jpg" width=150 height=150 style="border-radius: 15px;">
+    </div>
+
+<?php
+include "inc/mysql.php";
+include "inc/function.php";
+
+
+
+
+$userid = $_SESSION["userid"];
+
+$arr = getUserinfoById($userid);//从数据库user表中获取用户信息
+$username   = $arr["username"];
+$realname   = $arr["realname"];
+$mail       = $arr["mail"];
+$department = $arr["department"];
+?>
+       <div style="position:absolute; top:80px; left:430px;">
+        <table style="font-size: 18px;">
+            <tr>
+                <td>用户名：</td>
+                <td>&nbsp;&nbsp;<?php echo $username;?></td>
+            </tr>
+
+            <tr>
+                <td>真实姓名：</td>
+                <td>&nbsp;&nbsp;<?php echo $realname;?></td>
+            </tr>
+
+            <tr>
+                <td>邮箱：</td>
+                <td>&nbsp;&nbsp;<?php echo $mail;?></td>
+            </tr>
+            <tr>
+                <td>部门：</td>
+                <td>&nbsp;&nbsp;<?php echo $departmentArr[$department];?>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>课程总数：</td>
+                <td>&nbsp;&nbsp;<?php
+                    $UserId=$_SESSION["userid"];
+                    $student=getStuStatistics($UserId);
+                    echo $student;?></td>
+            </tr>
+            <tr>
+                <td>课程过期：</td>
+                <td>&nbsp;&nbsp;0</td>
+            </tr>
+            <tr>
+                <td>考试总数：</td>
+                <td>&nbsp;&nbsp;0</td>
+            </tr>
+            <tr>
+                <td>考试补考：</td>
+                <td>&nbsp;&nbsp;0</td>
+            </tr>
+        </table>
+
+       </div>
+
+<?php
+    }else{
+?>
+    <div id="container">
+        <div class="siteName">商飞学习管理系统</div>
+        <div id="example">
+
+            <div id="slides">
+                <div class="slides_container"><div class="slide"><img src="img/slide01.jpg" width="720" height="240" title="ARJ21新支线飞机首次走出国门" alt="ARJ21新支线飞机首次走出国门"><div class="slide_caption" style="bottom:0"><p>ARJ21新支线飞机首次走出国门</p></div></div><div class="slide"><img src="img/slide02.jpg" width="720" height="240" title="中国商用飞机有限责任公司" alt="中国商用飞机有限责任公司"><div class="slide_caption" style="bottom:0"><p>中国商用飞机有限责任公司</p></div></div><div class="slide"><img src="img/slide03.jpg" width="720" height="240" title="更安全*更经济*更舒适*更环保" alt="更安全*更经济*更舒适*更环保"><div class="slide_caption" style="bottom:0"><p>更安全*更经济*更舒适*更环保</p></div></div></div>
+                <div id="nextbutton" style="display:none;">
+                    <a href="#" class="prev"><img src="img/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
+                    <a href="#" class="next"><img src="img/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table style="width: 730px;" class="white">
+        <tr>
+            <td><!-- table for the cells of content -->
+                <table style="width: 730px;margin:0px;" class="cellscontent">
+
+                    <tr>
+                        <td valign="top"><!-- tableau gauche pour les 4 items -->
+                            <table cellspacing="10" style="width: 100%;" class="quatreitems_scenario table_actions table_actions_rows">
+
+                                <tr>
+                                    <td class="section_white" style="padding: 10px;">
+                                        <h2>单元重组</h2>
+                                        课程单元可重组，优秀通用的课程单元可以通过加入新<br>的课程重复利用，减少开发成本，提高课程开发效率<img width="64" vspace="0" hspace="0" height="64" border="0" align="right"src="img/plane.png"></td>
+                                    <td class="section_white" style="padding: 10px;">
+                                        <h2>学习跟踪</h2>
+                                        学习系统可以及时的跟踪学习者的学习进度，学习者下次<BR>进入时智能读取学习进度，节省学习时间<img width="64" vspace="0" hspace="0" height="64" border="0" align="right" src="img/track.png"></td>
+                                </tr>
+                                <tr>
+                                    <td class="section_white" style="padding: 10px;">
+                                        <h2>支持多种课件标准</h2>
+                                        本学习系统不仅支持多媒体学习资源图片，文档和视频，<BR> 还支持多种电子课件标准，比如scorm2004等<img width="64" vspace="0" hspace="0" height="64" border="0" align="right" src="img/bag.png"></td>
+                                    <td class="section_white" style="padding: 10px;">
+                                        <h2>移动学习</h2>
+                                        本学习系统的移动客户端同时支持在线和离线学习，方便<BR>学习者随时随地查阅学习内容，了解课程信息<img width="64" vspace="0" hspace="0" height="64" border="0" align="right" src="img/mobile.png"></td>
+                                </tr>
+
+                            </table>
+                            <!-- fin tableau gauche pour les 4 items --></td>
+                    </tr>
+
+                </table>
+                <!-- end table for the cells of content --></td>
+        </tr>
+    </table>
 </div>
+<?php
+    }
+?>
+
 
 <div class="menu" id="menu">
 
