@@ -91,9 +91,14 @@ $('#slides').slides({
 <?php
     if(@$_SESSION["role"] == STUDENT){//根据用户角色跳转至相应用户界面
 ?>
-    <div style="border-radius: 15px;width: 200px;">
-        <img src="img/indexheader.jpg" width=150 height=150 style="border-radius: 15px;">
-    </div>
+    <div style="border-radius: 15px;width: 500px;">
+        <table style="font-size: 18px;border: 1px;">
+            <tr>
+                <td rowspan="5">
+                    <img src="img/indexheader.jpg" width=150 height=150 style="border-radius: 15px;">
+                </td>
+                <td></td>
+            </tr>
 
 <?php
 include "inc/mysql.php";
@@ -110,31 +115,36 @@ $realname   = $arr["realname"];
 $mail       = $arr["mail"];
 $department = $arr["department"];
 ?>
-       <div style="position:absolute; top:80px; left:430px;">
-        <table style="font-size: 18px;">
+
+
             <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>用户名：</td>
                 <td>&nbsp;&nbsp;<?php echo $username;?></td>
             </tr>
 
             <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>真实姓名：</td>
                 <td>&nbsp;&nbsp;<?php echo $realname;?></td>
             </tr>
 
             <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>邮箱：</td>
                 <td>&nbsp;&nbsp;<?php echo $mail;?></td>
             </tr>
             <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>部门：</td>
-                <td>&nbsp;&nbsp;<?php echo $departmentArr[$department];?>
-                </td>
+                <td>&nbsp;&nbsp;<?php echo $departmentArr[$department];?></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
             </tr>
             <tr>
+                <td></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>课程总数：</td>
                 <td>&nbsp;&nbsp;<?php
                     $UserId=$_SESSION["userid"];
@@ -142,14 +152,18 @@ $department = $arr["department"];
                     echo $student;?></td>
             </tr>
             <tr>
+                <td></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>课程过期：</td>
                 <td>&nbsp;&nbsp;0</td>
             </tr>
-            <tr>
+            <tr><td></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>考试总数：</td>
                 <td>&nbsp;&nbsp;0</td>
             </tr>
-            <tr>
+            <tr><td></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>考试补考：</td>
                 <td>&nbsp;&nbsp;0</td>
             </tr>
