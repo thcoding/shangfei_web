@@ -149,7 +149,7 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
 						$userids0      = $arrUserGroup["userids"];//获取该组中所有用户id
 						$arrUser = explode(",",$userids0);//切割为用户id数组
 						$userIsIn = in_array(strval($id),$arrUser);
-						if($userIsIn){//该组中尚无该用户，添加之   !$userIsIn
+						if(!$userIsIn){//该组中尚无该用户，添加之   !$userIsIn
 							$userids1 = $userids0.strval($id).",";
 							$mysql->query("update usergroup set userids='$userids1' where groupid=".$userGroupId);
                             //为用户添加该用户组的课程组和课程++++
@@ -170,7 +170,7 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
                             $arr=$mysql->fetch_array($res);
                             $newcourseids=Str_RemoveRepeatItem($arr["courseids"].$newcourseids);
                             $newcoursegroupid=Str_RemoveRepeatItem($arr["coursegroupids"].$coursegroupIds);
-                            $res = $mysql->query("select * from user_rel_course where userid=".$userArr[$i]);
+                            $res = $mysql->query("select * from user_rel_course where userid=".$userArr[$i]);//吴琦师兄：这行代码的$userArr[$i]参数在哪定义的？是不是写错了？
                             $arr = $mysql->fetch_array($res);
                             if($arr) {
                                 $mysql->query("update user_rel_course set courseids='$newcourseids' , coursegroupids='$newcoursegroupid' where userid=" . $id);
