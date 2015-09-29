@@ -140,6 +140,7 @@ while($arr = $mysql->fetch_array($res)){//取出一级目录
 		$node["lasttime"] = "";
 		$node["remark"] = "";
 		$node["itemurl"] = "";
+        $node["id"] = "";
 //@$nodes = "children:".json_encode($node["children"],JSON_UNESCAPED_UNICODE);
 //return json_encode($node,JSON_UNESCAPED_UNICODE);
 return   json_encode($node,JSON_UNESCAPED_UNICODE);

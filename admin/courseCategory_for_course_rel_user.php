@@ -125,11 +125,11 @@ div#rMenu ul li{
 	<div>
 
 		<div class="info">课程目录 &nbsp;</div>
-            <table title="Folder Browser" class="easyui-treegrid" style="width:1030px;height:500px"
+            <table title="课程" class="easyui-treegrid" style="width:1030px;height:500px"
                    data-options="
 				url: '../inc/getcoursetree_rel_user.php',
 				method: 'get',
-				rownumbers: true,
+				rownumbers: false,
 				idField: 'id',
 				treeField: 'name'
 			">
