@@ -170,7 +170,8 @@ if(isset($_SESSION["role"]) && ($_SESSION["role"]==ADMIN || $_SESSION["role"]==T
                             $arr=$mysql->fetch_array($res);
                             $newcourseids=Str_RemoveRepeatItem($arr["courseids"].$newcourseids);
                             $newcoursegroupid=Str_RemoveRepeatItem($arr["coursegroupids"].$coursegroupIds);
-
+                            $res = $mysql->query("select * from user_rel_course where userid=".$id);//吴琦师兄：这行代码的$userArr[$i]参数在哪定义的？是不是写错了？
+                            $arr = $mysql->fetch_array($res);
                             if($arr) {
                                 $mysql->query("update user_rel_course set courseids='$newcourseids' , coursegroupids='$newcoursegroupid' where userid=" . $id);
                                 //更新课程和课程组结束
