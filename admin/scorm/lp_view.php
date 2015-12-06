@@ -75,8 +75,8 @@
 session_start();
 setcookie(session_name(),session_id(),time()+600,"/");
 if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
-	header("Location:../../index.php");
-	exit();
+	//header("Location:../../index.php");
+	//exit();
 }
 
 include "../../inc/mysql.php";

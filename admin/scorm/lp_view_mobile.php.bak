@@ -73,7 +73,7 @@
 
 <?php 
 session_start();
-setcookie(session_name(),session_id(),time()+10,"/");
+setcookie(session_name(),session_id(),time()+600,"/");
 if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
 	//header("Location:../../index.php");
 	//exit();
@@ -94,7 +94,7 @@ include "learnpathItem.class.php";
 include_once "lib/database.lib.php";
 $lp_id = $_GET["id"];
 
-$userid = $_SESSION["userid"];
+$userid = $_GET["userid"];
 
 $lp_obj = new learnpath($lp_id,$userid);
 $lp_type = $lp_obj->get_type();
@@ -161,28 +161,14 @@ for($i=0; $i<count($htmlHeadXtra); $i++){
 ?>
 
 
-<div id="main" style="width:1225px"> <!-- start of #main wrapper for #content and #menu divs -->
+<div id="main" style="width:1000px"> <!-- start of #main wrapper for #content and #menu divs -->
 <!--   Begin Of script Output   -->
 
 <div id="learningPathMain" style="margin-top:5px;margin-bottom:5px;background-color:#666666; ">
 
-	<div id="learningPathLeftZone" style="float:left;width:200px;height:100%;">
-
-	<div id="toc_id" name="toc_name"  style="padding:0;margin-top:0px;height:60%;width:100%">
-        <div id="learningPathToc" style="font-size:9pt;margin:0;">
-		<?php
-		echo $lp_obj->get_html_toc();
-		?>
-	<!-- end log message layout -->
-        </div>
-        </div>
-	<!-- end toc layout -->
-
-	</div>
-
 	<!-- end learningPathLeftZone layout -->
 
-	<div id="learningPathRightZone" style="margin-left:205px;height:100%;background-color:#666666;">
+	<div id="learningPathRightZone" style="margin-left:0px;height:100%;background-color:#666666;">
 		<?php
         if($lp_obj->get_total_items_count()>1){
 

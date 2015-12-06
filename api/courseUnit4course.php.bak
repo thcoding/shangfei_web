@@ -155,7 +155,7 @@ for($j = 0; $j < $max;$j++){//依次取出每个叶子目录节点
 									$lesson_total_time+=$arr_lp_item_view["total_time"];//当前这个item的total_time
 
 									//$lesson_view_count
-									$lesson_view_count+= $arr_lp_item_view["view_count"];//lp_view表中的view_count
+									$lesson_view_count = $arr_lp_item_view["view_count"];//lp_view表中的view_count
 									error_log($lesson_view_count+"\n",3,'errors.log');
 									//$lesson_lastview_time;
 									$lesson_lastview_time = $arr_lp_item_view["start_time"];//当前这个item的上次访问时间
