@@ -1,11 +1,19 @@
 <?php 
-include "../inc/mysql.php";
-include "../inc/function.php";
-include "function.php";
 
-$userid = $postInfo["userid"];
+$userid = $postInfo["moduleid"];
+$lpid = $postInfo["lpid"];
 
-$res = $mysql->query("select * from lp_view where user_id=".$userid);
+$res = $mysql->query("select * from lp where id=".$lpid);
+while($arr = $mysql->fetch_array($res)){
+	$returnInfo["list"]["lp"][] = $arr;
+	//error_log(date("[Y-m-d H:i:s]")."\n", 3, "../php_err.log");
+	$resItem = $mysql->query("select * from lp_item where lp_id=".$arr["id"]);
+	while($arrItem = $mysql->fetch_array($resItem)){
+		$returnInfo["list"]["lp_item"][] = $arrItem;
+	}
+}
+
+$res = $mysql->query("select * from lp_view where user_id=".$userid." and lp_id=".$lpid);
 while($arr = $mysql->fetch_array($res)){
 	$returnInfo["list"]["lp_view"][] = $arr;
 	//error_log(date("[Y-m-d H:i:s]")."\n", 3, "../php_err.log");
@@ -15,5 +23,4 @@ while($arr = $mysql->fetch_array($res)){
 	}
 }
 
-echo json_encode($returnInfo,JSON_UNESCAPED_UNICODE);
 ?>

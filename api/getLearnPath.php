@@ -1,7 +1,4 @@
 <?php 
-include "../inc/mysql.php";
-include "../inc/function.php";
-include "function.php";
 
 $lpid = $postInfo["lpid"];
 

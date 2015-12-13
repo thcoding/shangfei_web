@@ -10,7 +10,7 @@ date_default_timezone_set("PRC");
 @$str = trim($_POST["json"]);
 
 $postInfo = json_decode(base64_decode(substr($str,8)),true);
-$moduleid = $postInfo["moduleid"];
+$moduleid = $postInfo["moduleid"];zz
 
 file_put_contents("log","moduleid=".$postInfo["moduleid"]."|".GetIP()."|".$str."|".date("Y-m-d H:i:s")."\n",FILE_APPEND);
 
@@ -44,7 +44,7 @@ switch ($moduleid){
 		include "getUserLearnPath.php";
 		break;
 	case 8:  //获取Scorm课件的数据表形式记录
-		include "getUserLearnPath.php";
+		include "getLearnPath.php";
 		break;
 }
 

@@ -76,7 +76,8 @@ for($j = 0; $j < $max;$j++){//依次取出每个叶子目录节点
 				$res = $mysql->query("select * from courseunitversion_rel_attachment where deleted=0 and id in ($ids) order by time desc");//选出目录下所包含的所有课程单元版本
 				$courseunitArr = Array();
 				while($arr = $mysql->fetch_array($res)){//得到courseunitversion_rel_attachment表中的一列
-					
+					//**获取courseunitversion id**
+					$courseunitversionid = $arr["id"];
 					//**获取lp_id**
 					$lp_id = $arr["lpid"];
 					
@@ -120,8 +121,10 @@ for($j = 0; $j < $max;$j++){//依次取出每个叶子目录节点
 						$returnInfo["list"]["courseUnit"][$i]["unitversionid"] = $arr["id"];//单元版本id
 						$returnInfo["list"]["courseUnit"][$i]["viewcount"] = $lesson_view_count;
 						$returnInfo["list"]["courseUnit"][$i]["totaltime"] = $lesson_total_time;
-						$returnInfo["list"]["courseUnit"][$i]["lasttime"] = $lesson_lastview_time;					
-
+						$returnInfo["list"]["courseUnit"][$i]["lasttime"] = $lesson_lastview_time;
+						$returnInfo["list"]["courseUnit"][$i]["scormpath"] = $dirname."/".$href;
+						$returnInfo["list"]["courseUnit"][$i]["userid"] = $user_id;
+						$returnInfo["list"]["courseUnit"][$i]["courseunitversionid"] = $courseunitversionid;
 					}
 					else{//"SCORM/AICC"课件，可记录学习状态
 						$lesson_status = ""; //学习状态：无状态、未学习、进行中、已完成（lp_item_view表中参数）
@@ -155,8 +158,7 @@ for($j = 0; $j < $max;$j++){//依次取出每个叶子目录节点
 									$lesson_total_time+=$arr_lp_item_view["total_time"];//当前这个item的total_time
 
 									//$lesson_view_count
-									$lesson_view_count = $arr_lp_item_view["view_count"];//lp_view表中的view_count
-									error_log($lesson_view_count+"\n",3,'errors.log');
+									$lesson_view_count+= $arr_lp_item_view["view_count"];//lp_view表中的view_count
 									//$lesson_lastview_time;
 									$lesson_lastview_time = $arr_lp_item_view["start_time"];//当前这个item的上次访问时间
 								}
@@ -172,18 +174,23 @@ for($j = 0; $j < $max;$j++){//依次取出每个叶子目录节点
 								$lesson_status = "未学习";
 
 							}
+
+						$href = $lesson_attachment["path"];
 						
 						$returnInfo["list"]["courseUnit"][$i]["type"] = 1;//scorm课件
 						$returnInfo["list"]["courseUnit"][$i]["title"] = $lesson_courseunitName;
-						$returnInfo["list"]["courseUnit"][$i]["url"] = $_SERVER['HTTP_HOST'].'/shangfei_web/admin/scorm/lp_view_mobile.php?id='.$lp_id.'&userid='.$user_id;
+						$returnInfo["list"]["courseUnit"][$i]["url"] = $dirname.'/../admin/scorm/lp_view_mobile.php?id='.$lp_id.'&userid='.$user_id;
 						$returnInfo["list"]["courseUnit"][$i]["status"] = $lesson_status;
 						$returnInfo["list"]["courseUnit"][$i]["versionname"] = $lesson_courseunitversionName;
-
+						
 						//几个新增的参数
 						$returnInfo["list"]["courseUnit"][$i]["unitversionid"] = $arr["id"];//单元版本id
 						$returnInfo["list"]["courseUnit"][$i]["viewcount"] = $lesson_view_count;
 						$returnInfo["list"]["courseUnit"][$i]["totaltime"] = $lesson_total_time;
 						$returnInfo["list"]["courseUnit"][$i]["lasttime"] = $lesson_lastview_time;
+						$returnInfo["list"]["courseUnit"][$i]["scormpath"] = $dirname."/".$href;
+						$returnInfo["list"]["courseUnit"][$i]["userid"] = $user_id;
+						$returnInfo["list"]["courseUnit"][$i]["courseunitversionid"] = $courseunitversionid;
 					}
 					
 					$i++;
