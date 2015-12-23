@@ -86,7 +86,7 @@ include "../inc/navigation_admin.php";
 				<button type="submit">上传</button>
 				<input type="hidden" name="id" value="<?php echo $id;?>">
 				<p>
-				<div>&nbsp; &nbsp; 课程单元包类型：<select name="packageType"><option value="1" selected>普通文件</option><option value="2">SCORM/AICC文件</option></select></div>
+				<div>&nbsp; &nbsp; 课程单元包类型：<select name="packageType"><option value="1" selected>普通文件</option><option value="2">SCORM文件</option><option value="3">AICC文件</option></select></div>
 				<?php
 					$res = $mysql->query("select * from courseunitversion_rel_attachment where deleted=0 and courseunitid=".$id);
 					if($mysql->num_rows($res)>0){
@@ -128,10 +128,31 @@ include "../inc/navigation_admin.php";
 							$size = $attachmentArr["size"]."KB";
 						}
 						$packageType = $arr["lpid"]?"SCORM/AICC":"普通文件";
+                        if($packageType=="SCORM/AICC"){
+                            $reslp= $mysql->query("select * from lp where id=".$arr["lpid"]);
+                            $arrlp=$mysql->fetch_array($reslp);
+                            $jslib=$arrlp["js_lib"];
+                            $packageType=strstr($jslib,"aicc");
+                            if(strstr($jslib,"aicc")){
+                                $packageType="AICC";
+                                if($arrlp["lp_interface"]==0) {
+                                    $viewsrc = "../upload/scorm/" . $arrlp["parentdir"] . "/main.html";
+                                }else{
+                                    $viewsrc = "../upload/scorm/" . $arrlp["parentdir"] . "/xg.html?AICC_SID=$arr[lpid]&AICC_URL=http%3a%2f%2flocalhost%3a8080%2fadmin%2fMyLessonAiccProcessor.php";
+                                }
+                                //$viewsrc="scorm/lp_view.php?id=$arr[lpid]";
+                            }else{
+                                $packageType="SCORM";
+                                $viewsrc="scorm/lp_view.php?id=$arr[lpid]";
+                            }
+
+                        }
 						if($attachmentArr["type"]=="zip"){
 							if($arr["lpid"]>0){//SCORM/AICC文件
-								echo "<tr><td>".$i++."</td><td>".$arr["versionname"]."</td><td>".$attachmentArr["type"]."</td><td>".$size."</td><td>".$packageType."</td><td>是</td><td>不可用</td><td>不可用</td>";
-								echo "<td><a href='scorm/lp_view.php?id=$arr[lpid]' target='_blank'><img src='../img/look.gif' alt='查看' title='查看'></a><a href='delete.php?type=6&id=".$arr["id"]."&cid=$id'><img src='../img/delete.png' alt='删除' title='删除'></a></td></tr>";
+
+                                echo "<tr><td>".$i++."</td><td>".$arr["versionname"]."</td><td>".$attachmentArr["type"]."</td><td>".$size."</td><td>".$packageType."</td><td>是</td><td>不可用</td><td>不可用</td>";
+								echo "<td><a href='$viewsrc' target='_blank'><img src='../img/look.gif' alt='查看' title='查看'></a><a href='delete.php?type=6&id=".$arr["id"]."&cid=$id'><img src='../img/delete.png' alt='删除' title='删除'></a></td></tr>";
+
 							}else{
 								echo "<tr><td>".$i++."</td><td>".$arr["versionname"]."</td><td>".$attachmentArr["type"]."</td><td>".$size."</td><td>".$packageType."</td><td>".($attachmentArr["unzip"]?"是":"否")."</td><td><a href='javascript:;' title='点击设置' onclick='setIndexFile(\"".pathinfo($attachmentArr["path"],PATHINFO_DIRNAME)."/unzip/\",$attachmentArr[id])'>设置入口文件</a></td><td><a href='showDir.php?dir=".pathinfo($attachmentArr["path"],PATHINFO_DIRNAME)."/unzip/' target='_blank'>查看</a></td>";
 								if($attachmentArr["indexfile"]){

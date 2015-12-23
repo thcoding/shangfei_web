@@ -57,7 +57,7 @@ if($packageType==1){  //普通文件
 			}
 		}
 	}
-}else if($packageType==2){ // SCORM/AICC
+}else if($packageType==2||$packageType==3){ // SCORM/AICC
 	$userid = $_SESSION["userid"];
 	include "scorm/lp_upload.php";
 }

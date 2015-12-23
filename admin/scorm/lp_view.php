@@ -139,17 +139,23 @@ if (!isset($src))
 			break;
 		case 3:
 			//aicc
-			$lp_obj->stop_previous_item(); //save status manually if asset
-			$htmlHeadXtra[] = '<script src="scorm_api.php" type="text/javascript" language="javascript"></script>';
-			$htmlHeadXtra[] = '<script src="'.$lp_obj->get_js_lib().'" type="text/javascript" language="javascript"></script>';
-			$prereq_check = $lp_obj->prerequisites_match($lp_item_id);
-			if($prereq_check === true){
-				$src = $lp_obj->get_link('http',$lp_item_id);
-				$lp_obj->start_current_item(); //starts time counter manually if asset
-			}else{
-				$src = 'blank.php';
-			}
-			break;
+            $lp_obj->stop_previous_item(); //save status manually if asset
+
+            $htmlHeadXtra[] = '<script src="aicc_api.php" type="text/javascript" language="javascript"></script>';
+            $prereq_check = $lp_obj->prerequisites_match($lp_item_id);
+
+            if($prereq_check === true){
+                $src = $lp_obj->get_link('http',$lp_item_id);
+
+                //echo ($lp_item_id." | ".$src);
+
+                $lp_obj->start_current_item(); //starts time counter manually if asset
+
+            }else{
+                $src = 'blank.php?error=prerequisites';
+            }
+
+            break;
 		case 4:
 			break;
 	}
@@ -173,10 +179,13 @@ for($i=0; $i<count($htmlHeadXtra); $i++){
 		<?php
 		echo $lp_obj->get_html_toc();
 		?>
+            <?php echo "很重要";
+            echo $lp_obj->get_html_toc();?>
 	<!-- end log message layout -->
         </div>
         </div>
 	<!-- end toc layout -->
+
 
 	</div>
 

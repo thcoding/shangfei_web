@@ -275,6 +275,7 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
             $courseunit["viewcount"] = $lesson_view_count;
             $courseunit["lasttime"] = $lesson_lastview_time;
             $courseunit["remark"] = $lesson_remarks;
+
             $courseunit["itemurl"] = "<a href=\"javascript:void(0);\" onclick=\"LaunchDueItem($arr[lpid])\" target=\"_blank\"><img src=\"../img/look.gif\" alt=\"查看\" title=\"查看\"></a>";
 
             $courseunits[] = $courseunit;
