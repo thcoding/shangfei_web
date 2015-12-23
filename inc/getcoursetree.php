@@ -225,14 +225,13 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
             $lesson_view_count = 0;   //学习次数（lp_view表中参数）
             $lesson_lastview_time = 0;//最后访问日期（lp_item_view表中参数）
             $lesson_remarks="";      //*备注*
-
+            $lesson_view_status="";
                 //根据userid和lp_id获得lp_view表中的id；
                 $res_lp_view = $mysql->query("select * from lp_view where lp_id= $lp_id and user_id = $userid ");
                 $arr_lp_view = $mysql->fetch_array($res_lp_view);
                 $lp_view_id = $arr_lp_view["id"];
 
                 if($lp_view_id){//已经学习过该lp，则开始获取所有lp_item_view的信息（一个或多个）
-
                     //根据lp_view_id获得lp_item_view表中所有的lp_item_view信息
                     $res_lp_item_view = $mysql->query("select * from lp_item_view where lp_view_id= $lp_view_id ");
 
@@ -248,10 +247,10 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
 
                         //$lesson_total_time
                         $lesson_total_time+=$arr_lp_item_view["total_time"];//当前这个item的total_time
-
+                        $lesson_score=$arr_lp_item_view["score"];
                         //$lesson_view_count
                         $lesson_view_count = $arr_lp_item_view["view_count"];//lp_view表中的view_count
-
+                        $lesson_view_status=$arr_lp_item_view["status"];
                         //$lesson_lastview_time;
                         $lesson_lastview_time = date('Y-m-d H:i:s',$arr_lp_item_view["start_time"]);//当前这个item的上次访问时间
                     }
@@ -262,6 +261,13 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
                     else{//所有lp_item_view都达到completed状态
                     $lesson_status = "已完成";
                     }
+                    if($lesson_view_status=="F"){
+                        $lesson_status="考试失败" ;
+                    }
+                    if($lesson_view_status=="S"){
+                        $lesson_status="考试通过" ;
+                    }
+
                 }
                 else{//尚未学习过该lp，则$lesson_status=尚未学习
                     $lesson_status = "未学习";
