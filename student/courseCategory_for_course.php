@@ -29,6 +29,7 @@
     function LaunchDueItem(d,id,type) {
         var url;
         var dir= unescape(d);
+
         alert( dir);
             if(type==1){
                 url='../admin/scorm/lp_view.php?id='+id;

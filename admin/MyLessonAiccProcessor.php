@@ -19,6 +19,9 @@ $texthand=fopen("D:/aicc.txt","a");
 $userid=$_SESSION["userid"];
 
 if($SESSION_ID!=0){
+    if($_SESSION["aicctime"]==""){
+        $_SESSION["aicctime"]=time();
+    }
     $lpid=$SESSION_ID;
     $sql="select * from lp_view where lp_id='".$lpid."' and user_id='".$userid."'";
     $res_lp_view=$mysql->query($sql);
@@ -36,42 +39,41 @@ if($SESSION_ID!=0){
     }
     $res_lp_view=$mysql->query($sql);
     $arr_lp_view=$mysql->fetch_array($res_lp_view);
-    fwrite($texthand,"\n".$res_lp_view."xxxxxxxxxxx".$arr_lp_view."data".$aicc_data);
     $lpviewid=$arr_lp_view["id"];
     $lastitemid=$arr_lp_view["last_item"];
     $_SESSION["lpviewid"]=$lpviewid;
     $_SESSION["lastitemid"]=$lastitemid;
     $sql="select * from lp_item_view where lp_view_id='".$lpviewid."'";
     $res_lp_item_view=$mysql->query($sql);
-    $arr_lp_item_view=$mysql->fetch_array($res_lp_view);
-    fwrite($texthand,"成功0".$aicc_data);
+    $arr_lp_item_view=$mysql->fetch_array($res_lp_item_view);
     //flash 返回的数据 $aicc_data
     if($mysql->num_rows($res_lp_item_view)!=0){
-        fwrite($texthand,"成功".$aicc_data);
-        if($aicc_data!=""&&!isset($aicc_data)==1) {
+        fwrite($texthand,"***************1");
+        if($aicc_data!=""&&isset($aicc_data)==1) {
             //从解析aicc返回的数据格式中
-            fwrite($texthand,"成功2");
+            fwrite($texthand,"***************2");
             if(strpos($aicc_data,"[core]")!==false) {
-                $start_time = time();
-                $stringtime = trim(intercept_str("time=", "\n", $aicc_data));//时间字符串00:00:12
-                $total_time = strtotime($stringtime) + strtotime($arr_lp_item_view["total_time"]);
-                $score = trim(intercept_str("score=", "\n", $aicc_data));;
-                $status = trim(intercept_str("lesson_status=", "\n", $aicc_data));;
+                fwrite($texthand,"***************3");
+                $start_time=$_SESSION["aicctime"];//最后一次访问时间
+                unset ($_SESSION["aicctime"]);
+                $lpviewid=$_SESSION["lpviewid"];
+                $stringtime = trim(intercept_str("time=", "\n", $aicc_data));
+                $total_time = (time()-$start_time)+$arr_lp_item_view["total_time"];
+                $score = trim(intercept_str("score=", "\n", $aicc_data));
+                $status = trim(intercept_str("lesson_status=", "\n", $aicc_data));
                 $core_data = $_SESSION["aicc_data"];//trim(intercept_str("aicc_data=", "\n", $aicc_data));;//suspend_data
-                $lesson_location = trim(intercept_str("lesson_location=", "\n", $aicc_data));;
+                $lesson_location = trim(intercept_str("lesson_location=", "\n", $aicc_data));
                 $core_exit = "none";
-                $max_score = 100;
+                $max_score = "100";
                 $view_count = $arr_lp_item_view["view_count"] + 1;
                 //修改已有项
-                fwrite($texthand,"修改lp_item_view表");
-                $mysql->query("update lp_item_view SET view_count='$view_count',total_time='$total_time',
-                        score='$score',status='$status',suspend_data='$core_data' WHERE lp_view_id='".$lpviewid."'");
+                fwrite($texthand,"\n".$res_lp_view."xxxxxxxxxxx".$view_count."data".$arr_lp_item_view["view_count"]."##############");
+                $mysql->query("update lp_item_view SET start_time='$start_time', view_count='$view_count',total_time='$total_time',score='$score',status='$status',suspend_data='$core_data' WHERE lp_view_id='".$lpviewid."'");
             }else{
                 //可以放入session
                 $core_data=$aicc_data.$_SESSION["aicc_data"];
                 $_SESSION["aicc_data"]=$core_data;
             }
-            fwrite($texthand,"\n第一处");
             $sql="select * from lp_item_view where lp_view_id='".$lpviewid."'";
             $res=$mysql->query($sql);
             $arr=$mysql->fetch_array($res);
@@ -122,14 +124,13 @@ if($SESSION_ID!=0){
         fwrite($texthand,"请问企鹅的去1".$aicc_data."X".isset($aicc_data));
         if($aicc_data!=""&&isset($aicc_data)==1) {
             //解析aicc_data
-            fwrite($texthand,"请问企鹅的去2");
             if(strpos($aicc_data,"[core]")!==false) {
-                fwrite($texthand,"请问企鹅的去3");
                 $lpviewid=$_SESSION["lpviewid"];
                 $lastitemid=$_SESSION["lastitemid"];
-                $start_time = time();
-                $stringtime = trim(intercept_str("time=", "\n", $aicc_data));//时间字符串00:00:12
-                $total_time = strtotime($stringtime) + strtotime($arr_lp_item_view["total_time"]);
+                $start_time=$_SESSION["aicctime"];
+                unset ($_SESSION["aicctime"]);
+                $stringtime = trim(intercept_str("time=", "\n", $aicc_data));
+                $total_time = (time()-$start_time)+$arr_lp_item_view["total_time"];
                 $score = trim(intercept_str("score=", "\n", $aicc_data));
                 $status = trim(intercept_str("lesson_status=", "\n", $aicc_data));
                 $core_data = $_SESSION["aicc_data"];//trim(intercept_str("aicc_data=", "\n", $aicc_data));;//suspend_data

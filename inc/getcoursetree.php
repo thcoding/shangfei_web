@@ -293,9 +293,8 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
             $texthand=fopen("D:/aicc.txt","a");
             fwrite($texthand,$dir);
             fclose($texthand);
-            $dir=phpescape($dir);
+           $dir=phpescape($dir);
             //$dir=settype($d,"string");
-
             $courseunit["itemurl"] = "<a href=\"javascript:void(0);\" onclick=\"LaunchDueItem('$dir',$lp_id,$type)\" target=\"_blank\"><img src=\"../img/look.gif\" alt=\"查看\" title=\"查看\"></a>";
             $courseunits[] = $courseunit;
         }
