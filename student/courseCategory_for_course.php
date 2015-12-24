@@ -35,7 +35,10 @@
                 url='../admin/scorm/lp_view.php?id='+id;
             }
             if(type==2){
-                url = "../upload/scorm/"+dir+"/main.html";
+                //url = "../upload/scorm/"+dir+"/main.html";
+                url = '../upload/scorm/'
+                url=url.concat(dir);
+                url=url.concat('/main.html?AICC_SID='+id+'&AICC_URL=http%3a%2f%2flocalhost%3a8080%2fadmin%2fMyLessonAiccProcessor.php');
             }
             if(type==3){
                 url = '../upload/scorm/'
