@@ -127,9 +127,7 @@ if (!isset($src))
 			
 			if($prereq_check === true){
 				$src = $lp_obj->get_link('http',$lp_item_id);
-
 				//echo ($lp_item_id." | ".$src);
-				
 				$lp_obj->start_current_item(); //starts time counter manually if asset
 
 			}else{
@@ -179,8 +177,6 @@ for($i=0; $i<count($htmlHeadXtra); $i++){
 		<?php
 		echo $lp_obj->get_html_toc();
 		?>
-            <?php echo "很重要";
-            echo $lp_obj->get_html_toc();?>
 	<!-- end log message layout -->
         </div>
         </div>
@@ -194,14 +190,12 @@ for($i=0; $i<count($htmlHeadXtra); $i++){
 	<div id="learningPathRightZone" style="margin-left:205px;height:100%;background-color:#666666;">
 		<?php
         if($lp_obj->get_total_items_count()>1){
-
           echo"<div style = 'text-align:right;' >";
           echo "<a href='#' onclick= 'javascript:switch_item($lp_item_id,\"previous\");setTimeout(\"window.location.reload()\", 50);return false;'><img src='../../img/left.png' width='30'></a>
 			<a href= '#' onclick = 'javascript:switch_item($lp_item_id,\"next\");setTimeout(\"window.location.reload()\", 50);return false;' ><img src = '../../img/right.png' width = '30' ></a >
 		    </div >";
         } 
         ?>
-
 		<iframe id="content_id" name="content_name" src="<?php echo $src;?>" border="0" frameborder="0" class="autoHeight" style="width:100%;height:750px"></iframe>
 	</div>
 

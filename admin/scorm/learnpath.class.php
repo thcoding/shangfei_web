@@ -3171,16 +3171,13 @@ class learnpath {
             }
 
             $html .= "</div>";
-
             if ($scorm_color_background != '') {
                 $html .= '</div>';
             }
-
             $color_counter++;
         }
-        $html .= "</div>\n</div>";
-
-        return $html.$item['type'];
+        $html .= "</div></div>";
+        return $html;
     }
 
     /**

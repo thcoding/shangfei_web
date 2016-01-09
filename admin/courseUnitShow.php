@@ -138,7 +138,7 @@ include "../inc/navigation_admin.php";
                                 if($arrlp["lp_interface"]==0) {
                                     $viewsrc = "../upload/scorm/" . $arrlp["parentdir"] . "/main.html";
                                 }else{
-                                    $viewsrc = "../upload/scorm/" . $arrlp["parentdir"] . "/xg.html?AICC_SID=$arr[lpid]&AICC_URL=http%3a%2f%2flocalhost%3a8080%2fadmin%2fMyLessonAiccProcessor.php";
+                                    $viewsrc = "../upload/scorm/" . $arrlp["parentdir"] . "/xg.html?AICC_SID=$arr[lpid]&AICC_URL=http%3a%2f%2f127.0.0.1%3a8080%2fadmin%2fMyLessonAiccProcessor.php";
                                 }
                                 //$viewsrc="scorm/lp_view.php?id=$arr[lpid]";
                             }else{

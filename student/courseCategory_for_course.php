@@ -29,8 +29,6 @@
     function LaunchDueItem(d,id,type) {
         var url;
         var dir= unescape(d);
-
-        alert( dir);
             if(type==1){
                 url='../admin/scorm/lp_view.php?id='+id;
             }
@@ -38,12 +36,12 @@
                 //url = "../upload/scorm/"+dir+"/main.html";
                 url = '../upload/scorm/'
                 url=url.concat(dir);
-                url=url.concat('/main.html?AICC_SID='+id+'&AICC_URL=http%3a%2f%2flocalhost%3a8080%2fadmin%2fMyLessonAiccProcessor.php');
+                url=url.concat('/main.html?AICC_SID='+id+'&AICC_URL=http%3a%2f%2f127.0.0.1%3a8080%2fadmin%2fMyLessonAiccProcessor.php');
             }
             if(type==3){
                 url = '../upload/scorm/'
                 url=url.concat(dir);
-                url=url.concat('/xg.html?AICC_SID='+id+'&AICC_URL=http%3a%2f%2flocalhost%3a8080%2fadmin%2fMyLessonAiccProcessor.php');
+                url=url.concat('/xg.html?AICC_SID='+id+'&AICC_URL=http%3a%2f%2f127.0.0.1%3a8080%2fadmin%2fMyLessonAiccProcessor.php');
             }
             var name = 'lp_view';
             var specs = 'menubar=no,toolbar=no,location=no,status=no,directories=no,history=no,resizable=yes';
