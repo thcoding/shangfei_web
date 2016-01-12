@@ -244,19 +244,19 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
                         if(($lesson_item_status!='completed')&&($lesson_item_status!='complete')){//如果该item尚未完成
                             $incompleted_count++;
                         }
-
                         //$lesson_total_time
-                        $lesson_total_time+=$arr_lp_item_view["total_time"];//当前这个item的total_time
+                        $lesson_total_time=$lesson_total_time+$arr_lp_item_view["total_time"];//当前这个item的total_time
                         $lesson_score=$arr_lp_item_view["score"];
                         //$lesson_view_count
-                        $lesson_view_count = $arr_lp_item_view["view_count"];//lp_view表中的view_count
+                        $lesson_view_count =+ $arr_lp_item_view["view_count"];//lp_view表中的view_count
                         $lesson_view_status=$arr_lp_item_view["status"];
                         //$lesson_lastview_time;
                         $lesson_lastview_time = date('Y-m-d H:i:s',$arr_lp_item_view["start_time"]);//当前这个item的上次访问时间
                     }
 
-                    if($incompleted_count!=0){//如果存在尚未完成的item
+                    if($incompleted_count!=0){//如果存在尚未完成的item，不只有一个item
                     $lesson_status = "进行中";
+
                     }
                     else{//所有lp_item_view都达到completed状态
                     $lesson_status = "已完成";
@@ -286,6 +286,7 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
             $arr_lp = $mysql->fetch_array($res_lp);
             $type=1;//scorm
             $url='../admin/scorm/lp_view.php?id='.$lp_id;
+
             if($arr_lp["lp_type"]==3&&$arr_lp["lp_interface"]==0){
                 $type=2;//普通aicc
                 $url = "../upload/scorm/$arr_lp[parentdir]/main.html";
@@ -296,12 +297,9 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
                 $url = "../upload/scorm/$arr_lp[parentdir]/xg.html?AICC_SID=$lp_id&AICC_URL=http%3a%2f%2flocalhost%3a8080%2fadmin%2fMyLessonAiccProcessor.php";
             }
             $dir=$arr_lp["parentdir"];
-            $texthand=fopen("D:/aicc.txt","a");
-            fwrite($texthand,$dir);
-            fclose($texthand);
            $dir=phpescape($dir);
             //$dir=settype($d,"string");
-            $courseunit["itemurl"] = "<a href=\"javascript:void(0);\" onclick=\"LaunchDueItem('$dir',$lp_id,$type)\" target=\"_blank\"><img src=\"../img/look.gif\" alt=\"查看\" title=\"查看\"></a>";
+            $courseunit["itemurl"] = "<a href=\"javascript:void(0);\" onclick=\"LaunchDueItem('$dir','$lp_id','$type')\" target=\"_blank\"><img src=\"../img/look.gif\" alt=\"查看\" title=\"查看\"></a>";
             $courseunits[] = $courseunit;
         }
     }
