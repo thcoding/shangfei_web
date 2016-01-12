@@ -3169,7 +3169,6 @@ class learnpath {
                     $html .= "&nbsp;<img id='toc_img_" . $item['id'] . "' src='" . $icon_name[$item['status']] . "' alt='" . substr($item['status'], 0, 1) . "' width='12' height='12' />";
                 }
             }
-
             $html .= "</div>";
             if ($scorm_color_background != '') {
                 $html .= '</div>';
