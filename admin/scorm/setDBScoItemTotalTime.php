@@ -44,7 +44,7 @@ switch($actionType){
             while($arr_lp_view=$mysql->fetch_array($res_lp_view)){
                 $view_item_num++;
                 $lp_view_id=$arr_lp_view["id"];
-                $lp_view_item_total_time=$arr_lp_view["total_time"];
+                $lp_view_item_total_time=$arr_lp_view_item["total_time"];
             }
         }
         if($view_item_num==1){
