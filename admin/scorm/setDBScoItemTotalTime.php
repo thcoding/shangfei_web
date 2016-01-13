@@ -44,10 +44,11 @@ switch($actionType){
             while($arr_lp_view=$mysql->fetch_array($res_lp_view)){
                 $view_item_num++;
                 $lp_view_id=$arr_lp_view["id"];
+                $lp_view_item_total_time=$arr_lp_view["total_time"];
             }
         }
         if($view_item_num==1){
-            $ItemTotalTime=$ItemTotalTime/1000;
+            $ItemTotalTime=$ItemTotalTime/1000+$lp_view_item_total_time;
             $mysql->query("update lp_item_view set total_time='$ItemTotalTime'where lp_item_id= $lpItemId AND lp_view_id=$lp_view_id");
             $_SESSION["ItemStartTime"]=0;
         }

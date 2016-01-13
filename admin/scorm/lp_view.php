@@ -84,12 +84,11 @@
             url: "setDBScoItemTotalTime.php",
             data:"type="+type+"&newTime="+nowTimestamp+"&lpItemId="+lpitemid+"&lpId="+lpId,
             success:function(msg){
-                alert("sucess");
+                /*alert("sucess");*/
             }
         });
     }
     var start=function(){
-        alert("qweqw");
         setScoItemTotalTimeByAjax("start",<?php echo $lp_item_id;?>,<?php echo $lp_id;?>);
     }
     var setTime=function(){
