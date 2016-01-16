@@ -110,7 +110,6 @@ class scorm extends learnpath {
 						if($child->nodeType == XML_ELEMENT_NODE){
 							switch($child->tagName){
 								case 'metadata':
-									//parse items from inside the <metadata> element
 									$this->metadata = new scormMetadata('manifest',$child);
 									break;
 								case 'organizations':
@@ -303,6 +302,10 @@ class scorm extends learnpath {
 			$previous = 0;
 			$level = 0;
 			foreach($list as $item){
+                $myfile=fopen("D:/aicc.txt","a");
+                fwrite($myfile,"321qwdeqe12e");
+                fclose($myfile);
+
 				if($item['level'] > $level){
 					//push something into the parents array
 					array_push($parents_stack,$previous);
@@ -345,17 +348,7 @@ class scorm extends learnpath {
 				if ($max_score==0 || is_null($max_score) || $max_score=='') {
 					$max_score=100;
 				}
-				//DOM in PHP5 is always recovering data as UTF-8, somehow, no matter what
-				//the XML document encoding is. This means that we have to convert
-				//the data to the declared encoding when it is not UTF-8
 
-				//if($this->manifest_encoding != 'UTF-8'){
-		     		//$title = api_convert_encoding($title,$this->manifest_encoding,'UTF-8');
-		     	//}
-
-				//if($this->manifest_encoding != $charset){
-		     	//	$title = api_convert_encoding($title,$charset,$this->manifest_encoding);
-		     	//}
 				$identifier = $mysql->escape_string($item['identifier']);
 				$prereq = $mysql->escape_string($item['prerequisites']);
 				$sql_item = "INSERT INTO $new_lp_item " .
@@ -378,7 +371,7 @@ class scorm extends learnpath {
 				//now update previous item to change next_item_id
 				$upd = "UPDATE $new_lp_item SET next_item_id = $item_id WHERE id = $previous";
 				$upd_res = $mysql->query($upd);
-				//update previous item id
+
 				$previous = $item_id;
 
 				// code for indexing, now only index specific fields like terms and the title

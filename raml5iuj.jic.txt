@@ -1,0 +1,42 @@
+﻿Merge branch 'master' of https://github.com/thcoding/shangfei_web
+
+Conflicts:
+	admin/save.php
+	log.html
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 7 and 4 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   admin/save.php
+#	modified:   admin/save.php.bak
+#	modified:   admin/scorm/lp_view.php.bak
+#	new file:   admin/scorm/lp_view_mobile.php
+#	new file:   admin/scorm/lp_view_mobile.php.bak
+#	modified:   api/LMSApi.php
+#	modified:   api/LMSApi.php.bak
+#	modified:   api/courseUnit4course.php
+#	new file:   api/courseUnit4course.php.bak
+#	new file:   api/errors.log
+#	new file:   api/getLearnPath.php
+#	new file:   api/getLearnPath.php.bak
+#	new file:   api/getUserLearnPath.php
+#	new file:   api/getUserLearnPath.php.bak
+#	modified:   api/log
+#	modified:   inc/config.php.bak
+#	modified:   log.html
+#	modified:   php_err.log
+#
+
