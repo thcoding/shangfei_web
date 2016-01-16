@@ -190,7 +190,8 @@ type:scorm
 <br>2015-12-06 20:59:38	userid:57; courseid:40;
 <br>2015-12-06 21:00:17	userid:57; courseid:40;
 <br>2015-12-06 21:00:24	userid:57; courseid:40;
-
+<<<<<<< HEAD
+>>>>>>> bd7059527dbbcdb318bacf9d816c1c91e5a19e71
 <br>2015-12-24 12:23:11	userid:2; courseid:33;
 <br>2015-12-24 21:29:48	userid:2; courseid:33;
 <br>2015-12-24 21:33:13	userid:2; courseid:33;
