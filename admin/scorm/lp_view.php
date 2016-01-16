@@ -55,9 +55,53 @@
 </script>
  
 <script type="text/javascript">
-    window.onload = function(){
-        window.open (<?php echo $src;?>,'newwindow','height=100,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no');
+    <?php
+        session_start();
+        setcookie(session_name(),session_id(),time()+600,"/");
+        if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
+            header("Location:../../index.php");
+            exit();
+        }
+        include "../../inc/mysql.php";
+        include "../../inc/function.php";
+        include "../../inc/config.php";
+
+        include "learnpath.class.php";
+        include "learnpathItem.class.php";
+        include_once "lib/database.lib.php";
+        $lp_id = $_GET["id"];
+        $userid = $_SESSION["userid"];
+        $lp_obj = new learnpath($lp_id,$userid);
+        $lp_type = $lp_obj->get_type();
+        $lp_item_id = $lp_obj->get_current_item_id();
+
+        $_SESSION["lpobject"] = serialize($lp_obj);
+    ?>
+    var setScoItemTotalTimeByAjax=function(type,lpitemid,lpId){
+        var nowTimestamp = Date.parse(new Date());
+        $.ajax({
+            type: "GET",
+            url: "setDBScoItemTotalTime.php",
+            data:"type="+type+"&newTime="+nowTimestamp+"&lpItemId="+lpitemid+"&lpId="+lpId,
+            success:function(msg){
+                /*alert("sucess");*/
+            }
+        });
     }
+    var start=function(){
+        setScoItemTotalTimeByAjax("start",<?php echo $lp_item_id;?>,<?php echo $lp_id;?>);
+    }
+    var setTime=function(){
+        setScoItemTotalTimeByAjax("setTime",<?php echo $lp_item_id;?>,<?php echo $lp_id;?>);
+    }
+    /*window.onload = function(){
+        alert("qweqw");
+        setScoItemTotalTimeByAjax("start",<?php echo $lp_item_id;?>,<?php echo $lp_id;?>);
+        window.open (<?php echo $src;?>,'newwindow','height=100,width=400,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no,status=no');
+    }*/
+    /*window.Onunload=function(){
+        setScoItemTotalTimeByAjax("setTime",<?php echo $lp_item_id;?>,<?php echo $lp_id;?>);
+    }*/
     $(function(){
        $(window).scroll(function(){
          $("#footer").css({"left":"0","bottom":"0"});
@@ -67,40 +111,9 @@
 
 </script>
 </head>
-<body>
-
+<body onload="start()" Onunload="setTime()">
 <div id="wrapper">
-
-<?php 
-session_start();
-setcookie(session_name(),session_id(),time()+600,"/");
-if(!(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0)){
-	header("Location:../../index.php");
-	exit();
-}
-
-include "../../inc/mysql.php";
-include "../../inc/function.php";
-include "../../inc/config.php";
-
-//if($_SESSION["role"]==STUDENT){
-//	include "../../inc/student_header_childof_studentdir.php";
-//}else{
-//	include "../../inc/admin_header_childof_admindir.php";
-//}
-
-include "learnpath.class.php";
-include "learnpathItem.class.php";
-include_once "lib/database.lib.php";
-$lp_id = $_GET["id"];
-
-$userid = $_SESSION["userid"];
-
-$lp_obj = new learnpath($lp_id,$userid);
-$lp_type = $lp_obj->get_type();
-$lp_item_id = $lp_obj->get_current_item_id();
-
-$_SESSION["lpobject"] = serialize($lp_obj);
+<?php
 
 if (!isset($src))
  {
@@ -121,15 +134,12 @@ if (!isset($src))
 		case 2:
 			//save old if asset
 			$lp_obj->stop_previous_item(); //save status manually if asset
-			
 			$htmlHeadXtra[] = '<script src="scorm_api.php" type="text/javascript" language="javascript"></script>';
 			$prereq_check = $lp_obj->prerequisites_match($lp_item_id);
 			
 			if($prereq_check === true){
 				$src = $lp_obj->get_link('http',$lp_item_id);
-
 				//echo ($lp_item_id." | ".$src);
-				
 				$lp_obj->start_current_item(); //starts time counter manually if asset
 
 			}else{
@@ -137,27 +147,29 @@ if (!isset($src))
 			}
 			
 			break;
-		case 3:
-			//aicc
-			$lp_obj->stop_previous_item(); //save status manually if asset
-			$htmlHeadXtra[] = '<script src="scorm_api.php" type="text/javascript" language="javascript"></script>';
-			$htmlHeadXtra[] = '<script src="'.$lp_obj->get_js_lib().'" type="text/javascript" language="javascript"></script>';
-			$prereq_check = $lp_obj->prerequisites_match($lp_item_id);
-			if($prereq_check === true){
-				$src = $lp_obj->get_link('http',$lp_item_id);
-				$lp_obj->start_current_item(); //starts time counter manually if asset
-			}else{
-				$src = 'blank.php';
-			}
-			break;
-		case 4:
-			break;
+            break;
+        case 3:
+            //aicc
+                $lp_obj->stop_previous_item(); //save status manually if asset
+                $htmlHeadXtra[] = '<script src="aicc_api.php" type="text/javascript" language="javascript"></script>';
+                $prereq_check = $lp_obj->prerequisites_match($lp_item_id);
+                if($prereq_check === true){
+                            $src = $lp_obj->get_link('http',$lp_item_id);
+                            //echo ($lp_item_id." | ".$src);
+                           $lp_obj->start_current_item(); //starts time counter manually if asset
+                          }else{
+                            $src = 'blank.php?error=prerequisites';
+                        }
+            break;
+        case 4:
+            break;
 	}
+     for($i=0; $i<count($htmlHeadXtra); $i++){
+         echo $htmlHeadXtra[$i];
+     }
 }
 
-for($i=0; $i<count($htmlHeadXtra); $i++){
-	echo $htmlHeadXtra[$i];
-}
+
 ?>
 
 
@@ -178,6 +190,7 @@ for($i=0; $i<count($htmlHeadXtra); $i++){
         </div>
 	<!-- end toc layout -->
 
+
 	</div>
 
 	<!-- end learningPathLeftZone layout -->
@@ -185,14 +198,12 @@ for($i=0; $i<count($htmlHeadXtra); $i++){
 	<div id="learningPathRightZone" style="margin-left:205px;height:100%;background-color:#666666;">
 		<?php
         if($lp_obj->get_total_items_count()>1){
-
           echo"<div style = 'text-align:right;' >";
           echo "<a href='#' onclick= 'javascript:switch_item($lp_item_id,\"previous\");setTimeout(\"window.location.reload()\", 50);return false;'><img src='../../img/left.png' width='30'></a>
 			<a href= '#' onclick = 'javascript:switch_item($lp_item_id,\"next\");setTimeout(\"window.location.reload()\", 50);return false;' ><img src = '../../img/right.png' width = '30' ></a >
 		    </div >";
         } 
         ?>
-
 		<iframe id="content_id" name="content_name" src="<?php echo $src;?>" border="0" frameborder="0" class="autoHeight" style="width:100%;height:750px"></iframe>
 	</div>
 

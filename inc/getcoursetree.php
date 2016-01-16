@@ -19,8 +19,8 @@ while($arr = $mysql->fetch_array($res)){//取出一级目录
 	$res2 = $mysql->query("select id,name from coursecategory where parentid=".$arr["id"]." order by id");//查找一级目录下的所有二级目录
 
     $num2 = $mysql->num_rows($res2);//一级目录下二级目录的个数
-	if($num2==0){//二级目录个数为0，说明该一级目录为叶子节点，下一行while语句为false，开始为其添加课程单元的children			
-		$arr["children"] = getCourseUnitsByCategoryid($userid,$arr["id"]);	
+	if($num2==0){//二级目录个数为0，说明该一级目录为叶子节点，下一行while语句为false，开始为其添加课程单元的children
+		$arr["children"] = getCourseUnitsByCategoryid($userid,$arr["id"]);
 	}
 	while($arr2 = $mysql->fetch_array($res2)){//存在二级目录，继续按逻辑寻找三级目录
 		$arr2["open"] = true;
@@ -225,14 +225,13 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
             $lesson_view_count = 0;   //学习次数（lp_view表中参数）
             $lesson_lastview_time = 0;//最后访问日期（lp_item_view表中参数）
             $lesson_remarks="";      //*备注*
-
+            $lesson_view_status="";
                 //根据userid和lp_id获得lp_view表中的id；
                 $res_lp_view = $mysql->query("select * from lp_view where lp_id= $lp_id and user_id = $userid ");
                 $arr_lp_view = $mysql->fetch_array($res_lp_view);
                 $lp_view_id = $arr_lp_view["id"];
 
-                if($lp_view_id){//已经学习过该lp，则开始获取所有lp_item_view的信息（一个或多个）						
-
+                if($lp_view_id){//已经学习过该lp，则开始获取所有lp_item_view的信息（一个或多个）
                     //根据lp_view_id获得lp_item_view表中所有的lp_item_view信息
                     $res_lp_item_view = $mysql->query("select * from lp_item_view where lp_view_id= $lp_view_id ");
 
@@ -245,23 +244,30 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
                         if(($lesson_item_status!='completed')&&($lesson_item_status!='complete')){//如果该item尚未完成
                             $incompleted_count++;
                         }
-
                         //$lesson_total_time
-                        $lesson_total_time+=$arr_lp_item_view["total_time"];//当前这个item的total_time
-
+                        $lesson_total_time=$lesson_total_time+$arr_lp_item_view["total_time"];//当前这个item的total_time
+                        $lesson_score=$arr_lp_item_view["score"];
                         //$lesson_view_count
-                        $lesson_view_count = $arr_lp_item_view["view_count"];//lp_view表中的view_count
-
+                        $lesson_view_count =+ $arr_lp_item_view["view_count"];//lp_view表中的view_count
+                        $lesson_view_status=$arr_lp_item_view["status"];
                         //$lesson_lastview_time;
                         $lesson_lastview_time = date('Y-m-d H:i:s',$arr_lp_item_view["start_time"]);//当前这个item的上次访问时间
                     }
 
-                    if($incompleted_count!=0){//如果存在尚未完成的item
+                    if($incompleted_count!=0){//如果存在尚未完成的item，不只有一个item
                     $lesson_status = "进行中";
+
                     }
                     else{//所有lp_item_view都达到completed状态
                     $lesson_status = "已完成";
                     }
+                    if($lesson_view_status=="F"){
+                        $lesson_status="考试失败" ;
+                    }
+                    if($lesson_view_status=="S"){
+                        $lesson_status="考试通过" ;
+                    }
+
                 }
                 else{//尚未学习过该lp，则$lesson_status=尚未学习
                     $lesson_status = "未学习";
@@ -275,13 +281,46 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
             $courseunit["viewcount"] = $lesson_view_count;
             $courseunit["lasttime"] = $lesson_lastview_time;
             $courseunit["remark"] = $lesson_remarks;
-            $courseunit["itemurl"] = "<a href=\"javascript:void(0);\" onclick=\"LaunchDueItem($arr[lpid])\" target=\"_blank\"><img src=\"../img/look.gif\" alt=\"查看\" title=\"查看\"></a>";
+            $lp_id=$arr["lpid"];
+            $res_lp = $mysql->query("select * from lp where id= $lp_id");
+            $arr_lp = $mysql->fetch_array($res_lp);
+            $type=1;//scorm
+            $url='../admin/scorm/lp_view.php?id='.$lp_id;
 
+            if($arr_lp["lp_type"]==3&&$arr_lp["lp_interface"]==0){
+                $type=2;//普通aicc
+                $url = "../upload/scorm/$arr_lp[parentdir]/main.html";
+
+            }
+            if($arr_lp["lp_type"]==3&&$arr_lp["lp_interface"]==1){
+                $type=3;//考试aicc
+                $url = "../upload/scorm/$arr_lp[parentdir]/xg.html?AICC_SID=$lp_id&AICC_URL=http%3a%2f%2flocalhost%3a8080%2fadmin%2fMyLessonAiccProcessor.php";
+            }
+            $dir=$arr_lp["parentdir"];
+           $dir=phpescape($dir);
+            //$dir=settype($d,"string");
+            $courseunit["itemurl"] = "<a href=\"javascript:void(0);\" onclick=\"LaunchDueItem('$dir','$lp_id','$type')\" target=\"_blank\"><img src=\"../img/look.gif\" alt=\"查看\" title=\"查看\"></a>";
             $courseunits[] = $courseunit;
         }
     }
 
-    return $courseunits;	
+    return $courseunits;
 }
-
+function phpescape($str){
+    preg_match_all("/[\x80-\xff].|[\x01-\x7f]+/",$str,$newstr);
+    $ar = $newstr[0];
+    $reString="";
+    foreach($ar as $k=>$v){
+        if(ord($ar[$k])>=127){
+            $tmpString=bin2hex(iconv("GBK","ucs-2",$v));
+            if (!eregi("WIN",PHP_OS)){
+                $tmpString = substr($tmpString,2,2).substr($tmpString,0,2);
+            }
+            $reString.="%u".$tmpString;
+        } else {
+            $reString.= rawurlencode($v);
+        }
+    }
+    return $reString;
+}
 ?>

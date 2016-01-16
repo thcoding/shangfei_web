@@ -102,8 +102,12 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	</ul>			
 		<div class="clear"></div>
 	</li>
-	<?php 
-	}//if(islogin)
+	<?php //if(islogin)
+	}else{
+         ?>
+
+        <?php
+        }
 				?>
 </ul>
 

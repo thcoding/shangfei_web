@@ -1,7 +1,5 @@
-<!DOCTYPE html
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
 <title>商飞学习管理系统</title>
 
@@ -28,9 +26,23 @@
 <script type="text/javascript" src="../js/navigation.js"></script>
 
 <script type="text/javascript">
-    function LaunchDueItem(id) {
-
-            var url = '../admin/scorm/lp_view.php?id=' + id;
+    function LaunchDueItem(d,id,type) {
+        var url;
+        var dir= unescape(d);
+            if(type==1){
+                url='../admin/scorm/lp_view.php?id='+id;
+            }
+            if(type==2){
+                //url = "../upload/scorm/"+dir+"/main.html";
+                url = '../upload/scorm/'
+                url=url.concat(dir);
+                url=url.concat('/main.html?AICC_SID='+id+'&AICC_URL=http%3a%2f%2f127.0.0.1%3a8080%2fadmin%2fMyLessonAiccProcessor.php');
+            }
+            if(type==3){
+                url = '../upload/scorm/'
+                url=url.concat(dir);
+                url=url.concat('/xg.html?AICC_SID='+id+'&AICC_URL=http%3a%2f%2f127.0.0.1%3a8080%2fadmin%2fMyLessonAiccProcessor.php');
+            }
             var name = 'lp_view';
             var specs = 'menubar=no,toolbar=no,location=no,status=no,directories=no,history=no,resizable=yes';
             var subWin = window.open(url, name, specs);
