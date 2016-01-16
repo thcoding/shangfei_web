@@ -14,7 +14,7 @@ require_once('aiccItem.class.php');
 require_once('aiccResource.class.php');
 require_once('aiccBlock.class.php');
 class aicc extends learnpath {
-    var $manifest = array();
+
 	var $config = array();
 	var $config_basename = '';  //the configuration files might be multiple and might have
 								//funny names. We need to keep the name of that file while we
@@ -92,7 +92,6 @@ class aicc extends learnpath {
 
 			//CRS distribute crs params into the aicc object
 			if(!empty($crs_params['course']['course_creator'])){
-
 				$this->course_creator = Database::escape_string($crs_params['course']['course_creator']);
 			}
 			if(!empty($crs_params['course']['course_id'])){
@@ -167,8 +166,6 @@ class aicc extends learnpath {
 				$this->cstlist[$oCst->identifier] = $oCst;
 			}
 
-
-            //不存在.ore
      		// Parse the Objectives Relationships File (.ore) - csv-type - if exists
      		//TODO @TODO implement these objectives. For now they're just parsed
      		if(!empty($this->config_files['ore'])){
@@ -182,7 +179,7 @@ class aicc extends learnpath {
 					$this->orelist[$oOre->identifier] = $oOre;
 				}
      		}
-            //不存在
+
      		// Parse the Prerequisites File (.pre) - csv-type - if exists
      		if(!empty($this->config_files['pre'])){
 	     		$pre_file = $dir.'/'.$this->config_files['pre'];
@@ -202,7 +199,7 @@ class aicc extends learnpath {
 					}
 				}
      		}
-            //不存在
+
      		// Parse the Completion Requirements File (.cmp) - csv-type - if exists
      		//TODO @TODO implement this set of requirements (needs database changes)
      		if(!empty($this->config_files['cmp'])){
@@ -219,236 +216,55 @@ class aicc extends learnpath {
      	}
      	return $this->config;
      }
-    /*************************test******************************************/
-    /**
-     * Parses an manifest.xml file and puts everything into the $manifest array
-     * @param	string	Path to the manifest.xml file on the system. If not defined, uses the base path of the course's scorm dir
-     * @return	array	Structured array representing the manifest's contents
-     */
-    function parse_manifest($file='')
-    {
-        if($this->debug>0){error_log('In scorm::parse_manifest('.$file.')',0);}
-        if(empty($file)){
-
-        }
-        if(is_file($file) and is_readable($file)) {
-
-            if($this->debug>0){
-                error_log('In scorm::parse_manifest() - Parsing using PHP5 method',0);
-            }
-            $doc = new DOMDocument();
-            $res = $doc->load($file);
-            //logger("try to load $file");
-            if($res===false){
-                if($this->debug>0){error_log('New LP - In scorm::parse_manifest() - Exception thrown when loading '.$file.' in DOMDocument',0);}
-                return null;
-            }
-            //logger("manifest loaded");
-
-            /*if(!empty($doc->xmlEncoding)){
-                $this->manifest_encoding = strtoupper($doc->xmlEncoding);
-            }*/
-
-            //logger("manifest xmlEncoding not null");
-            if($this->debug>1){error_log('New LP - Called  (encoding:'.$doc->xmlEncoding.' - saved: '.$this->manifest_encoding.')',0);}
-
-            $root = $doc->documentElement;
-            if($root->hasAttributes()){
-                $attributes = $root->attributes;
-                if($attributes->length !== 0){
-                    foreach($attributes as $attrib)
-                    {//<manifest> element attributes
-                        $this->manifest[$attrib->name] = $attrib->value;
-                    }
-                }
-            }
-            $this->manifest['name'] = $root->tagName;
-            if($root->hasChildNodes()){
-                $children = $root->childNodes;
-                //logger("children:$root->childNodes");
-                if($children->length !== 0){
-                    foreach($children as $child)
-                    {
-                        //logger("nodeType:$child->nodeType");
-                        //<manifest> element children (can be <metadata>, <organizations> or <resources> )
-                        if($child->nodeType == XML_ELEMENT_NODE){
-                            switch($child->tagName){
-                                case 'metadata':
-                                    $this->metadata = new scormMetadata('manifest',$child);
-                                    break;
-                                case 'organizations':
-                                    //logger("organizations:".json_encode($child->childNodes));
-                                    //contains the course structure - this element appears 1 and only 1 time in a package imsmanifest. It contains at least one 'organization' sub-element
-                                    $orgs_attribs = $child->attributes;
-                                    foreach($orgs_attribs as $orgs_attrib)
-                                    {//attributes of the <organizations> element
-                                        if($orgs_attrib->nodeType == XML_ATTRIBUTE_NODE){
-                                            $this->manifest['organizations'][$orgs_attrib->name] = $orgs_attrib->value;
-                                        }
-                                    }
-                                    $orgs_nodes = $child->childNodes;
-                                    $i = 0;
-                                    $found_an_org = false;
-                                    foreach($orgs_nodes as $orgnode)
-                                    {
-                                        //<organization> elements - can contain <item>, <metadata> and <title>
-                                        //Here we are at the 'organization' level. There might be several organization tags but
-                                        //there is generally only one.
-                                        //There are generally three children nodes we are looking for inside and organization:
-                                        //-title
-                                        //-item (may contain other item tags or may appear several times inside organization)
-                                        //-metadata (relative to the organization)
-                                        $found_an_org = false;
-                                        switch($orgnode->nodeType){
-                                            case XML_TEXT_NODE:
-                                                //ignore here
-                                                break;
-                                            case XML_ATTRIBUTE_NODE:
-                                                //just in case there would be interesting attributes inside the organization tag. There shouldn't
-                                                //as this is a node-level, not a data level
-                                                //$manifest['organizations'][$i][$orgnode->name] = $orgnode->value;
-                                                //$found_an_org = true;
-                                                break;
-                                            case XML_ELEMENT_NODE:
-                                                //<item>,<metadata> or <title> (or attributes)
-                                                $organizations_attributes = $orgnode->attributes;
-                                                foreach($organizations_attributes as $orgs_attr)
-                                                {
-                                                    $this->organizations_att[$orgs_attr->name] = $orgs_attr->value;
-                                                }
-                                                $oOrganization = new scormOrganization('manifest',$orgnode,$this->manifest_encoding);
-                                                if($oOrganization->identifier != ''){
-                                                    $name = $oOrganization->get_name();
-                                                    if(empty($name)){
-                                                        //if the org title is empty, use zip file name
-                                                        $myname = $this->zipname;
-                                                        if($this->lastzipnameindex != 0){
-                                                            $myname = $myname + $this->lastzipnameindex;
-                                                            $this->lastzipnameindex++;
-                                                        }
-                                                        $oOrganization->set_name($this->zipname);
-                                                    }
-                                                    $this->organizations[$oOrganization->identifier] = $oOrganization;
-                                                }
-                                                break;
-                                        }
-                                    }
-                                    break;
-                                case 'resources':
-                                    if($child->hasAttributes()){
-                                        $resources_attribs = $child->attributes;
-                                        foreach($resources_attribs as $res_attr)
-                                        {
-                                            if($res_attr->type == XML_ATTRIBUTE_NODE){
-                                                $this->manifest['resources'][$res_attr->name] = $res_attr->value;
-                                            }
-                                        }
-                                    }
-                                    if($child->hasChildNodes()){
-                                        $resources_nodes = $child->childNodes;
-                                        $i = 0;
-                                        foreach($resources_nodes as $res_node)
-                                        {
-                                            $oResource = new scormResource('manifest',$res_node);
-                                            if($oResource->identifier != ''){
-                                                $this->resources[$oResource->identifier] = $oResource;
-                                                $i++;
-                                            }
-                                        }
-                                    }
-                                    //contains links to physical resources
-                                    break;
-                                case 'manifest':
-                                    //only for sub-manifests
-                                    break;
-                            }
-                        }
-                    }
-                }
-            }
-            unset($doc);
-
-        }else{
-            if($this->debug>1){error_log('New LP - Could not open/read file '.$file,0);}
-            $this->set_error_msg("File $file could not be read");
-            return null;
-        }
-        //TODO close the DOM handler
-        return $this->manifest;
-    }
-    /**************************test*********************************************************/
      /**
       * Import the aicc object (as a result from the parse_config_files function) into the database structure
       * @param	string	Unique course code
       * @return	bool	Returns -1 on error
       */
      function import_aicc($course_code){
-         global $mysql,$userid,$courseunitId,$attachmentId,$versionname,$time;
      	if($this->debug>0){error_log('New LP - In aicc::import_aicc('.$course_code.')',0);}
      	//get table names
      	$new_lp = 'lp';
      	$new_lp_item = 'lp_item';
 
      	//The previous method wasn't safe to get the database name, so do it manually with the course_code
-     	/*$sql = "SELECT * FROM course WHERE code='$course_code'";
-        $res = $mysql->query($sql,__FILE__,__LINE__);
-        if($mysql->num_rows($res)<1){ error_log('New LP - Database for '.$course_code.' not found '.__FILE__.' '.__LINE__,0);return -1;}
-        $row = $mysql->fetch_array($res);*/
-        //$dbname = $mysql->get_course_table_prefix().$row['db_name'].Database::get_database_glue();
+     	$sql = "SELECT * FROM ".Database::get_main_table(TABLE_MAIN_COURSE)." WHERE code='$course_code'";
+        $res = Database::query($sql,__FILE__,__LINE__);
+        if(Database::num_rows($res)<1){ error_log('New LP - Database for '.$course_code.' not found '.__FILE__.' '.__LINE__,0);return -1;}
+        $row = Database::fetch_array($res);
+        $dbname = Database::get_course_table_prefix().$row['db_name'].Database::get_database_glue();
 
-
+		$new_lp = Database::get_course_table(TABLE_LP_MAIN);
+		$new_lp_item = Database::get_course_table(TABLE_LP_ITEM);
     	$get_max = "SELECT MAX(display_order) FROM $new_lp";
-    	$res_max = $mysql->query($get_max);
-    	if($mysql->num_rows($res_max)<1){
+    	$res_max = Database::query($get_max);
+    	if(Database::num_rows($res_max)<1){
     		$dsp = 1;
     	}else{
-    		$row = $mysql->fetch_array($res_max);
+    		$row = Database::fetch_array($res_max);
     		$dsp = $row[0]+1;
     	}
 
-		$this->config_encoding = "UTF-8";
-
-         //拿到name和ref
-        $myname="test";
-         $oOrganization_ref="test";
+		$this->config_encoding = "ISO-8859-1";
 
 		$sql = "INSERT INTO $new_lp " .
 				"(lp_type, name, ref, description, " .
 				"path, force_commit, default_view_mod, default_encoding, " .
 				"js_lib, content_maker,display_order)" .
 				"VALUES " .
-				"(3,'".$mysql->escape_string($myname)."', '".$mysql->escape_string($oOrganization_ref)."','".$this->course_description."'," .
-				"'".$course_code."', 0, 'embedded', '".$this->config_encoding."'," .
+				"(3,'".$this->course_title."', '".$this->course_id."','".$this->course_description."'," .
+				"'".$this->subdir."', 0, 'embedded', '".$this->config_encoding."'," .
 				"'aicc_api.php','".$this->course_creator."',$dsp)";
 		if($this->debug>2){error_log('New LP - In import_aicc(), inserting path: '. $sql,0);}
-		$res = $mysql->query($sql);
-		$lp_id = $mysql->insert_id();
+		$res = Database::query($sql);
+		$lp_id = Database::insert_id();
 		$this->lp_id = $lp_id;
+		api_item_property_update(api_get_course_info($course_code),TOOL_LEARNPATH,$this->lp_id,'LearnpathAdded',api_get_user_id());
+		api_item_property_update(api_get_course_info($course_code),TOOL_LEARNPATH,$this->lp_id,'visible',api_get_user_id());
 
-		//api_item_property_update(api_get_course_info($course_code),TOOL_LEARNPATH,$this->lp_id,'LearnpathAdded',api_get_user_id());
-		//api_item_property_update(api_get_course_info($course_code),TOOL_LEARNPATH,$this->lp_id,'visible',api_get_user_id());
-         $res = $mysql->query("select * from courseunitversion_rel_attachment where deleted=0 and courseunitid=".$courseunitId);
-         if($mysql->num_rows($res)==0){
-             $tempversion = '默认版本';//iconv("GB2312","UTF-8",'默认版本');
-             $mysql->query("insert into courseunitversion_rel_attachment (courseunitid,attachmentid,lpid,versionname,userid,time) values ('$courseunitId','$attachmentId','$lp_id','$tempversion','$userid','$time')");
-         }else{
-             $rewrite = $_POST["rewrite"];
-             if($rewrite){
-                 $mysql->query("update courseunitversion_rel_attachment set attachmentid='$attachmentId',lpid='$lp_id',userid='$userid' where id=".$_POST["versionid"]);
-             }else{
-                 $mysql->query("insert into courseunitversion_rel_attachment (courseunitid,attachmentid,lpid,versionname,userid,time) values ('$courseunitId','$attachmentId','$lp_id','".$versionname."','$userid','$time')");
-             }
-         }
-         $myfile=fopen("D:/aicc.txt","a");
-         foreach($this->aulist as $identifier =>$dummy){
-             fwrite($myfile,$dummy."x".$identifier);
-         }
-         fwrite($myfile,$this->aulist==null);
-         fclose($myfile);
-
-		/*foreach($this->aulist as $identifier => $dummy)
-		{*/
-
+		$previous = 0;
+		foreach($this->aulist as $identifier => $dummy)
+		{
 			$oAu =& $this->aulist[$identifier];
 			//echo "Item ".$oAu->identifier;
 			$field_add = '';
@@ -464,80 +280,36 @@ class aicc extends learnpath {
 			$path = $oAu->path;
 			//$max_score = $oAu->max_score //TODO check if special constraint exists for this item
 			//$min_score = $oAu->min_score //TODO check if special constraint exists for this item
-
-            $field_add = 'mastery_score, ';
-            $parent = 0; //TODO deal with parent
+			$parent = 0; //TODO deal with parent
 			$previous = 0;
 			$prereq = $oAu->prereq_string;
 			$parameters = $oAu->parameters;
-            /*
-             * lp_id+
-             * item_type+
-             * ref+  $oAu->identifier
-             * title $title
-             * path+
-             * parameters+
-             *
-             */
 			//$previous = (!empty($this->au_order_list_new_id[x])?$this->au_order_list_new_id[x]:0); //TODO deal with previous
-         $myfile=fopen("D:/aicc.txt","a");
-         $path="main.html";
-         fwrite($myfile,"321qwdeqe12e");
-         fclose($myfile);
-         $sql_item = "INSERT INTO $new_lp_item " .
-             "(lp_id,item_type,ref,title," .
-             "path,min_score,max_score, $field_add" .
-             "parent_item_id,previous_item_id,next_item_id," .
-             "prerequisite,display_order,launch_data," .
-             "parameters) " .
+			$sql_item = "INSERT INTO $new_lp_item " .
+					"(lp_id,item_type,ref,title," .
+					"path,parameters, min_score,max_score, $field_add" .
+					"parent_item_id,previous_item_id,next_item_id," .
+					"prerequisite,display_order) " .
 					"VALUES " .
-					"($lp_id, 'au','test','test'," .
-					"'".$path."','".$parameters."',0,100, null,
-					".$parent.",'', 1,
-					'".$prereq."', 0" .
+					"($lp_id, 'au','".$oAu->identifier."','".$title."'," .
+					"'$path','$parameters',0,100, $value_add" .
+					"$parent, $previous, 0, " .
+					"'$prereq', 0" .
 					")";
-         $sql_item="INSERT INTO $new_lp_item " .
-             "(lp_id,item_type,ref,title," .
-             "path,min_score,max_score, $field_add" .
-             "parent_item_id,previous_item_id,next_item_id," .
-             "prerequisite,display_order,launch_data," .
-             "parameters) "
-             ."VALUES (129, 'au','test','test','',0,100,0,0,0,0,'', 0,'', '')";
-         $res_item = $mysql->query($sql_item);
-
-         $myfile=fopen("D:/aicc.txt","a");
-         fwrite($myfile,$sql_item);
-         fwrite($myfile,"error".mysql_error());
-         fclose($myfile);
-
+			$res_item = Database::query($sql_item);
 			if($this->debug>1){error_log('New LP - In aicc::import_aicc() - inserting item : '.$sql_item.' : '.mysql_error(),0);}
-			$item_id = $mysql->insert_id();
+			$item_id = Database::insert_id();
 			//now update previous item to change next_item_id
 			if($previous != 0){
 				$upd = "UPDATE $new_lp_item SET next_item_id = $item_id WHERE id = $previous";
-				$upd_res =$mysql->query($upd);
+				$upd_res = Database::query($upd);
 				//update previous item id
 			}
 			$previous = $item_id;
-		//}
-         $myfile=fopen("D:/aicc.txt","a");
-         fwrite($myfile,"$oAu->identifier".$oAu->identifier);
-         fclose($myfile);
+		}
      }
-
-    function set_parentDir($maker=''){
-        global $mysql;
-        if($this->debug>0){error_log('In aicc::set_parentDir method('.$maker.')',0);}
-        $lp = $this->get_id();
-        if($lp!=0){
-            $tbl_lp = "lp";
-            $sql = "UPDATE $tbl_lp SET parentdir = '$maker' WHERE id = ".$lp;
-            $res = $mysql->query($sql);
-            return $res;
-        }else{
-            return false;
-        }
-    }
+     
+     
 	function update_aicc($course_code){
      	if($this->debug>0){error_log('New LP - In aicc::import_aicc('.$course_code.')',0);}
 
@@ -731,7 +503,7 @@ class aicc extends learnpath {
 					if($this->debug>3){error_log('New LP - aicc::import_package() - File '.$thisContent['filename'].' didnt match any check',0);}
 				}
 			}
-			$realFileSize= $thisContent['size'];
+			$realFileSize += $thisContent['size'];
 		}
 		if($this->debug>2){error_log('New LP - aicc::import_package() - $files_found: '.print_r($files_found,true),0);}
 		if($this->debug>1){error_log('New LP - aicc::import_package() - Package type is now '.$package_type,0);}
@@ -778,7 +550,17 @@ class aicc extends learnpath {
 			$new_dir=substr($new_dir,0,-1);
 		}
 
-
+		/*
+		--------------------------------------
+			Uncompressing phase
+		--------------------------------------
+		*/
+		/*
+			We need to process each individual file in the zip archive to
+			- add it to the database
+			- parse & change relative html links
+			- make sure the filenames are secure (filter funny characters or php extensions)
+		*/
 		if(is_dir($course_sys_dir.$new_dir) OR @mkdir($course_sys_dir.$new_dir))
 		{
 			// PHP method - slower...

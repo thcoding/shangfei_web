@@ -2050,7 +2050,7 @@ class learnpath {
                     $manifest = $thisContent['filename']; //just the relative directory inside scorm/
                     $package_type = 'scorm';
                     break; //exit the foreach loop
-                } elseif (stristr($thisContent['filename'], 'manifest.xml') !== FALSE||preg_match('/aicc\//i', $thisContent['filename']) != false || strtolower(pathinfo($thisContent['filename'], PATHINFO_EXTENSION)) == 'crs') {
+                } elseif (preg_match('/aicc\//i', $thisContent['filename']) != false || strtolower(pathinfo($thisContent['filename'], PATHINFO_EXTENSION)) == 'crs') {
                     //if found an aicc directory... (!= false means it cannot be false (error) or 0 (no match))
                     //or if a file has the .crs extension
                     $package_type = 'aicc';
@@ -3078,12 +3078,8 @@ class learnpath {
             error_log('New LP - In learnpath::get_html_toc()', 0);
         }
         $list = $this->get_toc();
-        $openhand=fopen("D:/html_toc.txt","a");
-        foreach($list as $key=>$value){
-            fwrite($openhand,$key."=>".$value."xxxxxx");
-        }
-            fwrite($openhand,$this->get_current_item_id());
-        fclose($openhand);
+
+
         //	$html = '<div class="actions" style="height:680px;overflow:auto;"><div class="scorm_title"><div class="scorm_title_text">' . Security::remove_XSS(api_convert_encoding($this->get_name(), $this->encoding, $charset)) . '</div></div>';
 
         $html = '<div class="actions" style="height:680px;overflow:auto;"><div class="scorm_title"><div class="scorm_title_text">' . $this->get_name() . '</div></div>';
@@ -3159,7 +3155,14 @@ class learnpath {
                 $html .= stripslashes($title);
             }
 
-
+            /* $tbl_track_e_exercises = Database :: get_statistic_table(TABLE_STATISTIC_TRACK_E_EXERCICES);
+              $tbl_lp_item = Database :: get_course_table(TABLE_LP_ITEM);
+              $user_id = api_get_user_id();
+              $course_id = api_get_course_id();
+              $sql = "SELECT path  FROM $tbl_track_e_exercises, $tbl_lp_item
+              WHERE path =   '" . $item['path'] . "' AND exe_user_id =  '$user_id' AND exe_cours_id = '$course_id' AND path = exe_exo_id AND status <> 'incomplete'";
+              $result = Database::query($sql, __FILE__, __LINE__);
+              $count = Database :: num_rows($result); */
             if ($item['type'] == 'quiz') {
                 if ($item['status'] == 'completed') {
                     $html .= "&nbsp;<img id='toc_img_" . $item['id'] . "' src='" . $icon_name[$item['status']] . "' alt='" . substr($item['status'], 0, 1) . "' width='12' height='12' />";
@@ -3169,13 +3172,17 @@ class learnpath {
                     $html .= "&nbsp;<img id='toc_img_" . $item['id'] . "' src='" . $icon_name[$item['status']] . "' alt='" . substr($item['status'], 0, 1) . "' width='12' height='12' />";
                 }
             }
+
             $html .= "</div>";
+
             if ($scorm_color_background != '') {
                 $html .= '</div>';
             }
+
             $color_counter++;
         }
-        $html .= "</div></div>";
+        $html .= "</div>\n</div>";
+
         return $html;
     }
 
