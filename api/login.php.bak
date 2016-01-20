@@ -9,7 +9,6 @@ $arr = $mysql->fetch_array($res);
 if($mysql->num_rows($res)==0){
 	$returnInfo["object"]["id"] = "0";
 	$returnInfo["object"]["info"] = "用户名不存在";
-	$returnInfo["result"] = 0;
 }else if($arr["password"] == md5($password)){
 	$arr["info"] = "登录成功";
 	$returnInfo["object"] = $arr;

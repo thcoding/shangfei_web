@@ -14,7 +14,7 @@ $moduleid = $postInfo["moduleid"];
 
 file_put_contents("log","moduleid=".$postInfo["moduleid"]."|".GetIP()."|".$str."|".date("Y-m-d H:i:s")."\n",FILE_APPEND);
 
-if(in_array($moduleid,array(1,2,3,4,5,6,7,8))){
+if(in_array($moduleid,array(1,2,3,4,5,6,7,8,9))){
 	$returnInfo["result"] = 1;
 }else{
 	$returnInfo["result"] = 0;
@@ -37,7 +37,7 @@ switch ($moduleid){
 	case 5:  //课程组下的课程及课程组列表接口
 		include "course4group.php";
 		break;
-	case 6:  //课程组下的课程及课程组列表接口
+	case 6:  //普通课件学习记录同步
 		include "save_common_file_learn_status.php";
 		break;
 	case 7:  //用户学习记录同步传入模块
@@ -45,6 +45,9 @@ switch ($moduleid){
 		break;
 	case 8:  //获取Scorm课件的数据表形式记录
 		include "getLearnPath.php";
+		break;
+	case 9:  //获取Scorm课件的数据表形式记录
+		include "save_scorm.php";
 		break;
 }
 
