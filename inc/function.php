@@ -1,6 +1,6 @@
 <?php
 //error_log(date("[Y-m-d H:i:s]").$returntype."\n", 3, "../php_err.log");//日志信息方法
-function logger($content, $filepath = 'log.html') {
+function logger($content, $filepath = 'log.txt') {
 	file_put_contents("../" . $filepath,  date("Y-m-d H:i:s", time()). "\t" .$content  . "\r\n<br>", FILE_APPEND);
 }
 function getLpInfoByLpid($id){//����id��ȡscorm����Ϣ
