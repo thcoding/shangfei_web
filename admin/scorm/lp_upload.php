@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && count($_FILES) > 0 && !empty($_FILES
             break;
         case '':
         default:
-            die("type".$type);
+            //die("type".$type);
             die("未知的课程包类型，请检查scorm课程压缩包是否正确。");
             //return "lp_upload.php error";
     }
