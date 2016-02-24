@@ -28,7 +28,7 @@
 session_start();
 include "inc/config.php";
 setcookie(session_name(),session_id(),time()+$sessionTime,"/");
-include "inc/navigation_root.php";
+include "inc/navigation_root.php";//test
 ?>
 
 <div class="clear">&nbsp;</div>
