@@ -21,3 +21,5 @@ new.txt
 inc/mysql.php
 
 php_err.log
+
+*.bak
