@@ -1,3 +1,7 @@
+pakage/
+Test_Angular/
+aicc-test/
+aicctest/
 upload/
 .idea/
 .settings/
@@ -17,7 +21,7 @@ inc/mysql.php
 ztemp.php
 
 new.txt
-
+log.html
 inc/mysql.php
 
 php_err.log
