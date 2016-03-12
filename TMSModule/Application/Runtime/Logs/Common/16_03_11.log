@@ -1,0 +1,18 @@
+[ 2016-03-11T21:50:37+08:00 ] ::1 /TMSModel/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000052s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002054s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-11T21:52:17+08:00 ] ::1 /TMSModel/index.php/Index/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000055s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001465s ]
+ERR: 无法加载模块:Index
+
+[ 2016-03-11T21:52:36+08:00 ] ::1 /TMSModel/index.php/Index/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000034s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001329s ]
+ERR: 无法加载模块:Index
+
