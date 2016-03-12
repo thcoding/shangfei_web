@@ -1,0 +1,3 @@
+2016-02-24 21:29:39	{"lp_item_view":[{"total_time":52,"id":647,"lesson_location":"2","lp_view_id":120,"status":"completed","start_time":1456320562,"view_count":8,"lp_item_id":1723}]}
+<br>2016-02-24 21:29:39	647
+<br>

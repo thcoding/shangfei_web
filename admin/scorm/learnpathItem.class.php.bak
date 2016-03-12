@@ -13,8 +13,10 @@
  * information that enables tracking a user's progress in a learning path
  * @package	dokeos.learnpath
  */
+error_reporting(0);
 include_once "../../inc/mysql.php";
 include_once "lib/database.lib.php";
+//require_once '../../inc/function.php';
 class learnpathItem{
 	var $attempt_id; //also called "objectives" SCORM-wise
 	var $audio; //the path to an audio file (stored in document/audio/)
@@ -258,7 +260,9 @@ class learnpathItem{
     {
     	if($this->debug>0){error_log('New LP - In learnpathItem::get_attempt_id() on item '.$this->db_id,0);}
     	$res = 1;
-    	if(!empty($this->attempt_id))
+//        require_once '../../inc/function.php';
+//        logger("count:" . $this->attempt_id);
+    	if(isset($this->attempt_id))
     	{
     		$res = $this->attempt_id;
     	}
@@ -1045,7 +1049,7 @@ class learnpathItem{
 	    	}
     	}
    		if($this->debug>2){error_log('New LP - In learnpathItem::get_status() - Returning default '.$this->possible_status[0],0);}
-    	return $this->status;
+    	return $this->possible_status[0];
     }
     /**
      * Gets the suspend data
@@ -2204,11 +2208,10 @@ function get_terms()
      */
      function write_to_db()
      {
-		
    		if($this->debug>0){error_log('New LP - In learnpathItem::write_to_db()',0);}
    		$mode = $this->get_lesson_mode();
    		$credit = $this->get_credit();
-   		$my_verified_status=$this->get_status(false);
+         $my_verified_status=$this->get_status(false);
 
    		$item_view_table = Database::get_course_table(TABLE_LP_ITEM_VIEW);
 		$sql_verified='SELECT status FROM '.$item_view_table.' WHERE lp_item_id="'.$this->db_id.'" AND lp_view_id="'.$this->view_id.'" AND view_count="'.$this->attempt_id.'" ;';
@@ -2217,17 +2220,18 @@ function get_terms()
 
    		$my_case_completed=array('completed','passed','browsed','failed');//added by isaac flores
    		
-   		//if (in_array($sql_verified['status'],$my_case_completed)) {
+   		if (in_array($sql_verified['status'],$my_case_completed)) {
    			$save=false;
-   		//} else {
-   		//	$save=true;
-   		//}
-
+   		} else {
+   			$save=true;
+   		}
+//logger("db here: save-".$save . ";type-" . $this->type . "; credit-" . $credit . "; mode-" . $mode);
    		if (($save===false && $this->type == 'sco') ||(($this->type == 'sco') && ($credit == 'no-credit' OR $mode == 'review' OR $mode == 'browse')))
    		{
    			//this info shouldn't be saved as the credit or lesson mode info prevent it
    			if($this->debug>1){error_log('New LP - In learnpathItem::write_to_db() - credit('.$credit.') or lesson_mode('.$mode.') prevent recording!',0);}
    		} else {
+            
       		//check the row exists
       		$inserted = false;
 
@@ -2270,8 +2274,7 @@ function get_terms()
 	     	$item_view_table = Database::get_course_table(TABLE_LP_ITEM_VIEW);
 	     	$check = "SELECT * FROM $item_view_table " .
 	     			"WHERE lp_item_id = ".$this->db_id. " " .
-	     			"AND   lp_view_id = ".$this->view_id. " ".
-	     			"AND   view_count = ".$this->get_attempt_id();
+	     			"AND   lp_view_id = ".$this->view_id;
 	     	if($this->debug>2){error_log('New LP - In learnpathItem::write_to_db() - Querying item_view: '.$check,0);}
 	     	$check_res = Database::query($check);
 	     	//depending on what we want (really), we'll update or insert a new row
@@ -2282,6 +2285,7 @@ function get_terms()
 	     		if ($this->type!=TOOL_QUIZ) {
 	     				$my_status = $this->get_status(false);
 	     		}*/
+
 
 		     	$sql = "INSERT INTO $item_view_table " .
 		     			"(total_time, " .
@@ -2324,8 +2328,7 @@ function get_terms()
 			     			" suspend_data = '".Database::escape_string($this->current_data)."'," .
 			     			" lesson_location = '".$this->lesson_location."' " .
 			     			"WHERE lp_item_id = ".$this->db_id." " .
-			     			"AND lp_view_id = ".$this->view_id." " .
-			     			"AND view_count = ".$this->attempt_id;
+			     			"AND lp_view_id = ".$this->view_id;
 	     		} else {
 	     			//for all other content types...
 	     			if ($this->type=='quiz') {
@@ -2388,7 +2391,7 @@ function get_terms()
 	     					if (in_array($this->get_status(false),$case_completed) &&  $my_type_lp==2) {
 	     						//reset zero new attempt ?
 	     						$my_status = " status = '".$this->get_status(false)."' ,";
-	     					}  elseif (!in_array($this->get_status(false),$case_completed) &&  $my_type_lp==2){
+	     					}  else if (!in_array($this->get_status(false),$case_completed) &&  $my_type_lp==2){
 	     						$total_time =" total_time = ".$this->get_total_time().", ";
 	     						$my_status = " status = '".$this->get_status(false)."' ,";
 	     					} else {
@@ -2424,19 +2427,23 @@ function get_terms()
 	     				$total_time = ' total_time = '.($this->time_before_session + $this->get_total_time()).' , ';
 	     				$this->force_scorm_time = false;
 	     			}
+                    
+                    $my_view_count='view_count='.($this->get_attempt_id()+1).',';
+
 			     	$sql = "UPDATE $item_view_table " .
 			     			"SET " .$total_time.
 			     			" start_time = ".$this->get_current_start_time().", " .
 			     			" score = ".$this->get_score().", " .
-			     			$my_status.
+			     			$my_status.$my_view_count.
 			     			" max_score = '".$this->get_max()."'," .
 			     			" suspend_data = '".Database::escape_string($this->current_data)."'," .
 			     			//" max_time_allowed = '".$this->get_max_time_allowed()."'," .
 			     			" lesson_location = '".$this->lesson_location."' " .
 			     			"WHERE lp_item_id = ".$this->db_id." " .
-			     			"AND lp_view_id = ".$this->view_id." " .
-			     			"AND view_count = ".$this->attempt_id;
+			     			"AND lp_view_id = ".$this->view_id;
+
 			     			$this->current_start_time = time();
+                                            
 	     		}
 	    	 	if($this->debug>2){error_log('New LP - In learnpathItem::write_to_db() - Updating item_view: '.$sql,0);}
 		     	$res = Database::query($sql,__FILE__,__LINE__);

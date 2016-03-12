@@ -2391,7 +2391,7 @@ function get_terms()
 	     					if (in_array($this->get_status(false),$case_completed) &&  $my_type_lp==2) {
 	     						//reset zero new attempt ?
 	     						$my_status = " status = '".$this->get_status(false)."' ,";
-	     					}  elseif (!in_array($this->get_status(false),$case_completed) &&  $my_type_lp==2){
+	     					}  else if (!in_array($this->get_status(false),$case_completed) &&  $my_type_lp==2){
 	     						$total_time =" total_time = ".$this->get_total_time().", ";
 	     						$my_status = " status = '".$this->get_status(false)."' ,";
 	     					} else {
@@ -2439,9 +2439,9 @@ function get_terms()
 			     			" suspend_data = '".Database::escape_string($this->current_data)."'," .
 			     			//" max_time_allowed = '".$this->get_max_time_allowed()."'," .
 			     			" lesson_location = '".$this->lesson_location."' " .
-			     			"WHERE lp_item_id = ".$this->db_id;
-                        //." " .
-			     			//"AND lp_view_id = ".$this->view_id." "
+			     			"WHERE lp_item_id = ".$this->db_id." " .
+			     			"AND lp_view_id = ".$this->view_id;
+
 			     			$this->current_start_time = time();
                                             
 	     		}
