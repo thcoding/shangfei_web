@@ -264,7 +264,7 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
                     if($lesson_view_status=="F"){
                         $lesson_status="考试失败" ;
                     }
-                    if($lesson_view_status=="S"){
+                    if($lesson_view_status=="P"){
                         $lesson_status="考试通过" ;
                     }
 

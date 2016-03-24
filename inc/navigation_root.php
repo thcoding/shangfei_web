@@ -34,6 +34,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 				?>
 	<li><a href="admin/user.php">用户</a>
 	<ul>
+        <li><a href="admin/user.php">管理</a></li>
 		<li><a href="admin/userGroup.php">用户组</a></li>
 	</ul>			
 		<div class="clear"></div>

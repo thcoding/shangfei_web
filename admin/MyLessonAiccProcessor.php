@@ -28,12 +28,9 @@ if($SESSION_ID!=0){
     $arr_lp_view=$mysql->fetch_array($res_lp_view);
     if($mysql->num_rows($res_lp_view)!=0&&strpos($aicc_data,"[core]")!==false){
         $view_count=$arr_lp_view["view_count"]+1;
-        fwrite($texthand,"\n更新");
-        fwrite($texthand,"\n".$lpid);
         $mysql->query("update lp_view SET view_count='$view_count' WHERE lp_id='".$lpid."'");
     }
     if($mysql->num_rows($res_lp_view)==0&&strpos($aicc_data,"[core]")!==false){
-        fwrite($texthand,"\n插入");
         $mysql->query("insert into lp_view (lp_id,user_id,view_count,last_item,progress)
                                     VALUES ('".$lpid."','".$userid."',1,1,0)");
     }
@@ -43,17 +40,15 @@ if($SESSION_ID!=0){
     $lastitemid=$arr_lp_view["last_item"];
     $_SESSION["lpviewid"]=$lpviewid;
     $_SESSION["lastitemid"]=$lastitemid;
+    $userId=$_SESSION["userid"];
     $sql="select * from lp_item_view where lp_view_id='".$lpviewid."'";
     $res_lp_item_view=$mysql->query($sql);
     $arr_lp_item_view=$mysql->fetch_array($res_lp_item_view);
     //flash 返回的数据 $aicc_data
     if($mysql->num_rows($res_lp_item_view)!=0){
-        fwrite($texthand,"***************1");
         if($aicc_data!=""&&isset($aicc_data)==1) {
             //从解析aicc返回的数据格式中
-            fwrite($texthand,"***************2");
             if(strpos($aicc_data,"[core]")!==false) {
-                fwrite($texthand,"***************3");
                 $start_time=$_SESSION["aicctime"];//最后一次访问时间
                 unset ($_SESSION["aicctime"]);
                 $lpviewid=$_SESSION["lpviewid"];
@@ -61,16 +56,15 @@ if($SESSION_ID!=0){
                 $total_time = (time()-$start_time)+$arr_lp_item_view["total_time"];
                 $score = trim(intercept_str("score=", "\n", $aicc_data));
                 $status = trim(intercept_str("lesson_status=", "\n", $aicc_data));
-                $core_data = $_SESSION["aicc_data"];//trim(intercept_str("aicc_data=", "\n", $aicc_data));;//suspend_data
+                $visited= trim(intercept_str("visited=", "\n", $aicc_data));
+                //trim(intercept_str("aicc_data=", "\n", $aicc_data));;//suspend_data
                 $lesson_location = trim(intercept_str("lesson_location=", "\n", $aicc_data));
-                $core_exit = "none";
+                $core_data = $_SESSION["aicc_data"];
+                $core_exit = $visited;
                 $max_score = "100";
                 $view_count = $arr_lp_item_view["view_count"] + 1;
-                //修改已有项
-                fwrite($texthand,"\n".$res_lp_view."xxxxxxxxxxx".$view_count."data".$arr_lp_item_view["view_count"]."##############");
-                $mysql->query("update lp_item_view SET start_time='$start_time', view_count='$view_count',total_time='$total_time',score='$score',status='$status',suspend_data='$core_data' WHERE lp_view_id='".$lpviewid."'");
+                $mysql->query("update lp_item_view SET start_time='$start_time', view_count='$view_count',total_time='$total_time',score='$score',status='$status',suspend_data='$core_data',core_exit='$core_exit' WHERE lp_view_id='".$lpviewid."'");
             }else{
-                //可以放入session
                 $core_data=$aicc_data.$_SESSION["aicc_data"];
                 $_SESSION["aicc_data"]=$core_data;
             }
@@ -83,18 +77,20 @@ if($SESSION_ID!=0){
                 $status=$arr["status"];
                 $score=$arr["score"];
                 $total_time=$arr["total_time"];
+                $visited=$arr["core_exit"];
             }
+            $core_data=';';
             echo '
             error=0
             error_text=Successful
             aicc_data='.$core_data.'
             [core]
-            lesson_location='.$lesson_location.'
+            lesson_location=3
             lesson_status='.$status.'
             score='.$score.'
             time='.$total_time.'
             [core_lesson]
-            visited=0$#$0$#$0,1$#$I$#$1^#^0$#$1$#$1,2,0,3$#$IT$#$0^#^0$#$2$#$3,1,0,2$#$I$#$1^#^^**^0|^**^';
+            visited='.$visited;
         }else{
             //从数据库中拿，传回给flash
             $sql="select * from lp_item_view where lp_view_id='".$lpviewid."'";
@@ -104,24 +100,23 @@ if($SESSION_ID!=0){
             $lesson_location=$arr["lesson_location"];
             $status=$arr["status"];
             $score=$arr["score"];
+            $visited=$arr["core_exit"];
             $total_time=$arr["total_time"];
-            fwrite($texthand,"\n第二处xx".$core_data."xx".$lpid);
+
             echo'
             error=0
             error_text=Successful
-            aicc_data=
-            '.$core_data.'
+            aicc_data='.$core_data.';'.'
             [core]
             lesson_location='.$lesson_location.'
             lesson_status='.$status.'
             score='.$score.'
             time='.$total_time.'
-            [core_lesson]
-            visited=0$#$0$#$0,1$#$I$#$1^#^0$#$1$#$1,2,0,3$#$IT$#$0^#^0$#$2$#$3,1,0,2$#$I$#$1^#^^**^0|^**^';
+	        [core_lesson]
+            visited='.$visited;
         }
     }else{
         //第一次打开
-        fwrite($texthand,"请问企鹅的去1".$aicc_data."X".isset($aicc_data));
         if($aicc_data!=""&&isset($aicc_data)==1) {
             //解析aicc_data
             if(strpos($aicc_data,"[core]")!==false) {
@@ -133,23 +128,23 @@ if($SESSION_ID!=0){
                 $total_time = (time()-$start_time)+$arr_lp_item_view["total_time"];
                 $score = trim(intercept_str("score=", "\n", $aicc_data));
                 $status = trim(intercept_str("lesson_status=", "\n", $aicc_data));
-                $core_data = $_SESSION["aicc_data"];//trim(intercept_str("aicc_data=", "\n", $aicc_data));;//suspend_data
                 $lesson_location = trim(intercept_str("lesson_location=", "\n", $aicc_data));
-                $core_exit = "none";
+                $visited= trim(intercept_str("visited=", "\n", $aicc_data));
+                $core_exit = $visited;
                 $max_score = "100";
-                fwrite($texthand,"差一步\n".$_SESSION["aicc_data"].$status."\n");
-                $mysql->query("insert into lp_item_view (lp_item_id,lp_view_id,view_count,start_time,total_time,
+                $core_data = $_SESSION["aicc_data"];//trim(intercept_str("aicc_data=", "\n", $aicc_data));;//suspend_data
+                $sql="insert into lp_item_view (lp_item_id,lp_view_id,view_count,start_time,total_time,
                       status,suspend_data,lesson_location,core_exit,max_score,score)
-                      VALUES ('" . $lastitemid . "','" . $lpviewid . "',1,'" . $start_time . "','" . $total_time . "','" . $status . "','" . $core_data . "','" . $lesson_location . "','".$core_exit."','" . $max_score ."','".$score. "')");
+                      VALUES ('" . $lastitemid . "','" . $lpviewid . "',1,'" . $start_time . "','" . $total_time . "','" . $status . "','" . $core_data . "','" . $lesson_location . "','".$core_exit."','" . $max_score ."','".$score. "')";
+                $mysql->query($sql);
             }else{
                 //可以放入session
                 $aicc_data=trim($aicc_data);
                 $core_data=$aicc_data.$_SESSION["aicc_data"];
                 $_SESSION["aicc_data"]=$core_data;
-                fwrite($texthand,"差一步\n".$_SESSION["aicc_data"].$status."\n");
+
             }
         }else{
-            fwrite($texthand,"\n第三处");
             $sql="select * from lp_item_view where lp_view_id='".$lpviewid."'";
             $res=$mysql->query($sql);
             $arr=$mysql->fetch_array($res);
@@ -160,20 +155,19 @@ if($SESSION_ID!=0){
                 $score=$arr["score"];
                 $total_time=$arr["total_time"];
             }
-            fwrite($texthand,"#########################".$core_data);
             echo '
             error=0
             error_text=Successful
-            aicc_data='.$core_data.'
+            aicc_data='.$core_data.';'.'
             [core]
             lesson_location='.$lesson_location.'
             lesson_status='.$status.'
             score='.$score.'
             time='.$total_time.'
             [core_lesson]
-            visited=0$#$0$#$0,1$#$I$#$1^#^0$#$1$#$1,2,0,3$#$IT$#$0^#^0$#$2$#$3,1,0,2$#$I$#$1^#^^**^0|^**^';
-            }
+            visited='.$visited;
         }
+    }
 
 
 }
