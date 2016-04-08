@@ -15,6 +15,6 @@ $mypassword = $password?",password='".md5($password)."'":"";//更新个人密码
 
 $mysql->query("update `user` set realname='$realname',mail='$mail',department='$department' $mypassword where id=".$userid);
 
-echo "<script>alert('更新成功！');location.href='myinfo.php'</script>";
+echo "<script>alert('更新成功！');location.href='userinfo.php'</script>";
 
 ?>

@@ -5337,6 +5337,7 @@ span.highlight {
 		margin:0; 
 		padding:0; 
 		list-style:none;
+		width:3000px; 
 	}	
 	
 	/* Little tricking with positions */

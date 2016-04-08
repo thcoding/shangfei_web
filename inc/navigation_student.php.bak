@@ -21,7 +21,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	</li>
             <li><a>我的考试</a>
                 <ul>
-					<li><a href="mycourse.php?status=4">未开始的考试</a></li>
+					<li><a href="mycourse.php?status=4">所有考试</a></li>
                     <li><a href="mycourse.php?status=5">未开始的考试</a></li>
                     <li><a href="mycourse.php?status=6">已结束的考试</a></li>
                 </ul>
@@ -39,7 +39,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 				?>
 	<li><a href="#"></a></li>
 	<li><a href="#"></a></li>
-	<li style="height: 40px;width: auto"><a href="../myinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>
+	<li style="height: 40px;width: auto"><a href="../userinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>
 	<ul>
 		<li><a href="../logout.php">退出登录</a></li>
 	</ul>			

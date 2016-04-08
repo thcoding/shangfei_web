@@ -61,28 +61,38 @@ function getSiteStatistics(){//��ȡ��ǰ���ÿγ̵�Ԫ���γ̡
 
 	return $info;
 }
-function getStuStatistics($userid){
-    global $mysql;
-    $res = $mysql->query("select courseids as s from user_rel_course where userid=".$userid);
-    $arr = $mysql->fetch_array($res);
-    $info["course"] = $arr["s"];
-    $arr=explode(",",$arr["s"]);
-    for($i=0;$i<count($arr);$i++){
-        if($arr[$i]!=""){
-            $res = $mysql->query("select deleted from course where id=".$arr[$i]);
-            if(mysql_num_rows($res)<1){
-              array_remove($arr,$i);
-            }else{
-                $arrsun = $mysql->fetch_array($res);
-                if($arrsun["deleted"]==1){
-                    array_remove($arr,$i);
-                }
-            }
-
+function getStuStatistics($userid,$coursetype=1,$datetype=0){//$coursetype=1:课程、2：考试；$datetype=0：全部课程；$datetype=-1：过期课程
+        global $mysql;
+		//选择未删除的课程
+		$where = "where deleted=0";
+		//选出该用户所拥有的所有课程id
+		$res = mysql_query("select * from user_rel_course where userid=".$userid);
+		$arr = mysql_fetch_array($res);
+		$ids = substr($arr["courseids"],1,-1);
+		$where .=" and id in ($ids)";
+        //选出是考试还是课程
+        if($coursetype==1){
+            $where .= " and (type in (0,1))";
+        }else{
+            $where .= " and (type in (2))";
         }
-    }
-    return count($arr)-2;
+		if($datetype==-1){
+			//根据时间状态继续筛选
+			$timeNow = date("Y-m-d H:i:s");//当前时间
+			$where .= " and (DATE_FORMAT( endTime, '%Y-%m-%d %H:%i:%S') <='".$timeNow."')";
+		}
+		
+		//最终语句
+		$sql = "select * from course $where";
+
+		//在course表中查询所有课程信息
+		$result = mysql_query($sql);
+		//表中的总纪录数
+		@$amount = mysql_num_rows($result);
+
+	return @$amount;
 }
+
 function array_remove(&$arr, $offset)
 {
     array_splice($arr, $offset, 1);

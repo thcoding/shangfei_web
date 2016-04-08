@@ -75,7 +75,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	</ul>			
 		<div class="clear"></div>
 	</li>
-    <li><a href="">我的考试</a>
+    <li><a>我的考试</a>
             <ul>
 				<li><a href="student/mycourse.php?status=4">所有考试</a></li>
                 <li><a href="student/mycourse.php?status=5">未开始的考试</a></li>
@@ -89,7 +89,12 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	<?php
 			}//else if($_SESSION["role"]==STUDENT)
 				?>
-	<li style="height: 40px;width: auto"><a href="myinfo.php"><?php echo $_SESSION["username"];?>（<?php echo $_SESSION["realname"];?>）</a>
+	<li style="height: 40px;width: auto"><a href="userinfo.php"><?php 
+		if(sizeof($_SESSION["username"])>5){
+			echo substr($_SESSION["username"],0,5).'...';
+		}else{
+			echo $_SESSION["username"];
+				}?>（<?php echo $_SESSION["realname"];?>）</a>
 	<ul>
 	<?php
 	if($_SESSION["role"]==ADMIN){//管理员拥有的权限
@@ -102,8 +107,12 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	</ul>			
 		<div class="clear"></div>
 	</li>
-	<?php 
-	}//if(islogin)
+	<?php //if(islogin)
+	}else{
+         ?>
+
+        <?php
+        }
 				?>
 </ul>
 
