@@ -1,0 +1,348 @@
+[ 2016-03-12T14:21:19+08:00 ] ::1 /TMSModel/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001191s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T16:57:55+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001408s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T16:58:00+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000054s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003695s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T16:58:23+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000051s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002710s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:05:04+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000090s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003403s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:06:58+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001272s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:06:59+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001201s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:06:59+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000051s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002157s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:00+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000122s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002597s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:00+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000055s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001861s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:16+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000033s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001489s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:24+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000055s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001557s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:25+08:00 ] ::1 /TMSModule/index.php/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000034s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001261s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:29+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000048s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001361s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:31+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000050s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001724s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:37+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000053s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001709s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:38+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001298s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:49+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001687s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:52+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000053s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002142s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:07:53+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000034s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001232s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:12:25+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001354s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:12:28+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000050s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002053s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:12:29+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000057s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002499s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:12:30+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000055s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002274s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:12:30+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000808s ]
+INFO: [ app_init ] --END-- [ RunTime:0.008903s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:12:30+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000169s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002834s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:12:31+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000055s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002006s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:13:15+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001516s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:13:17+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000063s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001382s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:13:18+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000050s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001682s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:13:18+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000068s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002441s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:14:08+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000036s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002097s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:16:18+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000038s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001549s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:16:21+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000048s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001418s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:16:21+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000054s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003344s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:16:22+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000137s ]
+INFO: [ app_init ] --END-- [ RunTime:0.005588s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:28:30+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001602s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:28:31+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001848s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:28:32+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000028s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000903s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:29:14+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000106s ]
+INFO: [ app_init ] --END-- [ RunTime:0.006248s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:29:15+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000048s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001628s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:29:16+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000052s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001801s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:29:17+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000034s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001266s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:29:18+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000051s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001848s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:33:03+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000039s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001601s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:33:04+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001194s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:33:05+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000054s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001343s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:33:06+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000050s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001869s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:33:06+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000060s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002723s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:33:06+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000051s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001730s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:34:26+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000041s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001384s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:34:27+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001265s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:35:37+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000035s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001270s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:35:38+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000055s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003361s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:35:38+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000055s ]
+INFO: [ app_init ] --END-- [ RunTime:0.002253s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:35:39+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000051s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001667s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:35:39+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000049s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001641s ]
+ERR: 无法加载模块:TMSUser
+
+[ 2016-03-12T17:36:01+08:00 ] ::1 /TMSModule/TMSUser/insert
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000048s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001720s ]
+ERR: 无法加载模块:TMSUser
+
