@@ -37,15 +37,9 @@ include "inc/navigation_root.php";//test
 <div id="content" class="maxcontent">
 <?php
 if(isset($_SESSION["userid"]) && $_SESSION["userid"]>0){//判断用户是否已经登录
-if(@$_SESSION["role"] == STUDENT){
 ?>
-    <div id="student_content" style="padding: 10px"> <?php
-        }else{
-        ?>
     <div id="content_with_menu" >
-
 <?php
-}
 }else{
 ?>
 <div id="content_with_menu_unlogin">
@@ -88,92 +82,6 @@ $('#slides').slides({
 });
 });
 </script>
-<?php
-    if(@$_SESSION["role"] == STUDENT){//根据用户角色跳转至相应用户界面
-?>
-    <div style="border-radius: 15px;width: 500px;">
-        <table style="font-size: 18px;border: 1px;">
-            <tr>
-                <td rowspan="5">
-                    <img src="img/indexheader.jpg" width=150 height=150 style="border-radius: 15px;">
-                </td>
-                <td></td>
-            </tr>
-
-<?php
-include "inc/mysql.php";
-include "inc/function.php";
-
-
-
-
-$userid = $_SESSION["userid"];
-
-$arr = getUserinfoById($userid);//从数据库user表中获取用户信息
-$username   = $arr["username"];
-$realname   = $arr["realname"];
-$mail       = $arr["mail"];
-$department = $arr["department"];
-?>
-
-
-            <tr>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>用户名：</td>
-                <td>&nbsp;&nbsp;<?php echo $username;?></td>
-            </tr>
-
-            <tr>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>真实姓名：</td>
-                <td>&nbsp;&nbsp;<?php echo $realname;?></td>
-            </tr>
-
-            <tr>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>邮箱：</td>
-                <td>&nbsp;&nbsp;<?php echo $mail;?></td>
-            </tr>
-            <tr>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>部门：</td>
-                <td>&nbsp;&nbsp;<?php echo $departmentArr[$department];?></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>课程总数：</td>
-                <td>&nbsp;&nbsp;<?php
-                    $UserId=$_SESSION["userid"];
-                    $student=getStuStatistics($UserId);
-                    echo $student;?></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>课程过期：</td>
-                <td>&nbsp;&nbsp;0</td>
-            </tr>
-            <tr><td></td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>考试总数：</td>
-                <td>&nbsp;&nbsp;0</td>
-            </tr>
-            <tr><td></td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>考试补考：</td>
-                <td>&nbsp;&nbsp;0</td>
-            </tr>
-        </table>
-
-       </div>
-
-<?php
-    }else{
-?>
     <div id="container">
         <div class="siteName">商飞学习管理系统</div>
         <div id="example">
@@ -222,11 +130,6 @@ $department = $arr["department"];
         </tr>
     </table>
 </div>
-<?php
-    }
-?>
-
-
 <div class="menu" id="menu">
 
 <?php

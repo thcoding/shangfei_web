@@ -137,4 +137,11 @@
 <br>2016-02-25 17:27:50	userid:63; courseid:40;
 <br>2016-02-25 17:28:09	userid:63; courseid:40;
 <br>2016-02-25 17:28:20	userid:64; courseid:40;
+<br>2016-02-25 17:36:26	userid:63; courseid:40;
+<br>2016-02-25 17:36:36	userid:63; courseid:40;
+<br>2016-02-25 17:36:45	userid:64; courseid:40;
+<br>2016-02-25 17:36:51	userid:64; courseid:40;
+<br>2016-03-16 19:56:37	userid:67; courseid:51;
+<br>2016-03-16 20:18:18	userid:67; courseid:51;
+<br>2016-04-08 17:02:02	userid:7; courseid:32;
 <br>
