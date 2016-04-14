@@ -39,7 +39,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 				?>
 	<li><a href="#"></a></li>
 	<li><a href="#"></a></li>
-	<li style="height: 40px;width: auto"><a href="userinfo.php"><?php 
+	<li style="height: 40px;width: auto"><a href="../userinfo.php"><?php 
 		if(strlen($_SESSION["username"])>5){
 			echo substr($_SESSION["username"],0,5).'...';
 		}else{

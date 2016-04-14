@@ -88,37 +88,12 @@ function getStuStatistics($userid,$coursetype=1,$datetype=0){//$coursetype=1:课
 		//在course表中查询所有课程信息
 		$result = mysql_query($sql);
 		//表中的总纪录数
-		@$amount = mysql_num_rows($result);
+		@$amount = isset(mysql_num_rows($result))?mysql_num_rows($result):0;
+
 
 	return @$amount;
 }
-function getStuExpiredCourses($userid){
-    global $mysql;
-		//选择未删除的课程
-		$where = "where deleted=0";
-		//选出该用户所拥有的所有课程id
-		$res = mysql_query("select * from user_rel_course where userid=".$userid);
-		$arr = mysql_fetch_array($res);
-		$ids = substr($arr["courseids"],1,-1);
-		$where .=" and id in ($ids)";
-        //选出是考试还是课程
-        if($typeflag==1){
-            $where .= " and (type in (0,1))";
-        }else{
-            $where .= " and (type in (2))";
-        }
-		//根据时间状态继续筛选
-		$timeNow = date("Y-m-d H:i:s");//当前时间
-		$where .= " and (DATE_FORMAT( endTime, '%Y-%m-%d %H:%i:%S') <='".$timeNow."')";
-		$sql = "select * from course $where";
 
-		//在course表中查询所有课程信息
-		$result = mysql_query($sql);
-		//表中的总纪录数
-		@$amount = mysql_num_rows($result);
-
-	return @$amount;
-}
 function array_remove(&$arr, $offset)
 {
     array_splice($arr, $offset, 1);

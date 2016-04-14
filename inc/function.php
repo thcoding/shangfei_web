@@ -88,7 +88,8 @@ function getStuStatistics($userid,$coursetype=1,$datetype=0){//$coursetype=1:课
 		//在course表中查询所有课程信息
 		$result = mysql_query($sql);
 		//表中的总纪录数
-		@$amount = mysql_num_rows($result);
+		@$amount = mysql_num_rows($result)!=null?mysql_num_rows($result):0;
+
 
 	return @$amount;
 }

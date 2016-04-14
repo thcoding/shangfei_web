@@ -60,7 +60,7 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	<?php
 			}//if($_SESSION["role"]==ADMIN || $_SESSION["role"]==TEACHER)
 				?>
-	<li style="height: 40px;width: auto"><a href="userinfo.php"><?php 
+	<li style="height: 40px;width: auto"><a href="../userinfo.php"><?php 
 		if(strlen($_SESSION["username"])>5){
 			echo substr($_SESSION["username"],0,5).'...';
 		}else{
