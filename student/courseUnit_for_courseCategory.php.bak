@@ -103,7 +103,7 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 				<td align='center'>分数</td>
 				<td align='center'>学习次数</td>
 				<td align='center'>上次访问时间</td>
-				<td align='center'>备注</td>
+			
 				<td align='center'>进入学习</td>
 				</tr>";	
 			    
@@ -192,7 +192,7 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 									$lesson_view_count = $arr_lp_view["view_count"];//lp_view表中的view_count
 
 									//$lesson_lastview_time;
-									$lesson_lastview_time = $arr_lp_item_view["start_time"];//当前这个item的上次访问时间
+									$lesson_lastview_time = date('Y-m-d H:i:s',$arr_lp_item_view["start_time"]);//当前这个item的上次访问时间
 								}
 
 								if($incompleted_count!=0){//如果存在尚未完成的item
@@ -227,19 +227,7 @@ $courseUnitGroupIds = $arr["courseunitgroupids"];
 			</div>
 		</div>
 	</div>
-
-<div class="menu" id="menu">
-
-<div class="create_portal">
-<ul>
-<li><a href="mycourse.php">我的课程</a></li>
-<li><a href="mycourse_in.php">进行中的课程</li>
-<li><a href="mycourse_undo.php">未开始的课程</li>
-<li><a href="mycourse_expire.php">已过期的课程</li>
-</ul>
-</div>
-
-</div></div> <div class="clear">&nbsp;</div> <!-- 'clearing' div to make sure that footer stays below the main and right column sections -->
+</div> <div class="clear">&nbsp;</div> <!-- 'clearing' div to make sure that footer stays below the main and right column sections -->
 </div> <!-- end of #main" started at the end of banner.inc.php -->
 
 <div class="push"></div>

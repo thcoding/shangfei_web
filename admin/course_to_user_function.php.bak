@@ -322,7 +322,7 @@ function getChildren($groupid,$grouptype){//获得group的children grouptype(1:�
 
 			$userinfo = getUserinfoById($arr_courseunit["userid"]);
 			$courseunitinfo = getCourseUnitinfoById($arr_courseunit["courseunitid"]);
-			if($courseunitinfo["deleted=1"])
+			if($courseunitinfo["deleted"]==1)
 				continue;
 			//开始获取课程单元所需信息，并添加到item中
 			$childrenitem["id"] = $arr_courseunit["id"];

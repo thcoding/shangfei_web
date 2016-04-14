@@ -1,0 +1,13 @@
+2016-04-14 19:47:12	userid:22; courseid:40;
+<br>2016-04-14 19:47:18	userid:22; courseid:42;
+<br>2016-04-14 20:10:23	userid:22; courseid:40;
+<br>2016-04-14 20:10:30	userid:22; courseid:42;
+<br>2016-04-14 20:10:42	userid:22; courseid:40;
+<br>2016-04-14 20:11:07	userid:22; courseid:40;
+<br>2016-04-14 20:11:32	userid:22; courseid:40;
+<br>2016-04-14 20:11:36	userid:22; courseid:37;
+<br>2016-04-14 20:11:40	userid:22; courseid:42;
+<br>2016-04-14 20:14:53	userid:22; courseid:42;
+<br>2016-04-14 20:32:35	userid:22; courseid:42;
+<br>2016-04-14 20:37:15	userid:22; courseid:42;
+<br>
