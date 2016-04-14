@@ -46,13 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && count($_FILES) > 0 && !empty($_FILES
     $stopping_error = false;
     $time = date("Y-m-d H:i:s");
 
-	$title = $_FILES['file']['name'];
-	$srcfile  = $_FILES['file']['tmp_name'];
-	$size = round($_FILES['file']['size']/1000);
-	//get name of the zip file without the extension
-	$extension = file_ext($title);
-	$filename = date("YmdHis-").rand(1000,9999).".".$extension;
-	$file_base_name = str_replace('.'.$extension,'',$filename);
+    $title = $_FILES['file']['name'];
+    $srcfile  = $_FILES['file']['tmp_name'];
+    $size = round($_FILES['file']['size']/1000);
+    //get name of the zip file without the extension
+    $extension = file_ext($title);
+    $filename = date("YmdHis-").rand(1000,9999).".".$extension;
+    $file_base_name = str_replace('.'.$extension,'',$filename);
 
     //$file_base_name = replace_dangerous_char(trim($file_base_name),'strict');
     //move_uploaded_file($srcfile,$course_dir.iconv("GBK","UTF-8",$s));
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && count($_FILES) > 0 && !empty($_FILES
             //die("type".$type);
             die("<script>alert(\"未知的课程包类型,请检查scorm课程压缩包是否正确。\");
                  history.go(-1);</script>");
-            //return "lp_upload.php error";
+        //return "lp_upload.php error";
     }
 } // end if is_uploaded_file
 
