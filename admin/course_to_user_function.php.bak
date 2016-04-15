@@ -181,7 +181,7 @@ function getCourseorUserInfo(){//获取postinfo
 		@$keyword = trim($_POST["keyword"]);//获取搜索关键字
 		$deleted = 0;//deleted默认为0，即显示所有未删除的课程组
 		@$page_index = trim($_POST["page_index"])?trim($_POST["page_index"]):1;//获取页码数
-		$page_size = 10;//每页记录10条信息
+		$page_size = 20;//每页记录10条信息
 		$amount = 0;//表中记录总数，默认为0
 
 		//返回的信息

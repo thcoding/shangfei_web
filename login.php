@@ -20,7 +20,7 @@ if($arr_user["password"] == md5($password)){//判断用户密码是否符合
 	$res_userlogin = $mysql->query("select * from userlogin where userid=".$userid);
 	$arr_userlogin = $mysql->fetch_array($res_userlogin);
 	if($mysql->num_rows($res_userlogin)>0){
-		if(filesize(session_save_path()."/sess_".$arr_userlogin["sessionid"])>0 || (time()-filemtime(session_save_path()."/sess_".$arr_userlogin["sessionid"]))<$sessionTime){//已有用户登录，不允许登录
+		if(filesize(session_save_path()."/sess_".$arr_userlogin["sessionid"])>0 && (time()-filemtime(session_save_path()."/sess_".$arr_userlogin["sessionid"]))<$sessionTime){//已有用户登录，不允许登录
 			die("<script>alert('该用户已经登录');location.href='index.php'</script>");
 		}else{ //用户登录时间已过，正常登录
 			session_start();

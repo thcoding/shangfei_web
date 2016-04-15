@@ -66,7 +66,7 @@
                     d = result['data'];
 
                     setTreeData(d['items']);
-                    setPagelist(90);
+                    setPagelist(d['amount']);
                     $("#item_list").tree({
                         data: d['items'],
                         checkbox: true,

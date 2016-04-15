@@ -200,7 +200,7 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
             $unitres = $mysql->query("SELECT * FROM `commonfile_view` where user_id = $userid and unitversion_id = ".$arr['id']."");
             $unitarr = $mysql->fetch_array($unitres);
             if ($unitarr) {
-                $lesson_status = "已完成"; //学习状态：无状态、未学习、进行中、已完成
+                $lesson_status = "无状态"; //学习状态：无状态、未学习、进行中、已完成
                 $lesson_total_time = vtime($unitarr['total_time']);   //学习时间
                 $lesson_view_count=$unitarr['view_count'];   //学习次数
                 $lesson_lastview_time = $lesson_lastview_time = date('Y-m-d H:i:s',$unitarr['last_time']);//最后访问日期

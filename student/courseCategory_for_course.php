@@ -59,6 +59,16 @@
 
 
     }
+	function LaunchCommonFile(vid,uid) {
+	    $.ajax({				
+				type: "GET",
+				url: "save_common_file.php",
+				data:"vid="+vid+"&uid="+uid,
+				success:function(msg){
+					//alert('回调成功');
+				}
+			});
+    }
 </script>
 <script type="text/javascript">
 

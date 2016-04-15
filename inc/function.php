@@ -190,22 +190,4 @@ function api_get_user_id(){//��ȡ��ǰsession���û�id
 	return $_SESSION["userid"];
 }
 
-function save_common_file_state($unitversionid,$userid,$lasttime){
-
-$res = $mysql->query("select * from commonfile_view where user_id=".$userid." and unitversion_id=".$unitversionid);
-	if($arr = $mysql->fetch_array($res)){//表中有记录
-
-		$viewcount = $arr["view_count"]+1;
-
-		$mysql->query("update commonfile_view set view_count='$viewcount',last_time='$lasttime' where user_id=".$userid." and unitversion_id=".$unitversionid);
-
-		$returnInfo["status"] = "success";
-	
-	}
-	else{//参数传递错误，保存失败
-		
-		$mysql->query("insert into commonfile_view (user_id,unitversion_id,view_count,total_time,last_time) values ('$userid','$unitversionid','1','0','$lasttime')");
-	}
-}
-
 ?>

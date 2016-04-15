@@ -161,7 +161,6 @@
             }
             //return checked course id and title to opener
             var submitChecked = function () {
-				alert('分配成功');
                 parent.page_submit(type, id_arr);
                 window.close();
             }

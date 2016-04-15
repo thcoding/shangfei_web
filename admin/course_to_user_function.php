@@ -232,10 +232,7 @@ function getCourseorUserInfo(){//获取postinfo
 			$where = "where deleted=".$deleted." and type=2";//为sql查询条件where语句赋值，type = 3，为课程单元组
 		
 		if($keyword!=""){ //如果存在关键字，则为where加该条件
-			if($grouptype==3)
 				$where .= " and (title like '%".$keyword."%' or description like '%".$keyword."%')";
-			else if($grouptype==1)	
-				$where .= " and (realname like '%".$keyword."%')";
 		}
 		
 		$sql = "select * from `group` $where";//先不管排序和分页问题，查出表中记录总数

@@ -14,7 +14,7 @@ $moduleid = $postInfo["moduleid"];
 
 file_put_contents("log","moduleid=".$postInfo["moduleid"]."|".GetIP()."|".$str."|".date("Y-m-d H:i:s")."\n",FILE_APPEND);
 
-if(in_array($moduleid,array(1,2,3,4,5,6,7,8,9))){
+if(in_array($moduleid,array(1,2,3,4,5,6,7,8,9,10))){
 	$returnInfo["result"] = 1;
 }else{
 	$returnInfo["result"] = 0;
@@ -46,11 +46,14 @@ switch ($moduleid){
 	case 8:  //获取Scorm课件的数据表形式记录
 		include "getLearnPath.php";
 		break;
-	case 9:  //获取Scorm课件的数据表形式记录
+	case 9:  //Save Scorm课件的数据表形式记录
 		include "save_scorm.php";
+		break;
+	case 10:  //获取Scorm课件群的数据表形式记录
+		include "get_scorm.php";
 		break;
 }
 
-echo make8().base64_encode(json_encode($returnInfo,JSON_UNESCAPED_UNICODE));
+echo base64_encode(json_encode($returnInfo,JSON_UNESCAPED_UNICODE));
 
 ?>
