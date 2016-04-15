@@ -11,6 +11,7 @@ include "inc/config.php";
 //从数据库中uer表中获取该用户名相关信息
 $res_user = $mysql->query("select * from user where username='$username'");
 $arr_user = $mysql->fetch_array($res_user);
+echo("asdasd");
 
 if($arr_user["password"] == md5($password)){//判断用户密码是否符合
 	if($arr_user["deleted"])die("<script>alert('您的帐号已被删除');location.href='index.php'</script>");
@@ -20,7 +21,7 @@ if($arr_user["password"] == md5($password)){//判断用户密码是否符合
 	$res_userlogin = $mysql->query("select * from userlogin where userid=".$userid);
 	$arr_userlogin = $mysql->fetch_array($res_userlogin);
 	if($mysql->num_rows($res_userlogin)>0){
-		if(filesize(session_save_path()."/sess_".$arr_userlogin["sessionid"])>0 || (time()-filemtime(session_save_path()."/sess_".$arr_userlogin["sessionid"]))<$sessionTime){//已有用户登录，不允许登录
+		if(filesize(session_save_path()."/sess_".$arr_userlogin["sessionid"])>0 && (time()-filemtime(session_save_path()."/sess_".$arr_userlogin["sessionid"]))<$sessionTime){//已有用户登录，不允许登录
 			die("<script>alert('该用户已经登录');location.href='index.php'</script>");
 		}else{ //用户登录时间已过，正常登录
 			session_start();
