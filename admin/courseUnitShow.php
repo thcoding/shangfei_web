@@ -83,7 +83,7 @@
                     <form action="upload.php" method="post" enctype="multipart/form-data" onsubmit="return checkFile()">
                         请选择课程单元包：<input type="file" name="file" id="file" onchange="checkZip()">
                         <span id="isUnzip">是否解压：<label><input type="radio" name="unzip" value="1" checked>是</label> <label><input type="radio" name="unzip" value="0">否</label></span>
-                        <button type="submit">上传</button>
+                        <button id="uploadBtn" type="submit">上传</button>
                         <input type="hidden" name="id" value="<?php echo $id;?>">
                         <p>
                         <div>&nbsp; &nbsp; 课程单元包类型：<select name="packageType"><option value="1" selected>普通文件</option><option value="2">SCORM文件</option><option value="3">AICC文件</option></select></div>

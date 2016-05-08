@@ -212,7 +212,7 @@
         <body class="easyui-layout">
             <div data-options="region:'center',title:'请选择'" style="padding:10px;background:#eee;">
                 <input id="btn_search" style="width:400px" data-options="
-                prompt: '输入查询词',
+                prompt: '输入ss查询词',
                 icons:[{
                     iconCls:'icon-search',
                     handler: function(e){

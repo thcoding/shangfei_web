@@ -98,6 +98,9 @@ function checkFile(){
 		$("#versionname").focus();
 		return false;
 	}
+	var buttonObject=document.getElementById('uploadBtn');
+	buttonObject.innerHTML='上传中...';
+　　buttonObject.disabled=true;
 	return true;
 }
 

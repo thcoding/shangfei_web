@@ -56,11 +56,8 @@ include "../inc/config.php";
 include "../inc/function.php";
 include "../inc/navigation_student.php";
 $status=isset($_GET["status"])?$_GET["status"]:0;
-if($status<4){
-   $type="course";
-}else{
-    $type="exam";
-}
+$type="exam";
+
 
 ?>
 
@@ -73,10 +70,7 @@ if($status<4){
 		<div id="container">
 			<div class="info">
                 <?php
-                if($type=="course") {
-                echo"我的课程列表";}else{
                 echo"我的考试列表";
-                }
                 ?>
             </div>
 			<div class="wrap">
@@ -99,10 +93,7 @@ if($status<4){
 					<input name="k" value="<?php echo $keyword;?>" type="text" placeholder="请输入关键字...">
 					<button id="btn_search" type="submit">
                         <?php
-                        if($type=="course") {
-                            echo"搜索课程";}else{
                             echo"搜索考试";
-                        }
                         ?>
                         </button>
 					</td>
@@ -111,48 +102,29 @@ if($status<4){
 					<td colspan="2"><label><input type="radio" name="searchType" value=1 <?php if($searchType==1){					
 					?>checked<?php } ?>>
                             <?php
-                            if($type=="course") {
-                                echo"按课程名";}else{
                                 echo"按考试名";
-                            }
                             ?></label>
-                        <?php
-                        if($type=="course"){
-                            echo '<label><input type="radio" name="searchType" value=2 > 按课程类别</label>';
-                            if($searchType==2) {
-                                echo '<label><input type="radio" name="searchType" value=2 checked> 按课程类别</label>';
-                            }
-                            }else{
-                        }
-                        ?><label><input type="radio" name="searchType" value=3 <?php if($searchType==3){
+                        <label><input type="radio" name="searchType" value=3 <?php if($searchType==3){
 					?>checked<?php } ?>>按创建者</label><label><input type="radio" name="searchType" value=4 <?php if($searchType==4){	
 					?>checked<?php } ?>>按创建时间(格式:年-月-日，可缺省)</label></td>
 				</tr>
 				<tr>
 					<td colspan="2"><?php
-                        if($type=="course") {
-                            echo"请选择课程有效区间";}else{
                             echo"请选择考试有效区间";
-                        }
                         ?></td>
 				</tr>
 				<tr>
 					<td>
                         <?php
-                        if($type=="course") {
-                            echo"课程开始时间：";}else{
                             echo"考试开始时间：";
-                        }
                         ?>
                         </td>
 					<td><input style="width:250px;" type="text" name="startTime" id="title" value="<?php echo $startTime;?>" class="Wdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
 				</tr>
 				<tr>
 					<td><?php
-                        if($type=="course") {
-                            echo"课程结束时间：";}else{
                             echo"考试结束时间：";
-                        }
+
                         ?></td>
 					<td><input style="width:250px;" type="text" name="endTime" id="title" value="<?php echo $endTime;?>" class="Wdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
 				</tr>
@@ -170,11 +142,7 @@ if($status<4){
 
 			$linkPage = "$self";
 			//$userid = isset($_GET["userid"])?$_GET["userid"]:0;
-            $typeflag=0;
-            if($type=="course") {
-                $typeflag=1;}else{
-                $typeflag=2;
-            }
+            $typeflag=2;
 			$page_course->fenye($page,$order,$linkPage,$userid,$keyword,$searchType,$startTime,$endTime,$status,$typeflag);//课程列表页面实现分页功能
 			?>
 			</ul>

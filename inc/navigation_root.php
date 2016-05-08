@@ -78,9 +78,9 @@ if(isset($_SESSION["userid"]) && $_SESSION["userid"]!=0){
 	</li>
     <li><a>我的考试</a>
             <ul>
-				<li><a href="student/mycourse.php?status=4">所有考试</a></li>
-                <li><a href="student/mycourse.php?status=5">未开始的考试</a></li>
-                <li><a href="student/mycourse.php?status=6">已结束的考试</a></li>
+				<li><a href="student/myexam.php">所有考试</a></li>
+                <li><a href="student/myexam.php?status=5">未开始的考试</a></li>
+                <li><a href="student/myexam.php?status=6">已结束的考试</a></li>
             </ul>
             <div class="clear"></div>
     </li>

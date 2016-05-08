@@ -205,4 +205,15 @@
 <br>2016-04-15 21:28:03	userid:22; courseid:42;
 <br>2016-04-15 21:49:08	userid:22; courseid:42;
 <br>2016-04-15 21:49:14	userid:22; courseid:42;
+<br>2016-05-06 14:57:40	userid:22; courseid:52;
+<br>2016-05-06 14:57:57	userid:22; courseid:52;
+<br>2016-05-06 14:58:15	userid:22; courseid:52;
+<br>2016-05-06 15:04:00	userid:22; courseid:52;
+<br>2016-05-06 15:04:06	userid:22; courseid:52;
+<br>2016-05-06 15:33:07	userid:7; courseid:52;
+<br>2016-05-06 15:33:14	userid:7; courseid:52;
+<br>2016-05-06 15:33:19	userid:7; courseid:52;
+<br>2016-05-06 15:33:52	userid:7; courseid:52;
+<br>2016-05-07 19:15:27	userid:22; courseid:52;
+<br>2016-05-07 19:16:23	userid:22; courseid:52;
 <br>
