@@ -1,0 +1,290 @@
+A
+A/P	Autopilot
+A/T	Autothrottle
+A/THR	Autothrust	
+AC	Alternating Current
+ACARS	Aircraft Communications Addressing & Reporting System
+ACAS	Airborne Collision Avoidance System
+ADC	Air Data Computer
+ADF	Automatic Direction Finder
+ADIRS	Air Data Inertial Reference System
+ADIRU	Air Data Inertial Reference Unit
+ADR	Air Data Reference
+AGL	Above Ground Level
+AH	Alert Height
+ALT	Altitude
+ALTN	Alternate
+AMSL	Above Mean Sea Level
+AOA	Angle Of Attack
+AOC	Airline Operational Control
+AOM	Aircraft Operations Manual
+APPR	Approach
+APU	Auxiliary Power Unit
+ARINC	Aeronautical Radio Incorporated
+ATA	Actual Time of Arrival
+ATC	Air Traffic Control
+ATSU	Air Traffic Service Unit
+ATT	Attitude
+     
+B	
+BARO	Barometric
+BRG	Bearing
+BRT	Bright
+     
+C
+C	Celsius
+CAPT	Captain	 
+CB	Circuit Breaker
+CCD	Cursor Control Device
+CDU	Control Display Unit
+CFIT	Controlled Flight Into Terrain
+CHKL	Checklist
+CI	Cost Index
+CLB	Climb
+CLR	Clear
+cm	Centimetres
+CPDLC	Controller Pilot Datalink Communications
+COMM	Communication
+CRS	Course
+CRZ	Cruise
+CTL	Control
+CTR	Center
+     
+D	 
+DA	Descent Advisory
+DC	Direct Current
+DEP	Departure
+DES	Descent
+DEST	Destination
+DEV	Deviaton
+DH	Decision Height
+DISC	Disconnect
+DIR	Direct
+DME	Distance Measuring Equipment
+DMU	Datalink Management Unit
+DSP	Display Select Panel
+DSPL	Display
+     
+E	 	 
+E	East
+E/D	End of Descent
+EASA	European Aviation Safety Agency
+ECAM	Electronic Centralized Aircraft Monitor
+ECON	Economy
+EEC	Electronic Engine Control
+EFIS	Electronic Flight Instrument System
+EGPWS	Enhanced Ground Proximity Warning System
+EGT	Exhaust Gas Temperature
+EICAS	Engine Indicating Crew Alerting System
+ELEV	Elevator
+ENG	Engine
+EPR	Engine Pressure Ratio
+ETA	Estimated Time of Arrival
+EWD	Engine Warning Display
+EXEC	Execute
+     
+F	 
+F	Fahrenheit
+F/O	First Officer
+F-PLN	Flight Plan
+FAA	Federal Aviation Administration
+FADEC	Full Authority Digital Engine Control
+FAF	Final Approach Fix
+FCOM	Flight Crew Operations Manual
+FCTL	Flight Control
+FD	Flight Director
+FIR	Flight Information Region
+FL	Flight Level
+FLCH	Flight Level Change
+FMA	Flight Mode Annunciator
+FMC	Flight Management Computer
+FMGC	Flight Management Guidance Computer
+FMGS	Flight Management Guidance System
+FMS	Flight Management System
+FOM	Flight Operations Manual
+FPA	Flight Path Angle
+ft	Feet
+ft/min	Feet Per Minute
+FWD	Forward
+     
+G
+G/S	Glide Slope	 
+GA	Go-around
+GEN	Generator
+GMT	Greenwich Mean Time
+GNSS	Global Navigation Satellite System
+GPS	Global Positioning System
+GPWS	Ground Proximity Warning System
+GS	Ground Speed
+GW	Gross Weight
+     
+H	 
+HDG	Heading
+HF	High Frequency
+HFDR	High Frequency (HF) Data Link Radio
+HP	High Pressure
+HPA	Hectopascals
+hr	Hours
+     
+I	 
+IAS	Indicated Airspeed
+IATA	International Air Transport Association
+ICAO	International Civil Aviation Organization
+ID	Identifier
+IDENT	Identication
+in	Inches
+ILS	Instrument Landing System
+INBD	Inboard
+INOP	Inoperative
+IRS	Inertial Reference System
+IRU	Inertial Reference Unit
+ISFD	Integrated Standby Flight Display
+ISIS	Integrated Standby Instrument System
+ISLN	Isolation
+     
+K	 
+kg	Kilograms
+km	kilometres
+     
+L
+L	Left
+LAT	Latitude
+lb	Pounds
+LDG	Landing
+LNAV	Lateral Navigation
+LOC	Localizer
+LONG	Longitude
+LP	Low Pressure
+LSK	Line Select Key
+LW	Landing Weight
+     
+M
+m	Metres	 
+MAG	Magnetic
+MAN	Manual
+MAP	Missed Approach Point
+MAX	Maximum
+MCDU	Multipurpose Control Display Unit
+MCP	Mode Control Panel
+MCT	Maximum Continuous Thrust
+MDA	Minimum Descent Altitude
+MEL	Minimum Equipment List
+MFD	Multifunction Display
+mi	Miles
+MIN	Minimum
+min	Minutes
+mm	Milimetres
+MSG	Message
+MSL	Mean Sea Level
+MTOW	Maximum Take-off Weight
+     
+N
+N	North
+N/A	Not Applicable	 
+NAV	Navigation
+NAVAIDS	Navigational Aids
+ND	Navigation Display
+NE	Northeast
+nm	Nautical Miles
+NORM	Normal
+NW	Northwest
+     
+O
+OAT	Outside Air Temperature
+OCC	Operations Control Centre
+OFP	Operational Flight Plan
+OPT	Optimum	 
+OVHD	Overhead
+OVRD	Override
+     
+P	 
+PASS	Passenger
+PERF	Performance
+PF	Pilot Flying
+PFD	Primary Flight Display
+PM	Pilot Monitoring
+PNF	Pilot Not Flying
+PNL	Panel
+POS	Position
+PWS	Predictive Windshear
+     
+Q
+QRH	Quick Reference Handbook
+QTY	Quantity
+     
+R
+R	Right	 
+R/C	Rate of Climb
+RA	Radio Altitude / Resolution Advisory
+RAIM	Receiver Autonomous Integrity Monitoring
+RAT	Ram Air Turbine
+REF	Reference
+RGS	Remote Ground Service
+RNP	Required Navigation Performance
+RNAV	Area Navigation 
+RVSM	Reduced Vertical Separation Minima
+RWY	Runway
+     
+S
+S	South	
+S/C	Step Climb 
+SAARU	Secondary Attitude Air Data Reference Unit
+SATCOM	Satellite Communications
+SE	Southeast
+sec	seconds
+SEL	Select
+SELCAL	Selective Calling
+SID	Standard Instrument Departure
+SOP	Standard Operating Procedures
+SPD	Speed
+STA	Station
+STAB	Stabilizer
+STAR	Standard Terminal Arrival Route
+STBY	Standby
+STD	Standard
+SW	Southwest
+     
+T
+T/C	Top of Climb
+T/D	Top of Descent
+T/O	Take-off	 
+TA	Traffic Advisory
+TA/RA	Traffic Advisory / Resolution Advisory
+TAS	True Airspeed
+TAT	Total Air Temperature
+TCAS	Traffic Alert and Collision Avoidance System
+TEMP	Temperature
+TFC	Traffic
+THDG	True Heading
+THR	Thrust
+TN	True North
+TOGA	Take-off Go-around
+TRU	True
+     
+U	 
+UTC	Universal Time Coordinated
+     
+V
+V/S	Vertical Speed
+VDR	Very High Frequency (VHF) Data Link Radio	 
+VHF	Very High Frequency
+VNAV	Vertical Navigation
+VOR	VHF Omnidirectional Range
+     
+W
+W	West
+WARN	Warning	 
+WPT	Waypoint
+WT	Weight
+WX	Weather
+WXR	Weather Radar
+     
+X
+XFE	Transfer	 
+XTK	Cross Track
+     
+Y
+yd	Yards
+     
+Z	 
+ZFW	Zero Fuel Weight

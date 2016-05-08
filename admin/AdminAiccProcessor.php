@@ -1,0 +1,12 @@
+<?php
+echo
+'error=0
+error_text=Successful
+aicc_data=
+[core]
+lesson_location=
+lesson_status=
+score=
+time=
+[core_lesson]
+visited=visited';

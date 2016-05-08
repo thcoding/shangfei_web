@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<environment>
+  <checkMark_x>-7</checkMark_x>
+  <checkMark_y>-5</checkMark_y>
+  <bgColor>#555555</bgColor>
+  <bgPath>images/background.png</bgPath>
+  <template_x>12</template_x>
+  <template_y>10</template_y>
+  <instruction_x>80</instruction_x>
+  <instruction_y>534</instruction_y>
+  <pageTitle_x>230</pageTitle_x>
+  <pageTitle_y>10</pageTitle_y>
+  <fastAdvance>1</fastAdvance>
+  <pageNameShown>0</pageNameShown>
+  <txt_clr>red</txt_clr>
+  <lessonBased>1</lessonBased>
+  <screen>big</screen>
+  <version>08720061101GW</version>
+</environment>

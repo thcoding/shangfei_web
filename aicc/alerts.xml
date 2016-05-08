@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<alerts>
+	<LaunchError>Launch data is incorrect, please contact the administrator.</LaunchError>
+	<FatalError>A fatal error occurred, please contact the administrator.</FatalError>
+	<Bookmark>Would you like to open last visited page?</Bookmark>
+  <CBTStructureXMLLoadError>Fatal error: failed to load cbtStructure XML file.</CBTStructureXMLLoadError>
+  <CBTStructureXMLSecurityError>Security error occurred while loading cbt structure xml</CBTStructureXMLSecurityError>
+	<LessonXMLFilePathError>Lesson XML file path not specified in [core_vendor] parameter.</LessonXMLFilePathError>
+	<LMSDataLoadError>Error occurred while loading data from LMS.</LMSDataLoadError>
+	<AICCDataLoadError>Error occurred while loading AICC data.</AICCDataLoadError>
+	<ContentLoadError>Error occurred while loading content data.</ContentLoadError>
+	<SendPutParamError>Error occurred while sending PutParam data.</SendPutParamError>
+	<SendExitAUError>Error occurred while sending exitAu data.</SendExitAUError>
+	<ElementNameUnspecified>Element name not specified</ElementNameUnspecified>
+	<AICCDataSendError>Error occurred while sending AICC data to Player.</AICCDataSendError>
+	<LessonDataSendError>Error occurred while sending lesson data to Player.</LessonDataSendError>
+	<ExitCourse>Are you sure you would like to exit?</ExitCourse>
+	<ExitLesson>Are you sure you would like to exit?</ExitLesson>
+	<ConnectMenuError>Error occurred while connecting to ModuleMenu movie.</ConnectMenuError>
+	<InvalidDataFromDataModel>Invalid data sent by Data model.</InvalidDataFromDataModel>
+	<SetElementValueError>Error occurred while setting value of element.</SetElementValueError>
+ 	<OpenParamFile>Cannot find file param.cmi in the specified folder. Do you want to open it manually? If no, player will use the default setting.</OpenParamFile>
+ 	<InvalidCommand>Invalid command.</InvalidCommand>
+	<InvalidSection>Invalid section.</InvalidSection>
+	<InvalidPageId>Invalid page id.</InvalidPageId>
+	<AudioLoadError>Error occurred while loading audio.</AudioLoadError>
+	<ConnectContentGetStatusFailed>Connection failed while content page gets/sets status.</ConnectContentGetStatusFailed>
+	<InvalidCommandFromContent>Invalid command sent by content.</InvalidCommandFromContent>
+	<ConnectContentGetAnswerFailed>Connection failed while content page gets/sets answers.</ConnectContentGetAnswerFailed>
+	<ConfigXMLLoadError>Error occurred while loading config.xml.</ConfigXMLLoadError>
+	<ConfigXMLSecurityError>Security error occurred while loading config.xml.</ConfigXMLSecurityError>
+	<PageXMLLoadError>Sorry, no content found.</PageXMLLoadError>
+	<PageXMLSecurityError>Security error occurred while loading page xml.</PageXMLSecurityError>
+	<TooLongComments>Please do not enter more than 1,000 characters for comments.</TooLongComments>
+	<ImageURLError>Unable to connect to images URL.</ImageURLError>
+	<CoreVendorSettingError>Unknown AICC core vendor settings.</CoreVendorSettingError>
+	<SendPutCommentsError>Error occurred while sending comments. Please try again.</SendPutCommentsError>
+	<SendPutInteractionsError>Error occurred while sending interactions. Please try again.</SendPutInteractionsError>
+	<ExitMessage>Would you like to exit from the exam?</ExitMessage>
+	<NoCrossDomainFile>Cross domain file not found.</NoCrossDomainFile>
+	<NoAnswerWarning>You have not answered this question yet.</NoAnswerWarning>
+	<IdleAlert>Do you want to continue?</IdleAlert>
+	<GlossaryFileLoadError>IO error occurred while loading data from glossry text file.</GlossaryFileLoadError>
+	<GlossarySecurityError>Security error occurred while loading data from glossry text file.</GlossarySecurityError>
+	<InvalidCoreLesson>The record in the LMS doesn't match the current CBT course. An error may occur if you continue to proceed.</InvalidCoreLesson>
+	<OutputFileErr>Invalid output file path in param.cmi.</OutputFileErr>
+	<SecurityError>Security error occured while writing the output file.</SecurityError>
+	<WritingOutputFileErr>Error occured while writing the output file.</WritingOutputFileErr>
+	<DeleteParamFileErr>Error occured while deleting param file.</DeleteParamFileErr>
+  <ExitTestLesson>Once you exit from the test lesson, you will not be allowed to re-enter. Do you want to continue?</ExitTestLesson>
+	<ReviewPageError>Cannot find the specified review page.</ReviewPageError>
+	<ExitReviewPage>Are you sure you would like to exit the review page?</ExitReviewPage>
+	<ExitReviewTestLesson>Sorry, you cannot review a test lesson.</ExitReviewTestLesson>
+	<ExitMessage>Would you like to exit from the exam?</ExitMessage>
+  <LastPage>You have visited the last page. Click the next button to return back to the first screen or use the exit button to save status and exit.</LastPage>
+  <LastPageAndCompleted>The course is completed. Please use the exit button to save status and exit. Clicking the next button will return back to the first screen.</LastPageAndCompleted>
+  <CompleteCourse>The course is completed. Please use the exit button to save status and exit.</CompleteCourse>
+  <ArgumentError>The syntax of parameter is invalid.</ArgumentError>
+  <URLError>Error occurred while launching this URL.</URLError>
+  <UnclickableItem>Sorry, this item has been disabled.</UnclickableItem>
+  <Instruction>Rapidly drag screen to left  = go next page
+Rapidly drag screen to right = go previous page
+Rapidly drag screen down/up = turn Controll Panel on/off</Instruction>
+</alerts>
+
+	

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <title>Menu</title>
+  <id>menu_template</id>
+  <type>menu</type>
+  <init_required>true</init_required>
+  <unload_required>true</unload_required>
+  <graphics_location crewpad="">menu_template.swf</graphics_location>
+  <completion>last_section</completion>
+  <metadata>
+    <language>EN</language>
+    <description>
+    </description>
+    <keywords>
+    </keywords>
+    <date>13-11-2014</date>
+    <duration>15:04:21</duration>
+    <version>1.0</version>
+    <generator>
+    </generator>
+    <package_id>
+    </package_id>
+    <rights>Pelesys Learning Systems Inc.</rights>
+    <content_folder>EN:content</content_folder>
+  </metadata>
+  <data>menu_button:Topic1 ||| exit_button: true ||| exit_button_x:40 ||| exit_button_y:600 ||| background:cover.swf||| background_x:-12 ||| background_y:-12 ||| menu_x:40||| menu_y:80 ||| menu_button_space:50 ||| title_enabled:true ||| title_x:200|||title_y:22|||title_size:24|||title_color:#FFFFFF</data>
+  <sections>
+    <section>
+      <id>s1</id>
+      <audio_location>
+      </audio_location>
+      <audio_text>
+      </audio_text>
+      <instruction>
+      </instruction>
+      <completion>audio</completion>
+      <advance>auto</advance>
+      <jumpTo>
+      </jumpTo>
+    </section>
+  </sections>
+  <actions>
+    <action id="hotspot1">jump to item Topic1Page1</action>
+  </actions>
+</page>

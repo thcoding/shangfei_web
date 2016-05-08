@@ -1,0 +1,357 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Pelesys DreamSky Player 4.0</title>
+
+<style type="text/css">
+	html {
+		height: 100%;
+        width: 100%;
+		overflow: hidden;
+	}
+	
+	#flashContent {
+       position:absolute;
+       width:100%;
+	   height:100%;
+       z-index:0;
+	}
+
+
+    #HTMLLayer {
+	    height: 0;
+	    width: 0;
+	    position:absolute;
+	    padding:0;
+	    color:#666666;
+	    font-size:30px;
+	    margin:6px 0px 0px 0px;
+        z-index:1;
+    }
+
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #999999;
+	}
+</style>
+
+<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="SCORM_API_wrapper.js"></script>
+<script type="text/javascript" src="swfobject.js"></script>
+<script type="text/javascript">
+    var g_ratio = 723 / 1024;
+    var g_isScale = true;
+    var g_isWinOpen = false;
+    var g_xy8_6 = { top: 8, left: 6 };
+    var g_isHtmlPgRuning = false;
+
+
+    function getFlashVersion() {
+            // ie
+            try {
+                try {
+                    var axo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.6');
+                    try { axo.AllowScriptAccess = 'always'; }
+                    catch (e) { return '6,0,0'; }
+                } catch (e) { }
+         
+                return new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version').replace(/\D+/g, ',').match(/^,?(.+),?$/)[1];
+                // other browsers
+            } catch (e) {
+                try {
+                    if (navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin) {
+
+                        return (navigator.plugins["Shockwave Flash 2.0"] || navigator.plugins["Shockwave Flash"]).description.replace(/\D+/g, ",").match(/^,?(.+),?$/)[1];
+                    }
+                } catch (e) { }
+            }
+            return '0,0,0';
+     }
+
+
+
+    function validFlashVersion(m, n) {
+            var ver = getFlashVersion().split(',');
+            var major = parseInt(ver[0], 10);
+            var minor = parseInt(ver[1], 10);
+            if (major > m) {
+                return true;
+            } else {
+                if (minor >= n) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+     }
+
+
+
+     var allowPrompt = true;
+
+    function WarnUser()
+    {
+       if(allowPrompt)
+       {
+           var r = 'WARNING:ALL DATA WILL BE LOST IF YOU PRESS "CONTINUE" OR "LEAVE PAGE".\n' + 'To save and quit, please choose "Stay on Page" or "Cancel", then click "Exit" button on the menu page.';
+           return r;
+       }
+    }
+
+    function SetPromptOff() {
+        allowPrompt = false;
+    }
+
+    function NoPrompt()
+    {
+       allowPrompt = false;
+       top.window.close();
+    }
+
+    function checkScale() {
+        var winWidth = 0, winHeight = 0;
+        if (typeof (window.innerWidth) == 'number') {
+            //Non-IE
+            winWidth = window.innerWidth;
+            winHeight = window.innerHeight;
+        } else if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+            //IE 6+ in 'standards compliant mode'
+            winWidth = document.documentElement.clientWidth;
+            winHeight = document.documentElement.clientHeight;
+        } else if (document.body && (document.body.clientWidth || document.body.clientHeight)) {
+            //IE 4 compatible
+            winWidth = document.body.clientWidth;
+            winHeight = document.body.clientHeight;
+        }
+        //return ((winWidth <= 1024) || (winHeight <= 800))
+		return false
+    }
+
+    var jsReady = false;
+
+    function isReady() {
+        return jsReady;
+    }
+
+
+    function getParameterByName(name) {
+             name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+             var regexS = "[\\?&]" + name + "=([^&#]*)";
+             var regex = new RegExp(regexS);
+             var results = regex.exec(window.location.search);
+             if (results == null) {
+                 return "";
+             } else {
+                 return decodeURIComponent(results[1].replace(/\+/g, " "));
+             }
+         }
+          
+    
+
+
+     function triggerWindow(isWinOpen) {
+         g_isWinOpen = (isWinOpen.toLowerCase() == "true");
+         var r = $("#flashContent").width();
+         if (g_isWinOpen) {
+             $("#HTMLLayer").css("z-index", 0);
+			 $("#HTMLLayer").hide();
+             $("#flashContent").css("z-index", 1);
+             $("#flashContent").width(r-1);
+         }
+         else {
+             $("#flashContent").css("z-index", 0);
+             $("#HTMLLayer").css("z-index", 1);
+			 $("#HTMLLayer").show();
+             $("#flashContent").width(r+1);
+         }
+     }
+
+
+
+
+     function loadSwf() {
+         if (!validFlashVersion(10, 3)) {
+             alert("Please update your Adobe Flash Player to version 10.3 or higher. If you need further assistance please contact your administrator.");
+             return;
+         }
+            g_isScale = checkScale();
+         var so = new SWFObject("engine.swf", "engine", "100%", "100%", "10,3,0,0", "#666666");
+            so.addParam("wmode", "transparent");
+            so.addParam("quality", "high");
+
+            if (g_isScale) {
+               so.addParam("scale", "showall");
+           } else {
+               so.addParam("scale", "noscale");
+           }
+
+           so.addParam("menu", "false");
+           so.addParam("allowScriptAccess", "always");
+           so.addParam("salign", "tl");
+           so.addVariable("strSESSION_ID", getQueryParamValue("aicc_sid"));
+           so.addVariable("strAICC_URL", getQueryParamValue("aicc_url"));
+           so.addVariable("strContent_URL", getQueryParamValue("contenturl"));
+		   if (getQueryParamValue("aicc_sid"))
+		   {
+				window.onbeforeunload = WarnUser;
+		   }
+           so.write("flashContent");
+     }
+    
+    
+
+       
+     function thisMovie(movieName) {
+        if (navigator.appName.indexOf("Microsoft") != -1) {
+             return window[movieName];
+        } 	else {
+             return document[movieName];
+        }
+     }
+    
+
+
+     function sendToActionScript(p0, p1, p2, p3) {
+         thisMovie("engine").sendToActionScript(p0,p1,p2,p3);
+     }
+    
+    
+
+     function sendToJavaScript(value,param1) {
+        if (isMyDebug) {
+			alert("External interface connect done");
+        }
+     }
+
+
+
+    //----------------------------------------------------
+    //		Others
+    //----------------------------------------------------
+
+    var rightClickMsg = "Copyright 2007-2014 Pelesys Learning Systems Inc.";
+
+    function noRightClick(e) 
+    {
+	    if ((document.all) && (event.button==2))
+	    {
+		    alert(rightClickMsg);
+		    return false;
+	    }
+
+
+	    if ((document.layers) && (e.which == 3)) {
+	        alert(rightClickMsg);
+	        return false;
+	    }
+	    else {
+	        return true;
+	    }
+    }
+
+
+    if (document.layers) document.captureEvents(Event.MOUSEDOWN);
+    document.onmousedown = noRightClick;
+
+    //----------------------------------------------------
+    //		HTML Page
+    //----------------------------------------------------
+
+    function pageInit() {
+        jsReady = true;
+        loadSwf();
+    }
+
+    function loadHtml(pg) {
+        if (pg == "") {
+            cleanHtml()
+        } else {
+            g_isHtmlPgRuning = true;
+            $(document).ready(function () {
+               $("#flashContent").css("z-index", 0);
+               $("#HTMLLayer").css("z-index", 1);
+			   $("#HTMLLayer").show();
+               $("#frame").attr("src", pg);
+               setHTMLPageSize();
+            });
+        }
+    }
+
+
+
+    function cleanHtml() {
+        g_isHtmlPgRuning = false;
+        $("#HTMLLayer").offset(g_xy8_6);
+        $("#frame").attr("src", "");
+        $("#HTMLLayer").width(0);
+        $("#HTMLLayer").height(0);
+    }
+
+
+    $(window).resize(function () {
+        setHTMLPageSize();
+
+    });
+
+
+
+    function setHTMLPageSize() {
+
+        if (g_isScale) {
+            var sw = $("body").innerWidth();
+            var sh = $("body").innerHeight(); 
+            var curratio = sh / sw;
+            var fw;
+            var fh;
+        
+            if (curratio > g_ratio) {
+                // use width; 
+                fw = sw;
+                fh = sw * g_ratio * (552 / 723);
+            } else {
+                // use height;
+                fh = sh * (552 / 723);
+                fw = sh / g_ratio;
+            }
+
+            $("#flashContent").width(fw);
+            $("flashContent").height(fh);
+            $("#HTMLLayer").offset(g_xy8_6);
+
+            if (g_isHtmlPgRuning) {
+                $("#HTMLLayer").width(fw);
+                $("#HTMLLayer").height(fh);
+            }else{
+                $("#HTMLLayer").width(0);
+                $("#HTMLLayer").height(0);
+            }
+
+        } else {
+
+            $("#flashContent").width(1024);
+            $("flashContent").height(723);
+            $("#HTMLLayer").offset(g_xy8_6);
+
+            if (g_isHtmlPgRuning) {
+                $("#HTMLLayer").width(1006);
+                $("#HTMLLayer").height(552);
+            } else {
+                $("#HTMLLayer").width(0);
+                $("#HTMLLayer").height(0);
+            }
+        }
+    }
+
+    </script>
+</head>
+
+<body topmargin=0 leftmargin=0 marginheight=0 marginwidth=0  scroll = "no" onload = "pageInit()">
+    <div id="flashContent">
+        <p>If you need further assistance please contact your administrator.</p>
+    </div>
+    <div id="HTMLLayer"><iframe id="frame" src="" width="100%" height="100%" frameborder="0"></iframe></div>
+</body>
+</html>

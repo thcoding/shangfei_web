@@ -1,0 +1,566 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>时间线</title>
+    <link href="../cssDevelop/bootstrap.css?v=2.6.28.1" rel="stylesheet" type="text/css" />
+    <link href="../cssDevelop/TimeLine.css?v=2.6.28.1" rel="stylesheet" type="text/css" />
+    <link href="../cssDevelop/ruler.css?v=2.6.28.1" rel="stylesheet" type="text/css" />
+    <link href="../cssDevelop/jquery-ui.min.css?v=2.6.28.1" rel="stylesheet" type="text/css" />
+    <script src="../jsDevelop/jquery-2.0.3.min.js?v=2.6.28.1" type="text/javascript"></script>
+    <script src="../jsDevelop/jquery-ui.min.js?v=2.6.28.1" type="text/javascript"></script>
+    <script src="../jsDevelop/underscore.js?v=2.6.28.1" type="text/javascript"></script>
+    <script src="../jsDevelop/backbone.js?v=2.6.28.1" type="text/javascript"></script>
+    <script src="../jsDevelop/modernizr.js?v=2.6.28.1" type="text/javascript"></script>
+    <script src="../jsDevelop/jquery.ruler.js?v=2.6.28.1" type="text/javascript"></script>
+    <script src="../jsDevelop/bootstrap.js?v=2.6.28"></script>
+
+    <style type="text/css">
+        #showTimeline .divAnimationRow, #triggerAnimationTimeline .divAnimationRow
+        {
+            margin-top: 0px;
+        }
+        .divAnimationRow
+        {
+            white-space: nowrap;
+            height: 22px;
+            width: 100%;
+        }
+        .divSpaceLine
+        {
+            border-bottom: 1px solid #EEEEEE;
+            float: none;
+            margin: 2px 0 2px 0;
+            width: 100%;
+        }
+        #showAutoAnimationContainer, #showTriggerAnimationContainer
+        {
+            border-top: 1px solid #EEEEEE;
+            border-left: 1px solid #EEEEEE;
+            border-right: 1px solid #EEEEEE;
+            overflow-x: scroll;
+        }
+        #showAutoAnimationScale, showTriggerAnimationScale
+        {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .delaySpan
+        {
+            border: 1px dashed Red;
+        }
+        #showAutoAnimationName, #showTriggerAnimationName
+        {
+            border: 1px solid #EEEEEE;
+            width: 200px;
+            float: left;
+        }
+        body
+        {
+            overflow: hidden;
+        }
+    </style>
+    <script type="text/javascript">
+        //触发器动画拖拽的方法
+        function TriggerAnimationDragProcess() {
+            $(".drag").draggable({ axis: "y", revert: "invalid", cursor: "move" });
+            $(".divAnimationRow").droppable({
+                drop: function (event, ui) {
+                    opener.ChangeTriggerAnimationOrder($("#triggerSelect").val(), $(event.target).find(".drag").attr("actionid"), $(ui.helper).attr("actionid"));
+                    InitializeAnimationTimeLine();
+                }
+            });
+        }
+
+        //自动动画拖拽执行的方法
+        function AutoAnimationDragProcess() {
+            $(".drag").draggable({
+                axis: "y",
+                revert: "invalid"
+            });
+            $(".divAnimationRow").droppable({
+                drop: function (event, ui) {
+                    opener.ChangeAutoAnimationOrder($(event.target).find(".drag").attr("actionid"), $(ui.helper).attr("actionid"));
+                    InitializeAnimationTimeLine();
+                }
+            });
+        }
+
+        $(function () {
+            TranslateHTMLUI();
+        });
+        //专门针对html标签中的属性, 进行翻译
+        //这些属性, 比如title,无法调用fun直接翻译, 故统一在这个方法中翻译
+        function TranslateHTMLUI() {
+            $("title").text(GetTranslateUI('TTimeline'));
+        }
+
+        function GetTranslateUI(key) {
+            return opener.GetTranslateUI(key)
+        }
+
+        //得到动画集合中最后一个动画前和当前动画一共执行了多少秒
+        var totalTimeBeforeLastAnimation = 0;
+
+        var clickAutoAnimation = true;
+        var clickTriggerAnimation = false;
+        var animationNameHtml = "<div style='height:18px;background-color: #FF6600;text-align:center;'><strong style='font-size:14;color:white;'>" + GetTranslateUI("TAnimationName") + "</strong></div>";
+        $(function () {
+            $("#tabs").tabs();
+            $("#tabs").css("border", "0");
+            //绑定触发器下拉列表
+            BindTriggerSelect();
+            //绑定下拉列表改变事件
+            BindTriggerSelectChangge();
+
+            //根据浏览器的宽度设置动画时间线层显示的宽度
+            ProcessBodyWidth();
+
+            //页面初始化           
+            InitializeAnimationTimeLine();
+            //显示动画的时间刻度
+            ShowAutoTimeScale();
+
+            //绑定双击动画元素,弹出模态框修改动画时间参数
+            BindEditAnimationProperty();
+
+        });
+
+        task5686注释功能代码 //绑定双击动画元素,弹出模态框修改动画时间参数
+        function BindEditAnimationProperty() {
+            $("#tabs").on('dblclick', '.editAnimationProperty', function (e) {
+                var animationID = $(this).attr("actionid");
+                var animationModel = window.opener.GetCurrentAnimationByPId(parseInt(animationID));
+                $("#hidAnimationID").val(animationID);
+                $("#txtDelayTime").val(animationModel.get("delay"));
+                $("#txtDurationTime").val(animationModel.get("duration"));
+                $("#txtRepeat").val(animationModel.get("repeatCount"));
+                $('#myModal').modal("show");
+            });
+            //模态框点击保存执行的方法
+            $('#myModal').on('click', '#editAnimationPropSave', function (e) {
+                var animationID = $("#hidAnimationID").val();
+                var delay = $("#txtDelayTime").val();
+                var duration = $("#txtDurationTime").val();
+                var repeatCount = $("#txtRepeat").val();
+                var result = window.opener.TimeLineEditAnimationProp(animationID, delay, repeatCount, duration);
+                if (result == "ok") {
+                    $('#myModal').modal('hide');
+                }
+                else {
+                    alert("设置失败！");
+                    location.reload();
+                }
+            });
+        }
+
+
+        //绑定双击动画元素,弹出模态框修改动画时间参数
+        function BindEditAnimationProperty() {
+            $("#tabs").on('dblclick', '.editAnimationProperty', function (e) {
+                var animationID = $(this).attr("actionid");
+                var animationModel = window.opener.GetCurrentAnimationByPId(parseInt(animationID));
+                $("#hidAnimationID").val(animationID);
+                $("#txtDelayTime").val(animationModel.get("delay"));
+                $("#txtDurationTime").val(animationModel.get("duration"));
+                $("#txtRepeat").val(animationModel.get("repeatCount"));
+                $('#myModal').modal("show");
+            });
+            //模态框点击保存执行的方法
+            $('#myModal').on('click', '#editAnimationPropSave', function (e) {
+                var animationID = $("#hidAnimationID").val();
+                var delay = $("#txtDelayTime").val();
+                var duration = $("#txtDurationTime").val();
+                var repeatCount = $("#txtRepeat").val();
+                var result = window.opener.TimeLineEditAnimationProp(animationID, delay, repeatCount, duration);
+                if (result == "ok") {
+                    $('#myModal').modal('hide');
+                    location.reload();
+                }
+                else {
+                    alert("设置失败！");
+                    location.reload();
+                }
+            });
+        }
+
+        function ProcessBodyWidth() {
+            $("#showAutoAnimationContainer").css("width", (document.body.clientWidth - 300) + "px");
+        }
+
+        window.onresize = function () {
+            var animationType = $("#tabs ul li[aria-selected='true']").attr("aria-controls");
+            if (animationType == "tabs-1") {
+                $("#showAutoAnimationContainer").css("width", (document.body.clientWidth - 300) + "px");
+                var scrollWidth = $("#showAutoAnimationContainer")[0].scrollWidth;
+                if ((totalTimeBeforeLastAnimation * 20) > document.body.clientWidth - 300) {
+                    $(".divSpaceLine").css("width", scrollWidth + "px");
+                }
+                else {
+                    $(".divSpaceLine").css("width", scrollWidth + "px");
+                }
+            }
+            else if (animationType == "tabs-2") {
+                $("#showTriggerAnimationContainer").css("width", (document.body.clientWidth - 300) + "px");
+                var scrollWidth = $("#showTriggerAnimationContainer")[0].scrollWidth;
+                if ((totalTimeBeforeLastAnimation * 20) > document.body.clientWidth - 300) {
+                    $(".divSpaceLine").css("width", scrollWidth + "px");
+                }
+                else {
+                    $(".divSpaceLine").css("width", scrollWidth + "px");
+                }
+
+            }
+
+        }
+
+        //初始化动画时间线
+        function InitializeAnimationTimeLine() {
+            if ($("#tabs-1").css("display") == "none") {
+                $("#showAutoAnimationContainer").empty();
+                //当前页面触发器个数
+                var triggerModelCollection = window.opener.GetCurrenPageTriggerModelCollection("");
+                //说明页面没有触发器
+                if (triggerModelCollection.length == 0) {
+                    $("#tabs-2").html(GetTranslateUI('TThecurrentpagedoesnottrigger'));
+                    return;
+                }
+                else {
+                    animationNameHtml = "<div style='height:18px;background-color: #FF6600;text-align:center;'><strong style='font-size:14;color:white;'>" + GetTranslateUI('TAnimationName') + "</strong></div>";
+                    var scaleContent = "<div id='showTriggerAnimationScale'><br/><div id='triggerAnimationTimeline'></div></div>";
+                    $("#showTriggerAnimationContainer").html(scaleContent);
+
+                    //展示触发器动画时间线
+                    if (ShowTriggerAnimationTimeLine()) {
+                        $("#showTriggerAnimationScale").ruler({ hRuleSize: 18, vRuleSize: 0, hRuleSpace: 20, ruleSectionSize: 5, ruleUnit: 's' });
+                        TriggerAnimationDragProcess();
+                    }
+                    else {
+                        return;
+                    }
+                }
+
+            }
+            else if ($("#tabs-2").css("display") == "none") {
+                $("#showTriggerAnimationContainer").empty();
+                animationNameHtml = "<div style='height:18px;background-color: #FF6600;text-align:center;'><strong style='font-size:14;color:white;'>" + GetTranslateUI('TAnimationName') + "</strong></div>";
+                var scaleContent = "<div id='showAutoAnimationScale'><br/><div id='showTimeline'></div></div>";
+                $("#showAutoAnimationContainer").html(scaleContent);
+                //展示自动动画时间线（不需要触发器触发的动画）
+                if (ShowAutoAnimationTime()) {
+                    $("#showAutoAnimationScale").ruler({ hRuleSize: 18, vRuleSize: 0, hRuleSpace: 20, ruleSectionSize: 5, ruleUnit: 's' });
+                     AutoAnimationDragProcess();
+                }
+                else {
+                    $("#tabs-1").html(GetTranslateUI('TThecurrentpagedoesnotautomaticallyanimation'));
+                    return;
+                }
+            }
+        }
+        //显示动画的时间刻度
+        function ShowAutoTimeScale() {
+            $("#tabs > ul > li").click(function () {
+                var animationType = $(this).attr("aria-controls");
+                if (animationType == "tabs-1" && clickAutoAnimation) {
+                    return;
+                }
+                else if (animationType == "tabs-1" && !clickAutoAnimation) {
+                    clickAutoAnimation = true;
+                    clickTriggerAnimation = false;
+                    InitializeAnimationTimeLine();
+                }
+                else if (animationType == "tabs-2" && clickTriggerAnimation) {
+                    return;
+                }
+                else if (animationType == "tabs-2" && !clickTriggerAnimation) {
+                    clickTriggerAnimation = true;
+                    clickAutoAnimation = false;
+                    InitializeAnimationTimeLine();
+                }
+            });
+        }
+
+        //展示自动动画时间线（不需要触发器触发的动画）
+        function ShowAutoAnimationTime() {
+            //得到当前页面所有的动画集合(不包含需要触发器触发的动画)
+            var animationCollection = window.opener.GetCurrentPageAutoAnimationCollection();
+            if (animationCollection.length == 0) {
+                return false;
+            }
+            else {
+                //自动动画时间线（不需要触发器触发的动画）
+                var htmlContent = JoinTimeLineCode(animationCollection);
+                $("#showAutoAnimationName").html(animationNameHtml);
+                $("#showTimeline").html(htmlContent);
+                if ((totalTimeBeforeLastAnimation * 20) > document.body.clientWidth - 300) {
+                    $("#showTimeline").css("width", ((totalTimeBeforeLastAnimation * 20) + 25) + "px");
+                    $("#showAutoAnimationContainer").css("width", ((document.body.clientWidth - 300) + 10) + "px");
+                }
+                else {
+                    $("#showTimeline").css("width", ((document.body.clientWidth - 300) + 10) + "px");
+                    $("#showAutoAnimationContainer").css("width", ((document.body.clientWidth - 300) + 10) + "px");
+                }
+                return true;
+            }
+        }
+        //绑定下拉列表改变事件
+        function BindTriggerSelectChangge() {
+            $("#triggerSelect").change(function () {
+                animationNameHtml = "<div style='height:18px;background-color: #FF6600;text-align:center;'><strong style='font-size:14;color:white;'>" + GetTranslateUI('TAnimationName') + "</strong></div>";
+                if (ShowTriggerAnimationTimeLine()) {
+                    $(".hRule", "#showTriggerAnimationScale").remove();//防止多次切换触发器的时候，尺子变粗
+                    $("#showTriggerAnimationScale").ruler({ hRuleSize: 18, vRuleSize: 0, hRuleSpace: 20, ruleSectionSize: 5, ruleUnit: 's' });
+                }
+                else {
+                    return;
+                }
+            });
+        }
+
+        //展示触发器动画时间线
+        function ShowTriggerAnimationTimeLine() {
+            var triggerValue = $("#triggerSelect").val();
+            var triggerModelCollection = window.opener.GetCurrenPageTriggerModelCollection(triggerValue);
+            if (triggerModelCollection.length > 0) {
+                var controlAnimationModelArray = triggerModelCollection[0].get("ControlAnimationModelArray");
+                var triggerAnimationCollection = new Array();
+                for (var i = 0; i < controlAnimationModelArray.length; i++) {
+                    if (window.opener.GetCurrentAnimationByPId(controlAnimationModelArray[i]) == null) {
+                        continue;
+                    }
+                    else {
+                        triggerAnimationCollection.push(window.opener.GetCurrentAnimationByPId(controlAnimationModelArray[i]));
+                    }
+                }
+                if (triggerAnimationCollection.length > 0) {
+                    var triggerHtmlContent = JoinTimeLineCode(triggerAnimationCollection);
+                    $("#showTriggerAnimationName").html(animationNameHtml);
+                    $("#triggerAnimationTimeline").html(triggerHtmlContent);
+                    if ((totalTimeBeforeLastAnimation * 20) > document.body.clientWidth - 300) {
+                        $("#triggerAnimationTimeline").css("width", ((totalTimeBeforeLastAnimation * 20) + 25) + "px");
+                        $("#showTriggerAnimationContainer").css("width", ((document.body.clientWidth - 300) + 10) + "px");
+                    }
+                    else {
+                        $("#triggerAnimationTimeline").css("width", ((document.body.clientWidth - 300) + 10) + "px");
+                        $("#showTriggerAnimationContainer").css("width", ((document.body.clientWidth - 300) + 10) + "px");
+                    }
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+            return true;
+        }
+
+        //拼接时间线代码
+        function JoinTimeLineCode(animationCollection) {
+            var colorArr = new Array("red", "yellow", "green", "blue", "PaleVioletRed", "DeepPink", "DarkMagenta", "SteelBlue", "gray", "CadetBlue", "Auqamarin", "DarkSeaGreen", "ForestGreen", "Gold", "GoldEnrod", "Tan", "DarkOrange", "SaddleBrown", "Coral", "Tomato", "FireBrick", "Crimson", "MediumVioletRed", "Orchid", "Thistle", "plum", "Magenta", "Indigo", "MediumSlateBlue", "SlateBlue", "DarkSlateBlue", "MidnightBlue", "RoyalBlue", "CornflowerBlue", "DoderBlue", "DeepSkyBlue", "Aqua", "DarkSlateGray", "Lime", "GreenYellow", "OliveDrab", "Olive", "PaleGodenrod", "Peru", "Chocolate", "SaddleBrown", "LightSalmon", "RosyBrown", "Maroon", "Sienna", "SandyBrown");
+            var htmlContent = "";
+            var k = 0;
+            var belongToElementIDArr = new Array();
+            for (var i = 0; i < animationCollection.length; i++) {
+                var width = parseFloat(animationCollection[i].get("duration")); //运行时间
+                var delay = parseFloat(animationCollection[i].get("delay")); //延迟时间
+                var beforeTime = 0;
+                var repeatCountTemp = parseInt(animationCollection[i].get("repeatCount")); //重复次数
+                var actionMethod = animationCollection[i].get("ActionMethod");
+                var sequenceID = animationCollection[i].get("SequenceID");
+                var animationID = animationCollection[i].get("pid");
+
+                var eleName;
+                var belongToElementID = animationCollection[i].get("BelongToElementID");
+                var pName = window.opener.GetCurrentModelName(belongToElementID);
+                beforeTime = GetBeforeTime(animationCollection, i);
+                if ((beforeTime + delay + (width * (repeatCountTemp + 1))) > totalTimeBeforeLastAnimation) {
+                    totalTimeBeforeLastAnimation = beforeTime + delay + (width * (repeatCountTemp + 1));
+                }
+                eleName = pName.length > 9 ? pName.substring(0, 8) + "..." : pName;
+                var animationName = animationCollection[i].get("name");
+                var colorClass = JudgeCurrentBelongElementIDIsExist(belongToElementIDArr, belongToElementID);
+                if (colorClass == "") {
+                    colorClass = colorArr[k];
+                    belongToElementIDArr.push({ BelongToElementID: belongToElementID, DivBackColor: colorArr[k] });
+                    k = k == 50 ? 0 : k + 1;
+                }
+                if (i % 2 == 0) {
+                    animationNameHtml = animationNameHtml + "<div style='line-height:27px;height:27px;background-color: #FFFFFF;'><label title='" + pName + "' style='color:#326BEB;font-size:14px;'>" + animationName + "--" + eleName + "</label></div>";
+                }
+                else {
+                    animationNameHtml = animationNameHtml + "<div style='line-height:27px;height:27px;background-color: #EFEFEF;'><label title='" + pName + "' style='color:#326BEB;font-size:14px;'>" + animationName + "--" + eleName + "</label></div>";
+                }
+
+                var delaySpanHtml = "";
+                if (delay == 0) {
+                    delaySpanHtml = "<span style='margin-left:" + beforeTime * 20 + "px;float:left;height:22px;'></span>";
+                }
+                else {
+                    delaySpanHtml = "<span style='border:1px dashed Red;width:" + (delay * 20) + "px;margin-left:" + beforeTime * 20 + "px;float:left;height:22px;'></span>"
+                }
+                 htmlContent += "<div class='divAnimationRow'>" + delaySpanHtml + "<span actionid='" + animationID + "' SequenceID='" + sequenceID + "' class='button " + colorClass + " drag editAnimationProperty' title='" + GetTranslateUI('TElementName') + "：" + pName + "\n" + "" + GetTranslateUI('TCurrenttime') + "：" + beforeTime + "s" + "\n" + "" + GetTranslateUI('TDelaytime') + "：" + delay + "s" + "\n" + "" + GetTranslateUI('TNumberofexecutions') + "：" + (repeatCountTemp + 1) + "\n" + "" + GetTranslateUI('TSingleTime') + "：" + width + "s" + "\n" + "" + GetTranslateUI('TCompletionTime') + "：" + (beforeTime + delay + (width * (repeatCountTemp + 1))) + "s' style='cursor: move;width:" + ((width * (repeatCountTemp + 1)) * 20) + "px;float:left;height:22px;border-left:0px solid #191970;'></span></div><div class='divSpaceLine'></div>";
+              
+            }
+            animationNameHtml = animationNameHtml + "<div style='height:20px;background-color: #FF6600;text-align:center;'></div>";
+            return htmlContent;
+        }
+
+        //绑定触发器下拉列表
+        function BindTriggerSelect() {
+            //得到当前页面的所有触发器集合
+            var triggerModelCollection = window.opener.GetCurrenPageTriggerModelCollection("");
+            var triggerSelectHtml = "";
+            for (var i = 0; i < triggerModelCollection.length; i++) {
+                var triggerPId = triggerModelCollection[i].get("pid");
+                var triggerName;
+                if (triggerModelCollection[i].get("BelongToElementID") == triggerModelCollection[i].get("BelongToBoardID")) {
+                    triggerName = GetTranslateUI('TCurrentboard');
+                }
+                else {
+                    triggerName = window.opener.GetCurrentModelName(triggerModelCollection[i].get("BelongToElementID"));
+                }
+                triggerSelectHtml += "<option value='" + triggerPId + "'>" + triggerName + "</option>";
+            }
+            $("#triggerSelect").html(triggerSelectHtml);
+        }
+
+        //得到当前动作之前一共用时多少时间(递归方法)
+        function GetBeforeTime(animationCollection, i) {
+            if (i == 0) {
+                return 0;
+            }
+            else {
+                var actionMethod = animationCollection[i].get("ActionMethod");
+                //接上一个动作执行
+                if (actionMethod == "1") {
+                    return GetBeforeTime(animationCollection, i - 1) + ((parseFloat(animationCollection[i - 1].get("duration")) * (parseInt(animationCollection[i - 1].get("repeatCount")) + 1))) + parseFloat(animationCollection[i - 1].get("delay"));
+                }
+                //与上一个动作同时执行
+                else if (actionMethod == "2") {
+                    return GetBeforeTime(animationCollection, i - 1);
+                }
+            }
+        }
+        //判断当前元素ID是否在数组中已经存在
+        function JudgeCurrentBelongElementIDIsExist(belongToElementIDArr, belongToElementID) {
+            var colorClass = "";
+            for (var i = 0; i < belongToElementIDArr.length; i++) {
+                if (belongToElementIDArr[i].BelongToElementID == belongToElementID) {
+                    return belongToElementIDArr[i].DivBackColor;
+                }
+                else {
+                    continue;
+                }
+            }
+            return colorClass;
+        }
+    </script>
+</head>
+<body>
+    <div id="tabs" style="height: 1000px;">
+        <ul>
+            <li><a href="#tabs-1">
+                <script type="text/javascript">                    document.write(GetTranslateUI('TAutomaticAnimation'))</script>
+            </a></li>
+            <li><a href="#tabs-2">
+                <script type="text/javascript">                    document.write(GetTranslateUI('TTriggeranimation'))</script>
+            </a></li>
+        </ul>
+        <div id="tabs-1">
+            <span>
+                <script type="text/javascript">                    document.write(GetTranslateUI('TAutomaticanimationtimelinediagram'))</script>
+            </span>
+            <br />
+            <div style="height: 5px;">
+            </div>
+            <div style="float: left;">
+                <div id="showAutoAnimationName">
+                </div>
+                <div id="showAutoAnimationContainer">
+                </div>
+            </div>
+        </div>
+        <div id="tabs-2">
+            <span>
+                <script type="text/javascript">                    document.write(GetTranslateUI('TTriggerelement'))</script>
+                :</span>
+            <select id="triggerSelect" style="width: 150px;">
+            </select>
+            <br />
+            <div style="height: 5px;">
+            </div>
+            <div id="divTriggerBigContainer" style="float: left;">
+                <div id="showTriggerAnimationName">
+                </div>
+                <div id="showTriggerAnimationContainer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    !-- Modal修改动画的属性 -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width:450px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">
+                        <script type="text/javascript">                    document.write(GetTranslateUI('TModifytheanimationtime'))</script>
+                    </h4>
+                </div>
+                <div class="modal-body" style="height:150px;">
+                    <table>
+                        <tr style="display:none;">
+                            <td rowspan="2">
+                                <input type="hidden" id="hidAnimationID" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <script type="text/javascript">                    document.write(GetTranslateUI('TdelaySecond'))</script>
+                                :
+                            </td>
+                            <td>
+                                <div class=".col-xs-2">
+                                    <input maxlength="4" id="txtDelayTime" type="text" class="form-control pValidPositiveFloat" placeholder="0" value='' />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <script type="text/javascript">                    document.write(GetTranslateUI('TdurationSecond'))</script>
+                                :
+                            </td>
+                            <td>
+                                <div class=".col-xs-2">
+                                    <input maxlength="4" id="txtDurationTime" type="text" class="form-control pValidPositiveFloat" placeholder="1" value='' />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <script type="text/javascript">                    document.write(GetTranslateUI('Trepetitions'))</script>:
+                            </td>
+                            <td>
+                                <div class=".col-xs-2">
+                                    <input maxlength="3" id="txtRepeat" type="text" class="form-control pValidOnlyInputThreeNumPositiveInt" placeholder="0" value='' />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <script type="text/javascript">                    document.write(GetTranslateUI('Tcancel'))</script>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="editAnimationPropSave">
+                        <script type="text/javascript">                    document.write(GetTranslateUI('Tsave'))</script>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

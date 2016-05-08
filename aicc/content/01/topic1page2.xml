@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <title>Page_Photo</title>
+  <id>Topic1Page2</id>
+  <type>no_test</type>
+  <init_required>false</init_required>
+  <unload_required>false</unload_required>
+  <graphics_location crewpad="22991_HTMLTemplate_forcrewpad.htm">22991_HTMLTemplate.htm</graphics_location>
+  <completion>last_section</completion>
+  <metadata>
+    <language>EN</language>
+    <description>
+    </description>
+    <keywords>
+    </keywords>
+    <date>13-11-2014</date>
+    <duration>15:04:21</duration>
+    <version>1.0</version>
+    <generator>
+    </generator>
+    <package_id>
+    </package_id>
+    <rights>COMAC</rights>
+    <content_folder>EN:content</content_folder>
+  </metadata>
+  <data>
+  </data>
+  <sections>
+    <section>
+      <id>s1</id>
+      <audio_location>
+      </audio_location>
+      <audio_text>
+      </audio_text>
+      <instruction>
+      </instruction>
+      <completion>audio</completion>
+      <advance>auto</advance>
+      <jumpTo>
+      </jumpTo>
+    </section>
+  </sections>
+  <actions>
+  </actions>
+</page>

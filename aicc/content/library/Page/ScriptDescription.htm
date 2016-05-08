@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>页面脚本描述</title>
+    <meta charset="utf-8" />
+    <link href="../cssDevelop/bootstrap.css" rel="stylesheet" type="text/css" />
+    <script src="../jsDevelop/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="../ckeditor_4.3.2_full/ckeditor.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+
+        window.onload = function () {
+            CKEDITOR.replace("textareaScriptDescription",
+            {
+                toolbar: [{ name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Bold', 'Italic'] },
+    	                  { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'] },
+    	                  { name: 'others', items: ['-'] }
+    	                 ],
+                height: '450px'
+            });
+            var scriptText = window.opener.passScriptDescriptionToSubPage();
+            CKEDITOR.instances.textareaScriptDescription.setData(scriptText);
+        };
+        $(function () {
+            TranslateHTMLUI();
+
+            //保存脚本描述的事件绑定
+            $("#btnScriptDescriptionSave").click(function () {
+
+                var trueLocation = opener.GenerateRequestURL("/lcms/Files/OperateAnimationHTMLTemplate.ashx");
+
+                var pageID = parseInt(getQueryString("pageID"));
+                $.post(trueLocation, { actionType: "UpdateScriptDescription", pageID: pageID, "scriptDescription": encodeURIComponent(CKEDITOR.instances.textareaScriptDescription.getData()) }, function (data) {
+                    if (data.result == "ok") {
+                        //保存成功
+                        alert(opener.GetTranslateUI('TSuccessfullysaved'));
+                        window.opener.showScriptDescriptionoOnParentPage(CKEDITOR.instances.textareaScriptDescription.getData());
+                        window.close();
+                    }
+                    else if (data.result == "error") {
+                        alert(data.message + ". 保存失败,请重试!");
+                    }
+                    else if (data == "") {
+                        alert("保存失败,请重试!");
+                    }
+                })
+            });
+        });
+
+        //专门针对html标签中的属性, 进行翻译
+        //这些属性, 比如title,无法调用fun直接翻译, 故统一在这个方法中翻译
+        function TranslateHTMLUI() {
+            $("title").text(opener.GetTranslateUI('TPagescriptdescription'));
+        }
+
+    </script>
+</head>
+<body>
+    <div id="textareaScriptDescription">
+    </div>
+    <div style="position: absolute; right: 0;">
+        <ul class="pager">
+            <li><a href="#" id="btnScriptDescriptionSave"><span class="glyphicon glyphicon-floppy-open">
+            </span><script type="text/javascript">                       document.write(opener.GetTranslateUI('Tsave'))</script></a> </li>
+            <li onclick="window.close();"><a href="#" id="btnScriptDescriptionCancel"><span class="glyphicon glyphicon-floppy-open">
+            </span><script type="text/javascript">                       document.write(opener.GetTranslateUI('TClose'))</script></a> </li>
+        </ul>
+    </div>
+</body>
+</html>

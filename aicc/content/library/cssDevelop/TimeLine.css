@@ -1,0 +1,334 @@
+.button
+{
+    width: 140px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff; /*border-radius: 5px;*/
+    position: relative;
+    overflow: hidden;
+}
+.button:nth-child(6n)
+{
+    margin-right: 0;
+}
+.button.red
+{
+    background: -webkit-linear-gradient(top,#d53939,#d53939);
+    background: -moz-linear-gradient(top,#d53939,#b92929);
+    background: linear-gradient(top,#d53939,#b92929);
+}
+.button.gray
+{
+    background: -webkit-linear-gradient(top,#f2f3f7,#f2f3f7);
+    background: -moz-linear-gradient(top,#f2f3f7,#e4e8ec);
+    background: linear-gradient(top,#f2f3f7,#e4e8ec);
+}
+.button.yellow
+{
+    background: -webkit-linear-gradient(top,#fece34,#fece34);
+    background: -moz-linear-gradient(top,#fece34,#d8a605);
+    background: linear-gradient(top,#fece34,#d8a605);
+}
+.button.green
+{
+    background: -webkit-linear-gradient(top,#90dfa2,#90dfa2);
+    background: -moz-linear-gradient(top,#90dfa2,#84d494);
+    background: linear-gradient(top,#90dfa2,#84d494);
+}
+.button.blue
+{
+    background: -webkit-linear-gradient(top,#42a4e0,#42a4e0);
+    background: -moz-linear-gradient(top,#42a4e0,#2e88c0);
+    background: linear-gradient(top,#42a4e0,#2e88c0);
+}
+/*下面是自己添加的颜色*/
+.button.LightPink
+{
+    background: -webkit-linear-gradient(top,#FFB6C1,#FFB6C1);
+    background: -moz-linear-gradient(top,#FFB6C1,#FFB6C1);
+    background: linear-gradient(top,#FFB6C1,#FFB6C1);
+}
+.button.PaleVioletRed
+{
+    background: -webkit-linear-gradient(top,#DB7093,#DB7093);
+    background: -moz-linear-gradient(top,#DB7093,#DB7093);
+    background: linear-gradient(top,#DB7093,#DB7093);
+}
+.button.DeepPink
+{
+    background: -webkit-linear-gradient(top,#FF1493,#FF1493);
+    background: -moz-linear-gradient(top,#FF1493,#FF1493);
+    background: linear-gradient(top,#FF1493,#FF1493);
+}
+
+.button.DarkMagenta
+{
+    background: -webkit-linear-gradient(top,#8B008B,#8B008B);
+    background: -moz-linear-gradient(top,#8B008B,#8B008B);
+    background: linear-gradient(top,#8B008B,#8B008B);
+}
+.button.SteelBlue
+{
+    background: -webkit-linear-gradient(top,#4682B4,#4682B4);
+    background: -moz-linear-gradient(top,#4682B4,#4682B4);
+    background: linear-gradient(top,#4682B4,#4682B4);
+}
+.button.CadetBlue
+{
+    background: -webkit-linear-gradient(top,#5F9EA0,#5F9EA0);
+    background: -moz-linear-gradient(top,#5F9EA0,#5F9EA0);
+    background: linear-gradient(top,#5F9EA0,#5F9EA0);
+}
+.button.Auqamarin
+{
+    background: -webkit-linear-gradient(top,#7FFFAA,#7FFFAA);
+    background: -moz-linear-gradient(top,#7FFFAA,#7FFFAA);
+    background: linear-gradient(top,#7FFFAA,#7FFFAA);
+}
+.button.DarkSeaGreen
+{
+    background: -webkit-linear-gradient(top,#8FBC8F,#8FBC8F);
+    background: -moz-linear-gradient(top,#8FBC8F,#8FBC8F);
+    background: linear-gradient(top,#8FBC8F,#8FBC8F);
+}
+.button.ForestGreen
+{
+    background: -webkit-linear-gradient(top,#228B22,#228B22);
+    background: -moz-linear-gradient(top,#228B22,#228B22);
+    background: linear-gradient(top,#228B22,#228B22);
+}
+.button.Gold
+{
+    background: -webkit-linear-gradient(top,#FFD700,#FFD700);
+    background: -moz-linear-gradient(top,#FFD700,#FFD700);
+    background: linear-gradient(top,#FFD700,#FFD700);
+}
+.button.GoldEnrod
+{
+    background: -webkit-linear-gradient(top,#DAA520,#DAA520);
+    background: -moz-linear-gradient(top,#DAA520,#DAA520);
+    background: linear-gradient(top,#DAA520,#DAA520);
+}
+.button.Tan
+{
+    background: -webkit-linear-gradient(top,#D2B48C,#D2B48C);
+    background: -moz-linear-gradient(top,#D2B48C,#D2B48C);
+    background: linear-gradient(top,#D2B48C,#D2B48C);
+}
+.button.DarkOrange
+{
+    background: -webkit-linear-gradient(top,#FF8C00,#FF8C00);
+    background: -moz-linear-gradient(top,#FF8C00,#FF8C00);
+    background: linear-gradient(top,#FF8C00,#FF8C00);
+}
+.button.SaddleBrown
+{
+    background: -webkit-linear-gradient(top,#8B4513,#8B4513);
+    background: -moz-linear-gradient(top,#8B4513,#8B4513);
+    background: linear-gradient(top,#8B4513,#8B4513);
+}
+.button.Coral
+{
+    background: -webkit-linear-gradient(top,#FF7F50,#FF7F50);
+    background: -moz-linear-gradient(top,#FF7F50,#FF7F50);
+    background: linear-gradient(top,#FF7F50,#FF7F50);
+}
+.button.Tomato
+{
+    background: -webkit-linear-gradient(top,#FF6347,#FF6347);
+    background: -moz-linear-gradient(top,#FF6347,#FF6347);
+    background: linear-gradient(top,#FF6347,#FF6347);
+}
+.button.FireBrick
+{
+    background: -webkit-linear-gradient(top,#B22222,#B22222);
+    background: -moz-linear-gradient(top,#B22222,#B22222);
+    background: linear-gradient(top,#B22222,#B22222);
+}
+
+
+
+/*以下是新添加的颜色0710*/
+.button.Crimson
+{
+    background: -webkit-linear-gradient(top,#DC143C,#DC143C);
+    background: -moz-linear-gradient(top,#DC143C,#DC143C);
+    background: linear-gradient(top,#DC143C,#DC143C);
+}
+.button.MediumVioletRed
+{
+    background: -webkit-linear-gradient(top,#C71585,#C71585);
+    background: -moz-linear-gradient(top,#C71585,#C71585);
+    background: linear-gradient(top,#C71585,#C71585);
+}
+.button.Orchid
+{
+    background: -webkit-linear-gradient(top,#DA70D6,#DA70D6);
+    background: -moz-linear-gradient(top,#DA70D6,#DA70D6);
+    background: linear-gradient(top,#DA70D6,#DA70D6);
+}
+.button.Thistle
+{
+    background: -webkit-linear-gradient(top,#D8BFD8,#D8BFD8);
+    background: -moz-linear-gradient(top,#D8BFD8,#D8BFD8);
+    background: linear-gradient(top,#D8BFD8,#D8BFD8);
+}
+.button.plum
+{
+    background: -webkit-linear-gradient(top,#DDA0DD,#DDA0DD);
+    background: -moz-linear-gradient(top,#DDA0DD,#DDA0DD);
+    background: linear-gradient(top,#DDA0DD,#DDA0DD);
+}
+.button.Magenta
+{
+    background: -webkit-linear-gradient(top,#FF00FF,#FF00FF);
+    background: -moz-linear-gradient(top,#FF00FF,#FF00FF);
+    background: linear-gradient(top,#FF00FF,#FF00FF);
+}
+.button.Indigo
+{
+    background: -webkit-linear-gradient(top,#4B0082,#4B0082);
+    background: -moz-linear-gradient(top,#4B0082,#4B0082);
+    background: linear-gradient(top,#4B0082,#4B0082);
+}
+.button.MediumSlateBlue
+{
+    background: -webkit-linear-gradient(top,#7B68EE,#7B68EE);
+    background: -moz-linear-gradient(top,#7B68EE,#7B68EE);
+    background: linear-gradient(top,#7B68EE,#7B68EE);
+}
+.button.SlateBlue
+{
+    background: -webkit-linear-gradient(top,#6A5ACD,#6A5ACD);
+    background: -moz-linear-gradient(top,#6A5ACD,#6A5ACD);
+    background: linear-gradient(top,#6A5ACD,#6A5ACD);
+}
+.button.DarkSlateBlue
+{
+    background: -webkit-linear-gradient(top,#483D8B,#483D8B);
+    background: -moz-linear-gradient(top,#483D8B,#483D8B);
+    background: linear-gradient(top,#483D8B,#483D8B);
+}
+.button.MidnightBlue
+{
+    background: -webkit-linear-gradient(top,#191970,#191970);
+    background: -moz-linear-gradient(top,#191970,#191970);
+    background: linear-gradient(top,#191970,#191970);
+}
+.button.RoyalBlue
+{
+    background: -webkit-linear-gradient(top,#4169E1,#4169E1);
+    background: -moz-linear-gradient(top,#4169E1,#4169E1);
+    background: linear-gradient(top,#4169E1,#4169E1);
+}
+.button.CornflowerBlue
+{
+    background: -webkit-linear-gradient(top,#6495ED,#6495ED);
+    background: -moz-linear-gradient(top,#6495ED,#6495ED);
+    background: linear-gradient(top,#6495ED,#6495ED);
+}
+.button.DoderBlue
+{
+    background: -webkit-linear-gradient(top,#1E90FF,#1E90FF);
+    background: -moz-linear-gradient(top,#1E90FF,#1E90FF);
+    background: linear-gradient(top,#1E90FF,#1E90FF);
+}
+.button.DeepSkyBlue
+{
+    background: -webkit-linear-gradient(top,#00BFFF,#00BFFF);
+    background: -moz-linear-gradient(top,#00BFFF,#00BFFF);
+    background: linear-gradient(top,#00BFFF,#00BFFF);
+}
+.button.Aqua
+{
+    background: -webkit-linear-gradient(top,#00FFFF,#00FFFF);
+    background: -moz-linear-gradient(top,#00FFFF,#00FFFF);
+    background: linear-gradient(top,#00FFFF,#00FFFF);
+}
+.button.DarkSlateGray
+{
+    background: -webkit-linear-gradient(top,#2F4F4F,#2F4F4F);
+    background: -moz-linear-gradient(top,#2F4F4F,#2F4F4F);
+    background: linear-gradient(top,#2F4F4F,#2F4F4F);
+}
+.button.Lime
+{
+    background: -webkit-linear-gradient(top,#00FF00,#00FF00);
+    background: -moz-linear-gradient(top,#00FF00,#00FF00);
+    background: linear-gradient(top,#00FF00,#00FF00);
+}
+.button.GreenYellow
+{
+    background: -webkit-linear-gradient(top,#ADFF2F,#ADFF2F);
+    background: -moz-linear-gradient(top,#ADFF2F,#ADFF2F);
+    background: linear-gradient(top,#ADFF2F,#ADFF2F);
+}
+.button.OliveDrab
+{
+    background: -webkit-linear-gradient(top,#556B2F,#556B2F);
+    background: -moz-linear-gradient(top,#556B2F,#556B2F);
+    background: linear-gradient(top,#556B2F,#556B2F);
+}
+.button.Olive
+{
+    background: -webkit-linear-gradient(top,#808000,#808000);
+    background: -moz-linear-gradient(top,#808000,#808000);
+    background: linear-gradient(top,#808000,#808000);
+}
+.button.PaleGodenrod
+{
+    background: -webkit-linear-gradient(top,#EEE8AA,#EEE8AA);
+    background: -moz-linear-gradient(top,#EEE8AA,#EEE8AA);
+    background: linear-gradient(top,#EEE8AA,#EEE8AA);
+}
+.button.Peru
+{
+    background: -webkit-linear-gradient(top,#CD853F,#CD853F);
+    background: -moz-linear-gradient(top,#CD853F,#CD853F);
+    background: linear-gradient(top,#CD853F,#CD853F);
+}
+.button.Chocolate
+{
+    background: -webkit-linear-gradient(top,#D2691E,#D2691E);
+    background: -moz-linear-gradient(top,#D2691E,#D2691E);
+    background: linear-gradient(top,#D2691E,#D2691E);
+}
+.button.SaddleBrown
+{
+    background: -webkit-linear-gradient(top,#8B4513,#8B4513);
+    background: -moz-linear-gradient(top,#8B4513,#8B4513);
+    background: linear-gradient(top,#8B4513,#8B4513);
+}
+.button.LightSalmon
+{
+    background: -webkit-linear-gradient(top,#FFA07A,#FFA07A);
+    background: -moz-linear-gradient(top,#FFA07A,#FFA07A);
+    background: linear-gradient(top,#FFA07A,#FFA07A);
+}
+.button.RosyBrown
+{
+    background: -webkit-linear-gradient(top,#BC8F8F,#BC8F8F);
+    background: -moz-linear-gradient(top,#BC8F8F,#BC8F8F);
+    background: linear-gradient(top,#BC8F8F,#BC8F8F);
+}
+.button.Maroon
+{
+    background: -webkit-linear-gradient(top,#800000,#800000);
+    background: -moz-linear-gradient(top,#800000,#800000);
+    background: linear-gradient(top,#800000,#800000);
+}
+.button.Sienna
+{
+    background: -webkit-linear-gradient(top,#A0522D,#A0522D);
+    background: -moz-linear-gradient(top,#A0522D,#A0522D);
+    background: linear-gradient(top,#A0522D,#A0522D);
+}
+.button.SandyBrown
+{
+    background: -webkit-linear-gradient(top,#F4A460,#F4A460);
+    background: -moz-linear-gradient(top,#F4A460,#F4A460);
+    background: linear-gradient(top,#F4A460,#F4A460);
+}
+
+
