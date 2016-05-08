@@ -217,7 +217,8 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
             $courseunit["viewcount"] = $lesson_view_count;
             $courseunit["lasttime"] = $lesson_lastview_time;
             $courseunit["remark"] = $lesson_remarks;
-            $courseunit["itemurl"] = "<a href='".$href."'><img src='../img/down.gif' alt='下载' title='下载'></a>";
+
+		    $courseunit["itemurl"] = "<a href='".$href."'onclick=\"LaunchCommonFile('".$arr['id']."','".$userid."')\"><img src='../img/down.gif' alt='下载' title='下载'></a>";
 
             $courseunits[] = $courseunit;
         }
@@ -248,14 +249,18 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
                             $incompleted_count++;
                         }
                         //$lesson_total_time
-                        $lesson_total_time=$lesson_total_time+$arr_lp_item_view["total_time"];//当前这个item的total_time
+                        $lesson_total_time=$lesson_total_time + $arr_lp_item_view["total_time"];//当前这个item的total_time
                         $lesson_score=$arr_lp_item_view["score"];
                         //$lesson_view_count
-                        $lesson_view_count =+ $arr_lp_item_view["view_count"];//lp_view表中的view_count
+                        $lesson_view_count = $lesson_view_count + $arr_lp_item_view["view_count"];//lp_view表中的view_count
                         $lesson_view_status=$arr_lp_item_view["status"];
                         //$lesson_lastview_time;
-                        $lesson_lastview_time = date('Y-m-d H:i:s',$arr_lp_item_view["start_time"]);//当前这个item的上次访问时间
-                    }
+						if($lesson_lastview_time<$arr_lp_item_view["start_time"]){
+							$lesson_lastview_time = $arr_lp_item_view["start_time"];
+						}
+                   }
+					
+					$lesson_lastview_time = $lesson_lastview_time!=0?date('Y-m-d H:i:s',$lesson_lastview_time):"未开始";
 
                     if($incompleted_count!=0){//如果存在尚未完成的item，不只有一个item
                     $lesson_status = "进行中";
@@ -274,6 +279,7 @@ function getCourseUnitsByCategoryid($userid,$categoryid){//通过用户id和目�
                 }
                 else{//尚未学习过该lp，则$lesson_status=尚未学习
                     $lesson_status = "未学习";
+					$lesson_lastview_time = "未开始";
 
                 }
 

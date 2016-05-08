@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<organizations>
+  <organization id="HTMLPACKAGE_INPUT_TEST">
+    <title>HTMLPACKAGE_INPUT_TEST</title>
+    <metadata>
+      <language>EN</language>
+      <description>
+      </description>
+      <keywords>
+      </keywords>
+      <date>13-11-2014</date>
+      <duration>15:04:21</duration>
+      <version>1.0</version>
+      <generator>
+      </generator>
+      <package_id>
+      </package_id>
+      <rights>COMAC</rights>
+      <content_folder>EN:content</content_folder>
+    </metadata>
+    <item id="menu_template" location="menu/menu_template.xml" itemtype="page" completion="" auto_forward="false" visible="false" nav_button="both">
+      <title>menu</title>
+    </item>
+    <item id="Topic1" itemtype="topic" completion="" auto_forward="false" visible="false" nav_button="both">
+      <title>Topic_HTML_PACKAGE</title>
+      <item id="Topic1Page1" location="01/topic1page1.xml" itemtype="page" completion="" auto_forward="false" visible="false" nav_button="both">
+        <title>Page_Word</title>
+      </item>
+      <item id="Topic1Page2" location="01/topic1page2.xml" itemtype="page" completion="" auto_forward="false" visible="false" nav_button="both">
+        <title>Page_Photo</title>
+      </item>
+      <item id="Topic1Page3" location="01/topic1page3.xml" itemtype="page" completion="" auto_forward="false" visible="false" nav_button="both">
+        <title>Page_Audio</title>
+      </item>
+      <item id="Topic1Page4" location="01/topic1page4.xml" itemtype="page" completion="" auto_forward="false" visible="false" nav_button="both">
+        <title>Page_Video</title>
+      </item>
+      <item id="Topic1Page5" location="01/topic1page5.xml" itemtype="page" completion="" auto_forward="false" visible="false" nav_button="both">
+        <title>Page_U3D</title>
+      </item>
+    </item>
+  </organization>
+</organizations>

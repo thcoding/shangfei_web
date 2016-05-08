@@ -1,0 +1,564 @@
+#width, #height, #left, #top, #Transparent, #Rotate {
+    padding-top: 0px;
+}
+.urlPanelClass {
+    width: 200px !important;
+    height: 30px;
+    background: #e6e6e6;
+}
+.embedPanelClass {
+    width: 200px;
+    height: 100px;
+    background: #e6e6e6;
+    max-width: 210px;
+}
+#btnAdd {
+    width: 100px;
+}
+.ui-selecting {
+    box-shadow: 0 0 15px blue, 0 0 5px blue;
+}
+
+.ui-selected {
+    box-shadow: 0 0 15px blue, 0 0 5px blue;
+}
+.customeTemplate {
+    border: 10px solid gray;
+    border-style: dashed;
+    background-color: rgba(207, 207, 207, 0.42);
+    overflow: hidden;
+}
+.textboxInputAttribute {
+    width: 50px;
+    height: 20px;
+}
+.customeTemplate img {
+    cursor: pointer;
+}
+#layerTable {
+    width: 100%;
+}
+#layerTableOuter {
+    height: 170px;
+    overflow: auto;
+}
+#divTrigger ul, #divGoToPage, #divAudioAndVideoControl ul, #divSlidElementControl ul, #divChangeSectionControl ul {
+    list-style-type: none;
+    padding-left: 10px;
+}
+.one {
+    background: #ffffff;
+}
+.two {
+    background: #fbfbfb;
+}
+#divGoToPage ul {
+    padding-left: 0px;
+    float: left;
+}
+.listNoneUl {
+    padding-left: 0px;
+    list-style: none;
+}
+.listNoneUl li {
+    height: 20px;
+    margin-bottom: 4px;
+}
+.ulMenu li {
+    float: left;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+#layoutTemlateContaner ul {
+    list-style: none;
+    padding-left: 0px;
+    cursor: pointer;
+}
+#layoutTemlateContaner ul li {
+    padding-top: 5px;
+}
+.RedoUndoClass {
+    position: relative;
+    left: 50px;
+    cursor: pointer;
+}
+.RedoUndoClass div {
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.3;
+}
+.unDoClass {
+    background-image: url('../images/icon_undo.png');
+}
+.reDoClass {
+    background-image: url('../images/icon_redo.png');
+}
+.toolbar {
+    width: 600px;
+}
+.positionElementClass li {
+    width: 150px;
+}
+#guide-h {
+    border-top: 1px dashed #55f;
+}
+#guide-v {
+    border-left: 1px dashed #55f;
+}
+.guide {
+    display: none;
+    position: absolute;
+    left: 10px;
+    top: 0;
+    z-index: 9999999;
+}
+.pcontent {
+    display: inline-block;
+}
+.cursorOverElementActive {
+    border: 2px solid blue;
+    box-shadow: 0 0 15px blue, 0 0 5px blue;
+}
+.SelfIsTrigger {
+    cursor: pointer;
+}
+.SelfNotIsTrigger {
+    cursor: default;
+}
+html, body {
+    background: #666;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden; /* when page gets too small */
+}
+#container {
+    background: #999;
+    height: 100%;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 700px;
+    _width: 700px; /* min-width for IE6 */
+}
+.pane {
+    display: none; /* will appear when layout inits */
+}
+.fullSize {
+    width: 1000px;
+    height: 550px;
+}
+.tabbable.info {
+    margin-top: 10px;
+}
+.tabbable:before, .tabbable:after {
+    display: table;
+    line-height: 0;
+    content: "";
+}
+.tabbable:after {
+    clear: both;
+}
+.tabbable.info > .nav-tabs {
+    width: 180px;
+    margin: 0 auto 10px !important;
+    padding: 0;
+    border-bottom: 0px solid #ddd;
+}
+.tabbable.info > .nav-tabs > li {
+    float: left;
+    margin: 0 -1px -13px 0;
+    padding: 0;
+    border: 1px solid block;
+    height: 26px;
+    display: list-item;
+}
+.tabbable.info > .nav-tabs > li > a {
+    padding: 5px 10px 5px 10px;
+    background-color: rgb(221, 221, 221);
+    margin: 0px;
+    font-family: 'microsoft yahei' , tahoma, arial, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    cursor: auto;
+}
+.setting-body fieldset {
+    position: relative;
+    margin: 10px 0 0;
+    padding: 8px;
+    border: 1px solid #e3e3e3;
+    background: #fff;
+    font-size: 12px;
+}
+.setting-body fieldset legend {
+    position: relative;
+    width: auto;
+    height: 24px;
+    line-height: 24px;
+    margin: 0;
+    padding: 0 8px;
+    border: 1px solid #e3e3e3;
+    background: #fff;
+    font-size: 12px;
+    font-weight: normal;
+}
+.setting-body figure img {
+    max-width: 120px;
+    max-height: 80px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    vertical-align: middle;
+    border: 0;
+}
+div .puppet {
+    height: 5px;
+}
+div .fullSize .pcontent img {
+    height: 100%;
+    width: 100%;
+}
+.pcontent > img {
+    display: block;
+}
+.pcontent > svg {
+    display: block;
+}
+.jwlogo {
+    height: 0px !important;
+    width: 0px !important;
+}
+div .pactive {
+    border: 0px solid blue;
+}
+.animationtype {
+    width: 100%;
+    height: 30px;
+}
+.animationtype select {
+    height: 100%;
+}
+.settedAction {
+    clear: both;
+}
+.actionRow {
+    border: 1px solid rgb(197, 190, 190);
+    height: 20px;
+    margin-bottom: 3px;
+    background-color: rgb(252, 250, 250);
+}
+.actionRow div {
+    float: right;
+    margin: 0 5px 0 10px;
+}
+
+.resourcePanelDiv {
+    height: 100%;
+    float: left;
+}
+.resourceTreeWrap {
+    border: 1px solid black;
+    width: 230px;
+}
+.Rightpanel {
+    width: 620px;
+}
+.searchPanel {
+    width: 100%;
+    float: left;
+    height: 100px;
+    border: 1px solid black;
+    padding: 15px 3px 10px 10px;
+}
+.resultpanel {
+    width: 100%;
+    float: left;
+    height: 430px;
+    border: 1px solid black;
+}
+.searchPanel input {
+    margin: 3px 3px 3px 3px;
+}
+.searchPanel input[type=text] {
+    width: 200px;
+    height: 20px;
+}
+.resultpanel table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.resultpanel table tr td {
+    text-align: center;
+    border: 1px solid black;
+}
+.resultpanel table a {
+    cursor: pointer;
+}
+.actionRow .glyphicon {
+    cursor: pointer;
+}
+#divDelete {
+    float: right;
+}
+#prevewModalBody_board {
+    overflow: hidden;
+}
+#divDrawButton {
+    position: absolute;
+    left: 1020px;
+    top: 10px;
+}
+#divDrawButton button {
+    margin-bottom: 5px;
+}
+.pageboard {
+    position: absolute;
+}
+.ResourceSelectBar {
+    width: 100%;
+    height: 50px;
+    float: left;
+}
+div.puppet {
+    float: left;
+    width: 110px;
+    height: 80px;
+    padding: 0px 8px 3px 8px;
+}
+fieldset > hr {
+    clear: both;
+}
+.setting-body > .baseinfo {
+    font-size: 14px;
+    font-weight: bold;
+}
+#scriptDescription {
+    width: 100%;
+    height: 100%;
+}
+#captionDiv {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 1000px;
+    height: 120px;
+    border: 1px solid black;
+}
+#captionDiv > div {
+    width: 100%;
+    height: 100%;
+}
+#sectionTable {
+    width: 100%;
+    height: 100%;
+}
+.sectionOutDiv {
+    margin-bottom: 15px;
+    width: 100%;
+    height: 60px;
+    clear: both;
+}
+#sectionTable textarea {
+    height: 60px;
+    width: 600px;
+}
+.sectionCommond .add {
+    clear: both;
+}
+#PanelSection {
+    margin-top: 10px; /* overflow: auto; */
+}
+.ui-sortable a {
+    cursor: move;
+    padding: 5px 15px 5px 15px !important;
+}
+
+.delete {
+    cursor: pointer;
+}
+.nav-tabs > li > a {
+    font-size: 12px;
+    padding: 7px 5px 5px 5px;
+}
+
+#elementAndPageInfoPanel > li > a {
+    font-size: 11px;
+    padding: 5px 5px 5px 5px;
+    border-color: #eeeeee #eeeeee #dddddd;
+}
+#elementAndPageInfoPanel {
+    margin: 0 auto;
+}
+.Pos input {
+    width: 80px;
+}
+.Pos input[type="checkbox"] {
+    width: 20px;
+}
+.Pos ul {
+    list-style: none;
+    padding-left: 0px;
+}
+.size-position label {
+    width: 25px;
+}
+#currentPageAllElement tr {
+    border: solid 1px rgb(226, 216, 216);
+}
+#currentPageAllElement table {
+    width: 90%;
+    background-color: rgb(248, 245, 245);
+}
+.ui-resizable-handle {
+    display: none;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    z-index: 10000;
+    border-radius: 6px;
+    background: #2570ba !important;
+    background: -moz-linear-gradient( top, #92b9ea, #2570ba) !important;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#92b9ea), to(#2570ba)) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff92b9ea', endColorstr='#ff2570ba', GradientType=0) !important;
+    border: 1px solid #fff;
+    box-shadow: 1px 1px 2px rgba(0,0,0,.2);
+}
+.ui-resizable-se {
+    cursor: se-resize;
+    right: -5px;
+    bottom: -5px;
+}
+div.bugContainer {
+    position: absolute;
+    font-size: 9pt;
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+}
+bugflags {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    display: block;
+    height: 0;
+    width: 0;
+    font-size: 0;
+    line-height: 0;
+    border-color: transparent transparent red transparent;
+    border-style: dashed dashed solid dashed;
+    border-width: 10px;
+}
+bugflagi {
+    position: absolute;
+    top: -9px;
+    left: -10px;
+    display: block;
+    height: 0;
+    width: 0;
+    font-size: 0;
+    line-height: 0;
+    border-color: transparent transparent #fff transparent;
+    border-style: dashed dashed solid dashed;
+    border-width: 10px;
+}
+.bugContent {
+    border: 1px solid red;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    box-shadow: 3px 3px 4px red;
+    -moz-box-shadow: 3px 3px 4px red;
+    -webkit-box-shadow: 3px 3px 4px red;
+    color: red;
+}
+.SetWHXYInfo {
+    height: 20px;
+    width: 100px;
+    background: #e6e6e6;
+}
+.SetTransparentTextBox {
+    width: 30px;
+    float: left;
+    height: 20px;
+    background: #e6e6e6;
+}
+
+.SetRotateTextBox {
+    width: 30px;
+    float: left;
+    height: 20px;
+    background: #e6e6e6;
+}
+.ui-resizable-n {
+    cursor: n-resize;
+    height: 7px;
+    width: 7px;
+    top: -5px;
+    left: 50%;
+    margin-left: -5px;
+}
+.ui-resizable-e {
+    cursor: e-resize;
+    width: 7px;
+    right: -5px;
+    top: 50%;
+    height: 7px;
+    margin-top: -5px;
+}
+.ui-resizable-s {
+    cursor: s-resize;
+    height: 7px;
+    width: 7px;
+    bottom: -5px;
+    left: 50%;
+    margin-left: -5px;
+}
+.ui-resizable-w {
+    cursor: w-resize;
+    width: 7px;
+    left: -5px;
+    top: 50%;
+    height: 7px;
+    margin-top: -5px;
+}
+/*覆盖bootstrap的css-----------------------------开始*/
+#topMenuBar .dropdown-menu {
+    min-width: 30px;
+    padding: 0px 0px 0px 0px;
+    background-color: rgba(0, 0, 0, 0);
+}
+#topMenuBar .dropdown-menu li {
+    padding: 5px 0px 0px 0px;
+}
+#topMenuBar .dropdown-menu li button {
+    width: 100%;
+}
+.pcontent p {
+    margin: 1px 1px 1px 1px;
+}
+/*覆盖bootstrap的css-----------------------------结束*/
+.bugArrow {
+    margin: 5px 10px 10px 5px;
+}
+#H2Tile {
+    font-weight: bold;
+}
+
+/* 覆盖JqueryUI中的css*/
+.ui-widget {
+    font-size: 1.0em;
+}
+
+.ErrorElementFlag {
+    border: 3px solid red;
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    -webkit-box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    -moz-box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}

@@ -4,12 +4,9 @@ class mysql{
 	
 	function mysql($database){
 	
-		$m_host = "127.0.0.1:3306";
+		$m_host = "localhost:3306";
 		$m_name = "root";
 		$m_pass = "root";
-
-        /*$m_name = "root";
-        $m_pass = "welcome";*/
 
 		$link   =   $this -> linkdatabase($m_host,$m_name,$m_pass);
 		$this   ->    selectdatabase($database,$link);
@@ -45,9 +42,7 @@ class mysql{
 /**
 *获取当前行数据,返回关联数组
 */
-
 	function fetch_array($result){
-	
 		return @mysql_fetch_array($result,MYSQL_ASSOC);
 	
 	}

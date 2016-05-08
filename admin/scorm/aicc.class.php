@@ -46,7 +46,7 @@ class aicc extends learnpath {
 	 * @param	string	Course code
 	 * @param	integer	Learnpath ID in DB
 	 * @param	integer	User ID
-	 */
+	 **/
     function aicc($course_code=null,$resource_id=null,$user_id=null) {
     	if($this->debug>0){error_log('In aicc::aicc()',0);}
     	if(!empty($course_code) and !empty($resource_id) and !empty($user_id))
@@ -548,7 +548,7 @@ class aicc extends learnpath {
 
 		$sql = 'UPDATE '.$lp.' SET name = "'.$this->course_title.'" WHERE id = '.$this->lp_id;
 		Database :: query($sql);
-		
+
 		$previous = 0;
 		$i = 0;
 		foreach($this->aulist as $identifier => $dummy)
@@ -577,16 +577,16 @@ class aicc extends learnpath {
 			$res_item = Database::query($sql_item);
 			if($item = Database::fetch_array($res_item))
 			{ // item already exist, update it
-				$sql_item = 'UPDATE '.$lp_item.' SET 
+				$sql_item = 'UPDATE '.$lp_item.' SET
 								title = "'.$title.'",
 								path = "'.$path.'",
 								parameters = "'.$parameters.'"
 							 WHERE id = '.$item['id'];
 				$res_item = Database::query($sql_item);
 			if($this->debug>1){error_log('New LP - In aicc::update_aicc() - updating item : '.$sql_item.' : '.mysql_error(),0);}
-				$item_id = $item['id'];								
+				$item_id = $item['id'];
 			}
-			else 
+			else
 			{ // new item to be inserted
 				$sql_item = "INSERT INTO $lp_item " .
 						"(lp_id,item_type,ref,title," .
@@ -602,8 +602,8 @@ class aicc extends learnpath {
 				$res_item = Database::query($sql_item);
 				if($this->debug>1){error_log('New LP - In aicc::update_aicc() - inserting item : '.$sql_item.' : '.mysql_error(),0);}
 				$item_id = Database::insert_id();
-			}	
-			
+			}
+
 			//now update previous item to change next_item_id
 			if($previous != 0){
 				$upd = "UPDATE $new_lp_item SET next_item_id = $item_id WHERE id = $previous";

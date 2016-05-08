@@ -65,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && count($_FILES) > 0 && !empty($_FILES
     $type = learnpath::get_package_type($course_dir . $filename, $filename);
     switch ($type) {
         case 'scorm':
-
             require_once('scorm.class.php');
             //require_once api_get_path(LIBRARY_PATH).'searchengine.lib.php';
             $oScorm = new scorm();
@@ -75,8 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && count($_FILES) > 0 && !empty($_FILES
                 $oScorm->parse_manifest($manifest);
                 $oScorm->import_manifest($parentDir);
             } else {
-                //show error message stored in $oScrom->error_msg
-                //logger("error: lp_upload->switch(scorm)->empty(manifest)");
                 die("不是符合标准的scorm课程包。");
             }
 
@@ -106,6 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && count($_FILES) > 0 && !empty($_FILES
 
             break;
         case 'aicc':
+            $texthand=fopen("C:/aiccs.txt","a");
+            fwrite($texthand,"选择了aicc");
             require_once('aicc.class.php');
             $oAICC = new aicc();
             $config_dir = $course_dir . $file_base_name . "/manifest.xml";
@@ -138,7 +137,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && count($_FILES) > 0 && !empty($_FILES
             $oAICC->set_parentDir($parentDir . "/" . $file_base_name);
             $oAICC->set_jslib('aicc_api.php');
 
-
             break;
         case 'oogie':
             require_once('openoffice_presentation.class.php');
@@ -156,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && count($_FILES) > 0 && !empty($_FILES
         case '':
         default:
             //die("type".$type);
-            die("<script>alert(\"未知的课程包类型,请检查scorm课程压缩包是否正确。\");
+            die("<script>alert(\"未知的课程包类型,请检查scorm/aicc课程压缩包是否正确。\");
                  history.go(-1);</script>");
         //return "lp_upload.php error";
     }

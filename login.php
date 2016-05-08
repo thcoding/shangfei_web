@@ -11,7 +11,6 @@ include "inc/config.php";
 //从数据库中uer表中获取该用户名相关信息
 $res_user = $mysql->query("select * from user where username='$username'");
 $arr_user = $mysql->fetch_array($res_user);
-echo("asdasd");
 
 if($arr_user["password"] == md5($password)){//判断用户密码是否符合
 	if($arr_user["deleted"])die("<script>alert('您的帐号已被删除');location.href='index.php'</script>");
